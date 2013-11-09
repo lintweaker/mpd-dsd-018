@@ -5,6 +5,7 @@
 - Update to mpd 0.18.1
 - Update to mpd 0.18.2
 - Update to mpd 0.18.3
- Currently this version is identical to mpd-0.18.3
+- Fix DSD DSDIFF decoder
+
 
 
