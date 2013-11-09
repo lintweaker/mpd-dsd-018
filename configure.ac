@@ -1,6 +1,6 @@
 AC_PREREQ(2.60)
 
-AC_INIT(mpd, 0.18.2-dsd, gtmkramer@xs4all.nl)
+AC_INIT(mpd, 0.18.3-dsd, gtmkramer@xs4all.nl)
 
 VERSION_MAJOR=0
 VERSION_MINOR=18
@@ -8,7 +8,7 @@ VERSION_REVISION=0
 VERSION_EXTRA=0
 
 AC_CONFIG_SRCDIR([src/Main.cxx])
-AM_INIT_AUTOMAKE([foreign 1.11 dist-bzip2 dist-xz subdir-objects])
+AM_INIT_AUTOMAKE([foreign 1.11 dist-xz subdir-objects])
 AM_SILENT_RULES
 AC_CONFIG_HEADERS(config.h)
 AC_CONFIG_MACRO_DIR([m4])

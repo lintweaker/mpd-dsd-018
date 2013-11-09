@@ -3,9 +3,11 @@
 
 Introduction
 ------------
+
 This document is a very small amount of documentation about what is needed to 
-install MPD. If more information is desired see the community wiki at 
-http://mpd.wikia.com.
+install MPD.  If more information is desired, read the user manual:
+
+ http://www.musicpd.org/doc/user/
 
 Dependencies
 ------------
@@ -161,13 +163,9 @@ Get the latest release from of MPD from <http://www.musicpd.org/>.
 Compile
 -------
 
-1) unzip and untar the archive
+1) unpack the archive
 
-$ tar zxvf mpd-x.x.x.tar.gz
-
-or
-
-$ tar jxvf mpd-x.x.x.tar.bz2
+$ tar xf mpd-x.x.x.tar.xz
 
 2) change to directory created
 
@@ -208,6 +206,5 @@ Using MPD
 ---------
 
 You can download many different interfaces for MPD at 
-	<http://mpd.wikia.com/wiki/Clients>
 
-MPD can be interfaced directly using telnet (see COMMANDS, if you are brave).
+ http://www.musicpd.org/clients/
