@@ -25,7 +25,8 @@
 #include "ConfigData.hxx"
 #include "tag/Tag.hxx"
 #include "IcyMetaDataParser.hxx"
-#include "event/MultiSocketMonitor.hxx"
+#include "event/SocketMonitor.hxx"
+#include "event/TimeoutMonitor.hxx"
 #include "event/Call.hxx"
 #include "IOThread.hxx"
 #include "util/ASCII.hxx"
@@ -47,7 +48,6 @@
 #include <errno.h>
 
 #include <list>
-#include <forward_list>
 
 #include <curl/curl.h>
 #include <glib.h>
@@ -179,21 +179,104 @@ struct input_curl {
 	input_curl &operator=(const input_curl &) = delete;
 };
 
-/**
- * This class monitors all CURL file descriptors.
- */
-class CurlSockets final : private MultiSocketMonitor {
-public:
-	CurlSockets(EventLoop &_loop)
-		:MultiSocketMonitor(_loop) {}
+class CurlMulti;
 
-	using MultiSocketMonitor::InvalidateSockets;
+/**
+ * Monitor for one socket created by CURL.
+ */
+class CurlSocket final : SocketMonitor {
+	CurlMulti &multi;
+
+public:
+	CurlSocket(CurlMulti &_multi, EventLoop &_loop, int _fd)
+		:SocketMonitor(_fd, _loop), multi(_multi) {}
+
+	~CurlSocket() {
+		/* TODO: sometimes, CURL uses CURL_POLL_REMOVE after
+		   closing the socket, and sometimes, it uses
+		   CURL_POLL_REMOVE just to move the (still open)
+		   connection to the pool; in the first case,
+		   Abandon() would be most appropriate, but it breaks
+		   the second case - is that a CURL bug?  is there a
+		   better solution? */
+
+		Steal();
+	}
+
+	/**
+	 * Callback function for CURLMOPT_SOCKETFUNCTION.
+	 */
+	static int SocketFunction(CURL *easy,
+				  curl_socket_t s, int action,
+				  void *userp, void *socketp);
+
+	virtual bool OnSocketReady(unsigned flags) override;
 
 private:
-	void UpdateSockets();
+	static constexpr int FlagsToCurlCSelect(unsigned flags) {
+		return (flags & (READ | HANGUP) ? CURL_CSELECT_IN : 0) |
+			(flags & WRITE ? CURL_CSELECT_OUT : 0) |
+			(flags & ERROR ? CURL_CSELECT_ERR : 0);
+	}
 
-	virtual int PrepareSockets() override;
-	virtual void DispatchSockets() override;
+	gcc_const
+	static unsigned CurlPollToFlags(int action) {
+		switch (action) {
+		case CURL_POLL_NONE:
+			return 0;
+
+		case CURL_POLL_IN:
+			return READ;
+
+		case CURL_POLL_OUT:
+			return WRITE;
+
+		case CURL_POLL_INOUT:
+			return READ|WRITE;
+		}
+
+		assert(false);
+		gcc_unreachable();
+	}
+};
+
+/**
+ * Manager for the global CURLM object.
+ */
+class CurlMulti final : private TimeoutMonitor {
+	CURLM *const multi;
+
+public:
+	CurlMulti(EventLoop &_loop, CURLM *_multi);
+
+	~CurlMulti() {
+		curl_multi_cleanup(multi);
+	}
+
+	bool Add(input_curl *c, Error &error);
+	void Remove(input_curl *c);
+
+	/**
+	 * Check for finished HTTP responses.
+	 *
+	 * Runs in the I/O thread.  The caller must not hold locks.
+	 */
+	void ReadInfo();
+
+	void Assign(curl_socket_t fd, CurlSocket &cs) {
+		curl_multi_assign(multi, fd, &cs);
+	}
+
+	void SocketAction(curl_socket_t fd, int ev_bitmask);
+
+	void InvalidateSockets() {
+		SocketAction(CURL_SOCKET_TIMEOUT, 0);
+	}
+
+private:
+	static int TimerFunction(CURLM *multi, long timeout_ms, void *userp);
+
+	virtual void OnTimeout() override;
 };
 
 /** libcurl should accept "ICY 200 OK" */
@@ -203,37 +286,40 @@ static struct curl_slist *http_200_aliases;
 static const char *proxy, *proxy_user, *proxy_password;
 static unsigned proxy_port;
 
-static struct {
-	CURLM *multi;
-
-	/**
-	 * A linked list of all active HTTP requests.  An active
-	 * request is one that doesn't have the "eof" flag set.
-	 */
-	std::forward_list<input_curl *> requests;
-
-	CurlSockets *sockets;
-} curl;
+static CurlMulti *curl_multi;
 
 static constexpr Domain http_domain("http");
 static constexpr Domain curl_domain("curl");
 static constexpr Domain curlm_domain("curlm");
+
+CurlMulti::CurlMulti(EventLoop &_loop, CURLM *_multi)
+	:TimeoutMonitor(_loop), multi(_multi)
+{
+	curl_multi_setopt(multi, CURLMOPT_SOCKETFUNCTION,
+			  CurlSocket::SocketFunction);
+	curl_multi_setopt(multi, CURLMOPT_SOCKETDATA, this);
+
+	curl_multi_setopt(multi, CURLMOPT_TIMERFUNCTION, TimerFunction);
+	curl_multi_setopt(multi, CURLMOPT_TIMERDATA, this);
+}
 
 /**
  * Find a request by its CURL "easy" handle.
  *
  * Runs in the I/O thread.  No lock needed.
  */
+gcc_pure
 static struct input_curl *
 input_curl_find_request(CURL *easy)
 {
 	assert(io_thread_inside());
 
-	for (auto c : curl.requests)
-		if (c->easy == easy)
-			return c;
+	void *p;
+	CURLcode code = curl_easy_getinfo(easy, CURLINFO_PRIVATE, &p);
+	if (code != CURLE_OK)
+		return nullptr;
 
-	return nullptr;
+	return (input_curl *)p;
 }
 
 static void
@@ -244,93 +330,67 @@ input_curl_resume(struct input_curl *c)
 	if (c->paused) {
 		c->paused = false;
 		curl_easy_pause(c->easy, CURLPAUSE_CONT);
-		curl.sockets->InvalidateSockets();
+		curl_multi->InvalidateSockets();
 	}
 }
 
-/**
- * Calculates the GLib event bit mask for one file descriptor,
- * obtained from three #fd_set objects filled by curl_multi_fdset().
- */
-static unsigned
-input_curl_fd_events(int fd, fd_set *rfds, fd_set *wfds, fd_set *efds)
-{
-	unsigned events = 0;
+int
+CurlSocket::SocketFunction(gcc_unused CURL *easy,
+			   curl_socket_t s, int action,
+			   void *userp, void *socketp) {
+	CurlMulti &multi = *(CurlMulti *)userp;
+	CurlSocket *cs = (CurlSocket *)socketp;
 
-	if (FD_ISSET(fd, rfds)) {
-		events |= MultiSocketMonitor::READ | MultiSocketMonitor::HANGUP
-			| MultiSocketMonitor::ERROR;
-		FD_CLR(fd, rfds);
+	assert(io_thread_inside());
+
+	if (action == CURL_POLL_REMOVE) {
+		delete cs;
+		return 0;
 	}
 
-	if (FD_ISSET(fd, wfds)) {
-		events |= MultiSocketMonitor::WRITE |
-			MultiSocketMonitor::ERROR;
-		FD_CLR(fd, wfds);
+	if (cs == nullptr) {
+		cs = new CurlSocket(multi, io_thread_get(), s);
+		multi.Assign(s, *cs);
+	} else {
+#ifdef USE_EPOLL
+		/* when using epoll, we need to unregister the socket
+		   each time this callback is invoked, because older
+		   CURL versions may omit the CURL_POLL_REMOVE call
+		   when the socket has been closed and recreated with
+		   the same file number (bug found in CURL 7.26, CURL
+		   7.33 not affected); in that case, epoll refuses the
+		   EPOLL_CTL_MOD because it does not know the new
+		   socket yet */
+		cs->Cancel();
+#endif
 	}
 
-	if (FD_ISSET(fd, efds)) {
-		events |= MultiSocketMonitor::HANGUP |
-			MultiSocketMonitor::ERROR;
-		FD_CLR(fd, efds);
-	}
-
-	return events;
+	unsigned flags = CurlPollToFlags(action);
+	if (flags != 0)
+		cs->Schedule(flags);
+	return 0;
 }
 
-/**
- * Updates all registered GPollFD objects, unregisters old ones,
- * registers new ones.
- *
- * Runs in the I/O thread.  No lock needed.
- */
-void
-CurlSockets::UpdateSockets()
+bool
+CurlSocket::OnSocketReady(unsigned flags)
 {
 	assert(io_thread_inside());
 
-	fd_set rfds, wfds, efds;
-
-	FD_ZERO(&rfds);
-	FD_ZERO(&wfds);
-	FD_ZERO(&efds);
-
-	int max_fd;
-	CURLMcode mcode = curl_multi_fdset(curl.multi, &rfds, &wfds,
-					   &efds, &max_fd);
-	if (mcode != CURLM_OK) {
-		FormatError(curlm_domain,
-			    "curl_multi_fdset() failed: %s",
-			    curl_multi_strerror(mcode));
-		return;
-	}
-
-	UpdateSocketList([&rfds, &wfds, &efds](int fd){
-			return input_curl_fd_events(fd, &rfds,
-						    &wfds, &efds);
-		});
-
-	for (int fd = 0; fd <= max_fd; ++fd) {
-		unsigned events = input_curl_fd_events(fd, &rfds, &wfds, &efds);
-		if (events != 0)
-			AddSocket(fd, events);
-	}
+	multi.SocketAction(Get(), FlagsToCurlCSelect(flags));
+	return true;
 }
 
 /**
  * Runs in the I/O thread.  No lock needed.
  */
-static bool
-input_curl_easy_add(struct input_curl *c, Error &error)
+inline bool
+CurlMulti::Add(struct input_curl *c, Error &error)
 {
 	assert(io_thread_inside());
 	assert(c != nullptr);
 	assert(c->easy != nullptr);
-	assert(input_curl_find_request(c->easy) == nullptr);
 
-	curl.requests.push_front(c);
-
-	CURLMcode mcode = curl_multi_add_handle(curl.multi, c->easy);
+	CURLMcode mcode = curl_multi_add_handle(multi, c->easy);
 	if (mcode != CURLM_OK) {
 		error.Format(curlm_domain, mcode,
 			     "curl_multi_add_handle() failed: %s",
@@ -338,8 +398,7 @@ input_curl_easy_add(struct input_curl *c, Error &error)
 		return false;
 	}
 
-	curl.sockets->InvalidateSockets();
-
+	InvalidateSockets();
 	return true;
 }
 
@@ -355,9 +414,15 @@ input_curl_easy_add_indirect(struct input_curl *c, Error &error)
 
 	bool result;
 	BlockingCall(io_thread_get(), [c, &error, &result](){
-			result = input_curl_easy_add(c, error);
+			result = curl_multi->Add(c, error);
 		});
 	return result;
+}
+
+inline void
+CurlMulti::Remove(input_curl *c)
+{
+	curl_multi_remove_handle(multi, c->easy);
 }
 
 /**
@@ -375,9 +440,8 @@ input_curl_easy_free(struct input_curl *c)
 	if (c->easy == nullptr)
 		return;
 
-	curl.requests.remove(c);
+	curl_multi->Remove(c);
 
-	curl_multi_remove_handle(curl.multi, c->easy);
 	curl_easy_cleanup(c->easy);
 	c->easy = nullptr;
 
@@ -396,37 +460,10 @@ input_curl_easy_free_indirect(struct input_curl *c)
 {
 	BlockingCall(io_thread_get(), [c](){
 			input_curl_easy_free(c);
-			curl.sockets->InvalidateSockets();
+			curl_multi->InvalidateSockets();
 		});
 
 	assert(c->easy == nullptr);
-}
-
-/**
- * Abort and free all HTTP requests.
- *
- * Runs in the I/O thread.  The caller must not hold locks.
- */
-static void
-input_curl_abort_all_requests(const Error &error)
-{
-	assert(io_thread_inside());
-	assert(error.IsDefined());
-
-	while (!curl.requests.empty()) {
-		struct input_curl *c = curl.requests.front();
-		assert(!c->postponed_error.IsDefined());
-
-		input_curl_easy_free(c);
-
-		const ScopeLock protect(c->base.mutex);
-
-		c->postponed_error.Set(error);
-		c->base.ready = true;
-
-		c->base.cond.broadcast();
-	}
-
 }
 
 /**
@@ -471,84 +508,66 @@ input_curl_handle_done(CURL *easy_handle, CURLcode result)
 	input_curl_request_done(c, result, status);
 }
 
+void
+CurlMulti::SocketAction(curl_socket_t fd, int ev_bitmask)
+{
+	int running_handles;
+	CURLMcode mcode = curl_multi_socket_action(multi, fd, ev_bitmask,
+						   &running_handles);
+	if (mcode != CURLM_OK)
+		FormatError(curlm_domain,
+			    "curl_multi_socket_action() failed: %s",
+			    curl_multi_strerror(mcode));
+
+	ReadInfo();
+}
+
 /**
  * Check for finished HTTP responses.
  *
  * Runs in the I/O thread.  The caller must not hold locks.
  */
-static void
-input_curl_info_read(void)
+inline void
+CurlMulti::ReadInfo()
 {
 	assert(io_thread_inside());
 
 	CURLMsg *msg;
 	int msgs_in_queue;
 
-	while ((msg = curl_multi_info_read(curl.multi,
+	while ((msg = curl_multi_info_read(multi,
 					   &msgs_in_queue)) != nullptr) {
 		if (msg->msg == CURLMSG_DONE)
 			input_curl_handle_done(msg->easy_handle, msg->data.result);
 	}
 }
 
-/**
- * Give control to CURL.
- *
- * Runs in the I/O thread.  The caller must not hold locks.
- */
-static bool
-input_curl_perform(void)
-{
-	assert(io_thread_inside());
-
-	CURLMcode mcode;
-
-	do {
-		int running_handles;
-		mcode = curl_multi_perform(curl.multi, &running_handles);
-	} while (mcode == CURLM_CALL_MULTI_PERFORM);
-
-	if (mcode != CURLM_OK && mcode != CURLM_CALL_MULTI_PERFORM) {
-		Error error;
-		error.Format(curlm_domain, mcode,
-			     "curl_multi_perform() failed: %s",
-			     curl_multi_strerror(mcode));
-		input_curl_abort_all_requests(error);
-		return false;
-	}
-
-	return true;
-}
-
 int
-CurlSockets::PrepareSockets()
+CurlMulti::TimerFunction(gcc_unused CURLM *_multi, long timeout_ms, void *userp)
 {
-	UpdateSockets();
+	CurlMulti &multi = *(CurlMulti *)userp;
+	assert(_multi == multi.multi);
 
-	long timeout2;
-	CURLMcode mcode = curl_multi_timeout(curl.multi, &timeout2);
-	if (mcode == CURLM_OK) {
-		if (timeout2 >= 0 && timeout2 < 10)
-			/* CURL 7.21.1 likes to report "timeout=0",
-			   which means we're running in a busy loop.
-			   Quite a bad idea to waste so much CPU.
-			   Let's use a lower limit of 10ms. */
-			timeout2 = 10;
-
-		return timeout2;
-	} else {
-		FormatWarning(curlm_domain,
-			      "curl_multi_timeout() failed: %s",
-			      curl_multi_strerror(mcode));
-		return -1;
+	if (timeout_ms < 0) {
+		multi.Cancel();
+		return 0;
 	}
+
+	if (timeout_ms >= 0 && timeout_ms < 10)
+		/* CURL 7.21.1 likes to report "timeout=0", which
+		   means we're running in a busy loop.  Quite a bad
+		   idea to waste so much CPU.  Let's use a lower limit
+		   of 10ms. */
+		timeout_ms = 10;
+
+	multi.Schedule(timeout_ms);
+	return 0;
 }
 
 void
-CurlSockets::DispatchSockets()
+CurlMulti::OnTimeout()
 {
-	if (input_curl_perform())
-		input_curl_info_read();
+	SocketAction(CURL_SOCKET_TIMEOUT, 0);
 }
 
 /*
@@ -583,27 +602,22 @@ input_curl_init(const config_param &param, Error &error)
 						   "");
 	}
 
-	curl.multi = curl_multi_init();
-	if (curl.multi == nullptr) {
+	CURLM *multi = curl_multi_init();
+	if (multi == nullptr) {
 		error.Set(curl_domain, 0, "curl_multi_init() failed");
 		return false;
 	}
 
-	curl.sockets = new CurlSockets(io_thread_get());
-
+	curl_multi = new CurlMulti(io_thread_get(), multi);
 	return true;
 }
 
 static void
 input_curl_finish(void)
 {
-	assert(curl.requests.empty());
-
 	BlockingCall(io_thread_get(), [](){
-			delete curl.sockets;
+			delete curl_multi;
 		});
-
-	curl_multi_cleanup(curl.multi);
 
 	curl_slist_free_all(http_200_aliases);
 
@@ -927,6 +941,7 @@ input_curl_easy_init(struct input_curl *c, Error &error)
 		return false;
 	}
 
+	curl_easy_setopt(c->easy, CURLOPT_PRIVATE, (void *)c);
 	curl_easy_setopt(c->easy, CURLOPT_USERAGENT,
 			 "Music Player Daemon " VERSION);
 	curl_easy_setopt(c->easy, CURLOPT_HEADERFUNCTION,

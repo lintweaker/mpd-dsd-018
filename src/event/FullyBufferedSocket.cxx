@@ -42,7 +42,8 @@ FullyBufferedSocket::DirectWrite(const void *data, size_t length)
 		if (IsSocketErrorAgain(code))
 			return 0;
 
-		Cancel();
+		IdleMonitor::Cancel();
+		BufferedSocket::Cancel();
 
 		if (IsSocketErrorClosed(code))
 			OnSocketClosed();
@@ -54,13 +55,14 @@ FullyBufferedSocket::DirectWrite(const void *data, size_t length)
 }
 
 bool
-FullyBufferedSocket::WriteFromBuffer()
+FullyBufferedSocket::Flush()
 {
 	assert(IsDefined());
 
 	size_t length;
 	const void *data = output.Read(&length);
 	if (data == nullptr) {
+		IdleMonitor::Cancel();
 		CancelWrite();
 		return true;
 	}
@@ -71,8 +73,10 @@ FullyBufferedSocket::WriteFromBuffer()
 
 	output.Consume(nbytes);
 
-	if (output.IsEmpty())
+	if (output.IsEmpty()) {
+		IdleMonitor::Cancel();
 		CancelWrite();
+	}
 
 	return true;
 }
@@ -82,21 +86,10 @@ FullyBufferedSocket::Write(const void *data, size_t length)
 {
 	assert(IsDefined());
 
-#if 0
-	/* TODO: disabled because this would add overhead on some callers (the ones that often), but it may be useful */
+	if (length == 0)
+		return true;
 
-	if (output.IsEmpty()) {
-		/* try to write it directly first */
-		const auto nbytes = DirectWrite(data, length);
-		if (gcc_likely(nbytes > 0)) {
-			data = (const uint8_t *)data + nbytes;
-			length -= nbytes;
-			if (length == 0)
-				return true;
-		} else if (nbytes < 0)
-			return false;
-	}
-#endif
+	const bool was_empty = output.IsEmpty();
 
 	if (!output.Append(data, length)) {
 		// TODO
@@ -107,30 +100,31 @@ FullyBufferedSocket::Write(const void *data, size_t length)
 		return false;
 	}
 
-	ScheduleWrite();
+	if (was_empty)
+		IdleMonitor::Schedule();
 	return true;
 }
 
 bool
 FullyBufferedSocket::OnSocketReady(unsigned flags)
 {
-	const bool was_empty = output.IsEmpty();
-	if (!BufferedSocket::OnSocketReady(flags))
-		return false;
-
-	if (was_empty && !output.IsEmpty())
-		/* just in case the OnSocketInput() method has added
-		   data to the output buffer: try to send it now
-		   instead of waiting for the next event loop
-		   iteration */
-		flags |= WRITE;
-
 	if (flags & WRITE) {
 		assert(!output.IsEmpty());
+		assert(!IdleMonitor::IsActive());
 
-		if (!WriteFromBuffer())
+		if (!Flush())
 			return false;
 	}
 
+	if (!BufferedSocket::OnSocketReady(flags))
+		return false;
+
 	return true;
+}
+
+void
+FullyBufferedSocket::OnIdle()
+{
+	if (Flush() && !output.IsEmpty())
+		ScheduleWrite();
 }

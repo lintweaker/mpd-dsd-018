@@ -1,3 +1,18 @@
+ver 0.18.2 (2013/11/07)
+* protocol:
+  - "close" flushes the output buffer
+* input:
+  - cdio_paranoia: add setting "default_byte_order"
+  - curl: fix bug with redirected streams
+* playlist:
+  - pls: fix reversed song order
+* decoder:
+  - audiofile: require libaudiofile 0.3 due to API breakage
+  - dsf: enable DSD128
+* enable buffering when starting playback (regression fix)
+* fix build failures due to missing includes
+* fix big-endian support
+
 ver 0.18.1 (2013/11/04)
 * protocol:
   - always ignore whitespace at the end of the line

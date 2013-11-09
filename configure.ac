@@ -1,6 +1,6 @@
 AC_PREREQ(2.60)
 
-AC_INIT(mpd, 0.18.1-dsd, gtmkramer@xs4all.nl)
+AC_INIT(mpd, 0.18.2-dsd, gtmkramer@xs4all.nl)
 
 VERSION_MAJOR=0
 VERSION_MINOR=18
@@ -838,7 +838,7 @@ fi
 AM_CONDITIONAL(HAVE_ADPLUG, test x$enable_adplug = xyes)
 
 dnl -------------------------------- audiofile --------------------------------
-MPD_AUTO_PKG(audiofile, AUDIOFILE, [audiofile >= 0.1.7],
+MPD_AUTO_PKG(audiofile, AUDIOFILE, [audiofile >= 0.3],
 	[audiofile decoder plugin], [libaudiofile not found])
 AM_CONDITIONAL(HAVE_AUDIOFILE, test x$enable_audiofile = xyes)
 if test x$enable_audiofile = xyes; then
