@@ -1,3 +1,16 @@
+ver 0.18.1 (2013/11/04)
+* protocol:
+  - always ignore whitespace at the end of the line
+* networking:
+  - log UNIX domain path names instead of "localhost"
+  - open listener sockets in the order they were configured
+  - don't abort if IPv6 is not available
+* output:
+  - alsa: avoid endless loop in Raspberry Pi workaround
+* filter:
+  - autoconvert: fix "volume_normalization" with mp3 files
+* add missing files to source tarball
+
 ver 0.18 (2013/10/31)
 * configuration:
   - allow tilde paths for socket

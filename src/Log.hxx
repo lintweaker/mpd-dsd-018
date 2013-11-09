@@ -34,9 +34,30 @@ class Error;
 class Domain;
 
 enum class LogLevel {
+	/**
+	 * Debug message for developers.
+	 */
 	DEBUG,
+
+	/**
+	 * Unimportant informational message.
+	 */
 	INFO,
+
+	/**
+	 * Interesting informational message.
+	 */
+	DEFAULT,
+
+	/**
+	 * Warning: something may be wrong.
+	 */
 	WARNING,
+
+	/**
+	 * An error has occurred, an operation could not finish
+	 * successfully.
+	 */
 	ERROR,
 };
 
@@ -66,6 +87,16 @@ LogInfo(const Domain &domain, const char *msg)
 gcc_printf(2,3)
 void
 FormatInfo(const Domain &domain, const char *fmt, ...);
+
+static inline void
+LogDefault(const Domain &domain, const char *msg)
+{
+	Log(domain, LogLevel::DEFAULT, msg);
+}
+
+gcc_printf(2,3)
+void
+FormatDefault(const Domain &domain, const char *fmt, ...);
 
 static inline void
 LogWarning(const Domain &domain, const char *msg)

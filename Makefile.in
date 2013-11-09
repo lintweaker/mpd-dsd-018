@@ -1210,8 +1210,9 @@ am__DEPENDENCIES_14 = libmixer_plugins.a $(am__DEPENDENCIES_1)
 src_mpd_LINK = $(CXXLD) $(AM_CXXFLAGS) $(CXXFLAGS) $(src_mpd_LDFLAGS) \
 	$(LDFLAGS) -o $@
 am__src_pcm_dsd2pcm_dsd2pcm_SOURCES_DIST = src/pcm/dsd2pcm/dsd2pcm.c \
-	src/pcm/dsd2pcm/dsd2pcm.h src/pcm/dsd2pcm/noiseshape.c \
-	src/pcm/dsd2pcm/noiseshape.h src/pcm/dsd2pcm/main.cpp
+	src/pcm/dsd2pcm/dsd2pcm.h src/pcm/dsd2pcm/dsd2pcm.hpp \
+	src/pcm/dsd2pcm/noiseshape.c src/pcm/dsd2pcm/noiseshape.h \
+	src/pcm/dsd2pcm/noiseshape.hpp src/pcm/dsd2pcm/main.cpp
 @ENABLE_TEST_TRUE@am_src_pcm_dsd2pcm_dsd2pcm_OBJECTS =  \
 @ENABLE_TEST_TRUE@	src/pcm/dsd2pcm/dsd2pcm.$(OBJEXT) \
 @ENABLE_TEST_TRUE@	src/pcm/dsd2pcm/noiseshape.$(OBJEXT) \
@@ -2939,7 +2940,9 @@ SPARSE_SRC = $(addprefix $(top_srcdir)/,$(filter %.c,$(src_mpd_SOURCES)))
 
 @ENABLE_TEST_TRUE@src_pcm_dsd2pcm_dsd2pcm_SOURCES = \
 @ENABLE_TEST_TRUE@	src/pcm/dsd2pcm/dsd2pcm.c src/pcm/dsd2pcm/dsd2pcm.h \
+@ENABLE_TEST_TRUE@	src/pcm/dsd2pcm/dsd2pcm.hpp \
 @ENABLE_TEST_TRUE@	src/pcm/dsd2pcm/noiseshape.c src/pcm/dsd2pcm/noiseshape.h \
+@ENABLE_TEST_TRUE@	src/pcm/dsd2pcm/noiseshape.hpp \
 @ENABLE_TEST_TRUE@	src/pcm/dsd2pcm/main.cpp
 
 @ENABLE_TEST_TRUE@src_pcm_dsd2pcm_dsd2pcm_LDADD = libutil.a
@@ -2963,6 +2966,9 @@ DOCBOOK_FILES = doc/protocol.xml doc/user.xml doc/developer.xml
 # Distribution
 #
 EXTRA_DIST = $(doc_DATA) autogen.sh \
+	test/test_archive_bzip2.sh  \
+	test/test_archive_iso9660.sh \
+	test/test_archive_zzip.sh \
 	$(wildcard scripts/*.sh) \
 	$(man_MANS) $(DOCBOOK_FILES) doc/mpdconf.example doc/doxygen.conf \
 	src/win/mpd_win32_rc.rc.in src/win/mpd.ico
