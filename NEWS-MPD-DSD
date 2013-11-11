@@ -6,6 +6,7 @@
 - Update to mpd 0.18.2
 - Update to mpd 0.18.3
 - Fix DSD DSDIFF decoder
-
+11-Nov-13
+- Added temporary workaround for hang and the end of certain DSF and DSDIFF files
 
 
