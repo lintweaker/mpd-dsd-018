@@ -169,6 +169,11 @@ dsf_read_metadata(Decoder *decoder, InputStream &is,
 	if (data_size > playable_size)
 		data_size = playable_size;
 
+	/* Workaround for some DSF files hanging at the end */
+	if (data_size %4 != 0)
+		data_size = (data_size / (dsf_fmt_chunk.channelnum * 4)) *
+			    (dsf_fmt_chunk.channelnum * 4);
+
 	metadata->chunk_size = data_size;
 	metadata->channels = (unsigned) dsf_fmt_chunk.channelnum;
 	metadata->sample_rate = samplefreq;
