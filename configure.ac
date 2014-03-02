@@ -1,6 +1,6 @@
 AC_PREREQ(2.60)
 
-AC_INIT(mpd, 0.18.8-dsd, gtmkramer@xs4all.nl)
+AC_INIT(mpd, 0.18.9-dsd, gtmkramer@xs4all.nl)
 
 VERSION_MAJOR=0
 VERSION_MINOR=18
@@ -1023,7 +1023,7 @@ if test x$enable_tremor = xyes; then
 	fi
 fi
 
-MPD_AUTO_PKG(vorbis, VORBIS, [vorbis vorbisfile ogg],
+MPD_AUTO_PKG(vorbis, VORBIS, [vorbisfile vorbis ogg],
 	[Ogg Vorbis decoder], [libvorbis not found])
 if test x$enable_vorbis = xyes; then
 	AC_DEFINE(ENABLE_VORBIS_DECODER, 1, [Define for Ogg Vorbis support])
@@ -1139,7 +1139,7 @@ fi
 AM_CONDITIONAL(ENABLE_FLAC_ENCODER, test x$enable_flac_encoder = xyes)
 
 dnl ---------------------------- Ogg Vorbis Encoder ---------------------------
-MPD_AUTO_PKG(vorbis_encoder, VORBISENC, [vorbisenc vorbis],
+MPD_AUTO_PKG(vorbis_encoder, VORBISENC, [vorbisenc vorbis ogg],
 	[Ogg Vorbis encoder], [libvorbisenc not found])
 
 if test x$enable_vorbis_encoder = xyes; then

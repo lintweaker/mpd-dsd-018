@@ -106,12 +106,16 @@ struct AlsaOutput {
 	snd_pcm_uframes_t period_position;
 
 	/**
-	 * Set to non-zero when the Raspberry Pi workaround has been
-	 * activated in alsa_recover(); decremented by each write.
-	 * This will avoid activating it again, leading to an endless
-	 * loop.  This problem was observed with a "RME Digi9636/52".
+	 * Do we need to call snd_pcm_prepare() before the next write?
+	 * It means that we put the device to SND_PCM_STATE_SETUP by
+	 * calling snd_pcm_drop().
+	 *
+	 * Without this flag, we could easily recover after a failed
+	 * optimistic write (returning -EBADFD), but the Raspberry Pi
+	 * audio driver is infamous for generating ugly artefacts from
+	 * this.
 	 */
-	unsigned pi_workaround;
+	bool must_prepare;
 
 	/**
 	 * This buffer gets allocated after opening the ALSA device.
@@ -676,8 +680,6 @@ alsa_open(struct audio_output *ao, AudioFormat &audio_format, Error &error)
 {
 	AlsaOutput *ad = (AlsaOutput *)ao;
 
-	ad->pi_workaround = 0;
-
 	int err = snd_pcm_open(&ad->pcm, alsa_device(ad),
 			       SND_PCM_STREAM_PLAYBACK, ad->mode);
 	if (err < 0) {
@@ -698,6 +700,8 @@ alsa_open(struct audio_output *ao, AudioFormat &audio_format, Error &error)
 
 	ad->in_frame_size = audio_format.GetFrameSize();
 	ad->out_frame_size = ad->pcm_export->GetFrameSize(audio_format);
+
+	ad->must_prepare = false;
 
 	return true;
 }
@@ -736,29 +740,6 @@ alsa_recover(AlsaOutput *ad, int err)
 	case SND_PCM_STATE_XRUN:
 		ad->period_position = 0;
 		err = snd_pcm_prepare(ad->pcm);
-
-		if (err == 0 && ad->pi_workaround == 0) {
-			/* this works around a driver bug observed on
-			   the Raspberry Pi: after snd_pcm_drop(), the
-			   whole ring buffer must be invalidated, but
-			   the snd_pcm_prepare() call above makes the
-			   driver play random data that just happens
-			   to be still in the buffer; by adding and
-			   cancelling some silence, this bug does not
-			   occur */
-			alsa_write_silence(ad, ad->period_frames);
-
-			/* cancel the silence data right away to avoid
-			   increasing latency; even though this
-			   function call invalidates the portion of
-			   silence, the driver seems to avoid the
-			   bug */
-			snd_pcm_reset(ad->pcm);
-
-			/* disable the workaround for some time */
-			ad->pi_workaround = 8;
-		}
-
 		break;
 	case SND_PCM_STATE_DISCONNECTED:
 		break;
@@ -801,6 +782,7 @@ alsa_cancel(struct audio_output *ao)
 	AlsaOutput *ad = (AlsaOutput *)ao;
 
 	ad->period_position = 0;
+	ad->must_prepare = true;
 
 	snd_pcm_drop(ad->pcm);
 }
@@ -822,6 +804,16 @@ alsa_play(struct audio_output *ao, const void *chunk, size_t size,
 
 	assert(size % ad->in_frame_size == 0);
 
+	if (ad->must_prepare) {
+		ad->must_prepare = false;
+
+		int err = snd_pcm_prepare(ad->pcm);
+		if (err < 0) {
+			error.Set(alsa_output_domain, err, snd_strerror(-err));
+			return 0;
+		}
+	}
+
 	chunk = ad->pcm_export->Export(chunk, size, size);
 
 	assert(size % ad->out_frame_size == 0);
@@ -833,9 +825,6 @@ alsa_play(struct audio_output *ao, const void *chunk, size_t size,
 		if (ret > 0) {
 			ad->period_position = (ad->period_position + ret)
 				% ad->period_frames;
-
-			if (ad->pi_workaround > 0)
-				--ad->pi_workaround;
 
 			size_t bytes_written = ret * ad->out_frame_size;
 			return ad->pcm_export->CalcSourceSize(bytes_written);

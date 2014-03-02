@@ -21,4 +21,7 @@ and DSDIFF)
 
 13-Nov-13 MPD 0.18.4 released with DSDIFF fix included
 
+02-Nov-14 Updated to MPD 0.18.9. Currently no (real) differences with upstream
+	  MPD.
+
 
