@@ -1,3 +1,13 @@
+ver 0.18.7 (2013/01/13)
+* playlist
+  - pls: fix crash after parser error
+  - soundcloud: fix build failure with libyajl 2.0.1
+* decoder
+  - faad: fix memory leak
+  - mpcdec: reject libmpcdec SV7 in configure script
+* daemon: don't initialize supplementary groups when already running
+  as the configured user
+
 ver 0.18.6 (2013/12/24)
 * input
   - cdio_paranoia: support libcdio-paranoia 0.90

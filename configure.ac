@@ -1,6 +1,6 @@
 AC_PREREQ(2.60)
 
-AC_INIT(mpd, 0.18.6-dsd, gtmkramer@xs4all.nl)
+AC_INIT(mpd, 0.18.7-dsd, gtmkramer@xs4all.nl)
 
 VERSION_MAJOR=0
 VERSION_MINOR=18
@@ -732,7 +732,7 @@ dnl --------------------------------- Soundcloud ------------------------------
 if test x$enable_soundcloud != xno; then
 	PKG_CHECK_MODULES([YAJL], [yajl >= 2.0],
 		[found_soundcloud=yes],
-		AC_CHECK_LIB([yajl], [yajl_alloc],
+		AC_CHECK_LIB([yajl], [yajl_parse_complete],
 			[found_soundcloud=yes YAJL_CFLAGS=-DHAVE_YAJL1 YAJL_LIBS=-lyajl],
 			[found_soundcloud=no]))
 fi
@@ -960,7 +960,7 @@ AM_CONDITIONAL(ENABLE_SNDFILE, test x$enable_sndfile = xyes)
 
 dnl --------------------------------- musepack --------------------------------
 
-MPD_AUTO_LIB(mpc, MPCDEC, mpcdec, main, [-lmpcdec], [],
+MPD_AUTO_LIB(mpc, MPCDEC, mpcdec, mpc_demux_init, [-lmpcdec], [],
 	[mpcdec], [libmpcdec not found])
 if test x$enable_mpc = xyes; then
 	AC_DEFINE(HAVE_MPCDEC, 1, [Define to use libmpcdec for MPC decoding])
