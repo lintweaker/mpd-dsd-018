@@ -1,6 +1,6 @@
 AC_PREREQ(2.60)
 
-AC_INIT(mpd, 0.18.7-dsd, gtmkramer@xs4all.nl)
+AC_INIT(mpd, 0.18.8-dsd, gtmkramer@xs4all.nl)
 
 VERSION_MAJOR=0
 VERSION_MINOR=18
@@ -1139,7 +1139,7 @@ fi
 AM_CONDITIONAL(ENABLE_FLAC_ENCODER, test x$enable_flac_encoder = xyes)
 
 dnl ---------------------------- Ogg Vorbis Encoder ---------------------------
-MPD_AUTO_PKG(vorbis_encoder, VORBISENC, [vorbisenc],
+MPD_AUTO_PKG(vorbis_encoder, VORBISENC, [vorbisenc vorbis],
 	[Ogg Vorbis encoder], [libvorbisenc not found])
 
 if test x$enable_vorbis_encoder = xyes; then

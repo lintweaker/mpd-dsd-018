@@ -908,6 +908,7 @@ am__installdirs = "$(DESTDIR)$(bindir)" "$(DESTDIR)$(man1dir)" \
 @ENABLE_TEST_TRUE@am__EXEEXT_2 = test/test_util$(EXEEXT) \
 @ENABLE_TEST_TRUE@	test/test_byte_reverse$(EXEEXT) \
 @ENABLE_TEST_TRUE@	test/test_mixramp$(EXEEXT) \
+@ENABLE_TEST_TRUE@	test/test_icy_parser$(EXEEXT) \
 @ENABLE_TEST_TRUE@	test/test_pcm$(EXEEXT) \
 @ENABLE_TEST_TRUE@	test/test_queue_priority$(EXEEXT) \
 @ENABLE_TEST_TRUE@	$(am__EXEEXT_1)
@@ -1538,6 +1539,16 @@ test_test_byte_reverse_OBJECTS = $(am_test_test_byte_reverse_OBJECTS)
 test_test_byte_reverse_LINK = $(CXXLD) \
 	$(test_test_byte_reverse_CXXFLAGS) $(CXXFLAGS) $(AM_LDFLAGS) \
 	$(LDFLAGS) -o $@
+am__test_test_icy_parser_SOURCES_DIST = src/Log.cxx \
+	test/test_icy_parser.cxx
+@ENABLE_TEST_TRUE@am_test_test_icy_parser_OBJECTS =  \
+@ENABLE_TEST_TRUE@	src/test_test_icy_parser-Log.$(OBJEXT) \
+@ENABLE_TEST_TRUE@	test/test_test_icy_parser-test_icy_parser.$(OBJEXT)
+test_test_icy_parser_OBJECTS = $(am_test_test_icy_parser_OBJECTS)
+@ENABLE_TEST_TRUE@test_test_icy_parser_DEPENDENCIES = libtag.a \
+@ENABLE_TEST_TRUE@	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1)
+test_test_icy_parser_LINK = $(CXXLD) $(test_test_icy_parser_CXXFLAGS) \
+	$(CXXFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
 am__test_test_mixramp_SOURCES_DIST = src/Log.cxx test/test_mixramp.cxx
 @ENABLE_TEST_TRUE@am_test_test_mixramp_OBJECTS =  \
 @ENABLE_TEST_TRUE@	src/test_test_mixramp-Log.$(OBJEXT) \
@@ -1687,9 +1698,9 @@ SOURCES = $(libarchive_a_SOURCES) $(libconf_a_SOURCES) \
 	$(test_run_normalize_SOURCES) $(test_run_output_SOURCES) \
 	$(test_run_resolver_SOURCES) $(test_software_volume_SOURCES) \
 	$(test_test_archive_SOURCES) $(test_test_byte_reverse_SOURCES) \
-	$(test_test_mixramp_SOURCES) $(test_test_pcm_SOURCES) \
-	$(test_test_queue_priority_SOURCES) $(test_test_util_SOURCES) \
-	$(test_test_vorbis_encoder_SOURCES) \
+	$(test_test_icy_parser_SOURCES) $(test_test_mixramp_SOURCES) \
+	$(test_test_pcm_SOURCES) $(test_test_queue_priority_SOURCES) \
+	$(test_test_util_SOURCES) $(test_test_vorbis_encoder_SOURCES) \
 	$(test_visit_archive_SOURCES)
 DIST_SOURCES = $(am__libarchive_a_SOURCES_DIST) $(libconf_a_SOURCES) \
 	$(am__libdb_plugins_a_SOURCES_DIST) \
@@ -1726,6 +1737,7 @@ DIST_SOURCES = $(am__libarchive_a_SOURCES_DIST) $(libconf_a_SOURCES) \
 	$(am__test_software_volume_SOURCES_DIST) \
 	$(am__test_test_archive_SOURCES_DIST) \
 	$(am__test_test_byte_reverse_SOURCES_DIST) \
+	$(am__test_test_icy_parser_SOURCES_DIST) \
 	$(am__test_test_mixramp_SOURCES_DIST) \
 	$(am__test_test_pcm_SOURCES_DIST) \
 	$(am__test_test_queue_priority_SOURCES_DIST) \
@@ -2770,8 +2782,9 @@ SPARSE_SRC = $(addprefix $(top_srcdir)/,$(filter %.c,$(src_mpd_SOURCES)))
 # Test programs
 #
 @ENABLE_TEST_TRUE@C_TESTS = test/test_util test/test_byte_reverse \
-@ENABLE_TEST_TRUE@	test/test_mixramp test/test_pcm \
-@ENABLE_TEST_TRUE@	test/test_queue_priority $(am__append_71)
+@ENABLE_TEST_TRUE@	test/test_mixramp test/test_icy_parser \
+@ENABLE_TEST_TRUE@	test/test_pcm test/test_queue_priority \
+@ENABLE_TEST_TRUE@	$(am__append_71)
 @ENABLE_TEST_TRUE@test_read_conf_LDADD = \
 @ENABLE_TEST_TRUE@	libconf.a \
 @ENABLE_TEST_TRUE@	libutil.a \
@@ -3128,6 +3141,17 @@ SPARSE_SRC = $(addprefix $(top_srcdir)/,$(filter %.c,$(src_mpd_SOURCES)))
 @ENABLE_TEST_TRUE@test_test_mixramp_CPPFLAGS = $(AM_CPPFLAGS) $(CPPUNIT_CFLAGS) -DCPPUNIT_HAVE_RTTI=0
 @ENABLE_TEST_TRUE@test_test_mixramp_CXXFLAGS = $(AM_CXXFLAGS) -Wno-error=deprecated-declarations
 @ENABLE_TEST_TRUE@test_test_mixramp_LDADD = \
+@ENABLE_TEST_TRUE@	$(GLIB_LIBS) \
+@ENABLE_TEST_TRUE@	$(CPPUNIT_LIBS)
+
+@ENABLE_TEST_TRUE@test_test_icy_parser_SOURCES = \
+@ENABLE_TEST_TRUE@	src/Log.cxx \
+@ENABLE_TEST_TRUE@	test/test_icy_parser.cxx
+
+@ENABLE_TEST_TRUE@test_test_icy_parser_CPPFLAGS = $(AM_CPPFLAGS) $(CPPUNIT_CFLAGS) -DCPPUNIT_HAVE_RTTI=0
+@ENABLE_TEST_TRUE@test_test_icy_parser_CXXFLAGS = $(AM_CXXFLAGS) -Wno-error=deprecated-declarations
+@ENABLE_TEST_TRUE@test_test_icy_parser_LDADD = \
+@ENABLE_TEST_TRUE@	libtag.a \
 @ENABLE_TEST_TRUE@	$(GLIB_LIBS) \
 @ENABLE_TEST_TRUE@	$(CPPUNIT_LIBS)
 
@@ -4560,6 +4584,14 @@ test/test_test_byte_reverse-test_byte_reverse.$(OBJEXT):  \
 test/test_byte_reverse$(EXEEXT): $(test_test_byte_reverse_OBJECTS) $(test_test_byte_reverse_DEPENDENCIES) $(EXTRA_test_test_byte_reverse_DEPENDENCIES) test/$(am__dirstamp)
 	@rm -f test/test_byte_reverse$(EXEEXT)
 	$(AM_V_CXXLD)$(test_test_byte_reverse_LINK) $(test_test_byte_reverse_OBJECTS) $(test_test_byte_reverse_LDADD) $(LIBS)
+src/test_test_icy_parser-Log.$(OBJEXT): src/$(am__dirstamp) \
+	src/$(DEPDIR)/$(am__dirstamp)
+test/test_test_icy_parser-test_icy_parser.$(OBJEXT):  \
+	test/$(am__dirstamp) test/$(DEPDIR)/$(am__dirstamp)
+
+test/test_icy_parser$(EXEEXT): $(test_test_icy_parser_OBJECTS) $(test_test_icy_parser_DEPENDENCIES) $(EXTRA_test_test_icy_parser_DEPENDENCIES) test/$(am__dirstamp)
+	@rm -f test/test_icy_parser$(EXEEXT)
+	$(AM_V_CXXLD)$(test_test_icy_parser_LINK) $(test_test_icy_parser_OBJECTS) $(test_test_icy_parser_LDADD) $(LIBS)
 src/test_test_mixramp-Log.$(OBJEXT): src/$(am__dirstamp) \
 	src/$(DEPDIR)/$(am__dirstamp)
 test/test_test_mixramp-test_mixramp.$(OBJEXT): test/$(am__dirstamp) \
@@ -4852,6 +4884,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/test_run_avahi-Log.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/test_run_avahi-ZeroconfAvahi.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/test_test_archive-Log.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/test_test_icy_parser-Log.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/test_test_mixramp-Log.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/test_test_queue_priority-Queue.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/test_test_vorbis_encoder-AudioFormat.Po@am__quote@
@@ -5078,6 +5111,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@test/$(DEPDIR)/test_run_avahi-run_avahi.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@test/$(DEPDIR)/test_test_archive-test_archive.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@test/$(DEPDIR)/test_test_byte_reverse-test_byte_reverse.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@test/$(DEPDIR)/test_test_icy_parser-test_icy_parser.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@test/$(DEPDIR)/test_test_mixramp-test_mixramp.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@test/$(DEPDIR)/test_test_pcm-test_pcm_channels.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@test/$(DEPDIR)/test_test_pcm-test_pcm_dither.Po@am__quote@
@@ -9253,6 +9287,34 @@ test/test_test_byte_reverse-test_byte_reverse.obj: test/test_byte_reverse.cxx
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(test_test_byte_reverse_CPPFLAGS) $(CPPFLAGS) $(test_test_byte_reverse_CXXFLAGS) $(CXXFLAGS) -c -o test/test_test_byte_reverse-test_byte_reverse.obj `if test -f 'test/test_byte_reverse.cxx'; then $(CYGPATH_W) 'test/test_byte_reverse.cxx'; else $(CYGPATH_W) '$(srcdir)/test/test_byte_reverse.cxx'; fi`
 
+src/test_test_icy_parser-Log.o: src/Log.cxx
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(test_test_icy_parser_CPPFLAGS) $(CPPFLAGS) $(test_test_icy_parser_CXXFLAGS) $(CXXFLAGS) -MT src/test_test_icy_parser-Log.o -MD -MP -MF src/$(DEPDIR)/test_test_icy_parser-Log.Tpo -c -o src/test_test_icy_parser-Log.o `test -f 'src/Log.cxx' || echo '$(srcdir)/'`src/Log.cxx
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) src/$(DEPDIR)/test_test_icy_parser-Log.Tpo src/$(DEPDIR)/test_test_icy_parser-Log.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='src/Log.cxx' object='src/test_test_icy_parser-Log.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(test_test_icy_parser_CPPFLAGS) $(CPPFLAGS) $(test_test_icy_parser_CXXFLAGS) $(CXXFLAGS) -c -o src/test_test_icy_parser-Log.o `test -f 'src/Log.cxx' || echo '$(srcdir)/'`src/Log.cxx
+
+src/test_test_icy_parser-Log.obj: src/Log.cxx
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(test_test_icy_parser_CPPFLAGS) $(CPPFLAGS) $(test_test_icy_parser_CXXFLAGS) $(CXXFLAGS) -MT src/test_test_icy_parser-Log.obj -MD -MP -MF src/$(DEPDIR)/test_test_icy_parser-Log.Tpo -c -o src/test_test_icy_parser-Log.obj `if test -f 'src/Log.cxx'; then $(CYGPATH_W) 'src/Log.cxx'; else $(CYGPATH_W) '$(srcdir)/src/Log.cxx'; fi`
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) src/$(DEPDIR)/test_test_icy_parser-Log.Tpo src/$(DEPDIR)/test_test_icy_parser-Log.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='src/Log.cxx' object='src/test_test_icy_parser-Log.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(test_test_icy_parser_CPPFLAGS) $(CPPFLAGS) $(test_test_icy_parser_CXXFLAGS) $(CXXFLAGS) -c -o src/test_test_icy_parser-Log.obj `if test -f 'src/Log.cxx'; then $(CYGPATH_W) 'src/Log.cxx'; else $(CYGPATH_W) '$(srcdir)/src/Log.cxx'; fi`
+
+test/test_test_icy_parser-test_icy_parser.o: test/test_icy_parser.cxx
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(test_test_icy_parser_CPPFLAGS) $(CPPFLAGS) $(test_test_icy_parser_CXXFLAGS) $(CXXFLAGS) -MT test/test_test_icy_parser-test_icy_parser.o -MD -MP -MF test/$(DEPDIR)/test_test_icy_parser-test_icy_parser.Tpo -c -o test/test_test_icy_parser-test_icy_parser.o `test -f 'test/test_icy_parser.cxx' || echo '$(srcdir)/'`test/test_icy_parser.cxx
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) test/$(DEPDIR)/test_test_icy_parser-test_icy_parser.Tpo test/$(DEPDIR)/test_test_icy_parser-test_icy_parser.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='test/test_icy_parser.cxx' object='test/test_test_icy_parser-test_icy_parser.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(test_test_icy_parser_CPPFLAGS) $(CPPFLAGS) $(test_test_icy_parser_CXXFLAGS) $(CXXFLAGS) -c -o test/test_test_icy_parser-test_icy_parser.o `test -f 'test/test_icy_parser.cxx' || echo '$(srcdir)/'`test/test_icy_parser.cxx
+
+test/test_test_icy_parser-test_icy_parser.obj: test/test_icy_parser.cxx
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(test_test_icy_parser_CPPFLAGS) $(CPPFLAGS) $(test_test_icy_parser_CXXFLAGS) $(CXXFLAGS) -MT test/test_test_icy_parser-test_icy_parser.obj -MD -MP -MF test/$(DEPDIR)/test_test_icy_parser-test_icy_parser.Tpo -c -o test/test_test_icy_parser-test_icy_parser.obj `if test -f 'test/test_icy_parser.cxx'; then $(CYGPATH_W) 'test/test_icy_parser.cxx'; else $(CYGPATH_W) '$(srcdir)/test/test_icy_parser.cxx'; fi`
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) test/$(DEPDIR)/test_test_icy_parser-test_icy_parser.Tpo test/$(DEPDIR)/test_test_icy_parser-test_icy_parser.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='test/test_icy_parser.cxx' object='test/test_test_icy_parser-test_icy_parser.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(test_test_icy_parser_CPPFLAGS) $(CPPFLAGS) $(test_test_icy_parser_CXXFLAGS) $(CXXFLAGS) -c -o test/test_test_icy_parser-test_icy_parser.obj `if test -f 'test/test_icy_parser.cxx'; then $(CYGPATH_W) 'test/test_icy_parser.cxx'; else $(CYGPATH_W) '$(srcdir)/test/test_icy_parser.cxx'; fi`
+
 src/test_test_mixramp-Log.o: src/Log.cxx
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(test_test_mixramp_CPPFLAGS) $(CPPFLAGS) $(test_test_mixramp_CXXFLAGS) $(CXXFLAGS) -MT src/test_test_mixramp-Log.o -MD -MP -MF src/$(DEPDIR)/test_test_mixramp-Log.Tpo -c -o src/test_test_mixramp-Log.o `test -f 'src/Log.cxx' || echo '$(srcdir)/'`src/Log.cxx
 @am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) src/$(DEPDIR)/test_test_mixramp-Log.Tpo src/$(DEPDIR)/test_test_mixramp-Log.Po
@@ -9919,6 +9981,13 @@ test/test_mixramp.log: test/test_mixramp$(EXEEXT)
 	--log-file $$b.log --trs-file $$b.trs \
 	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
 	"$$tst" $(AM_TESTS_FD_REDIRECT)
+test/test_icy_parser.log: test/test_icy_parser$(EXEEXT)
+	@p='test/test_icy_parser$(EXEEXT)'; \
+	b='test/test_icy_parser'; \
+	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
+	--log-file $$b.log --trs-file $$b.trs \
+	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
+	"$$tst" $(AM_TESTS_FD_REDIRECT)
 test/test_pcm.log: test/test_pcm$(EXEEXT)
 	@p='test/test_pcm$(EXEEXT)'; \
 	b='test/test_pcm'; \
@@ -10227,8 +10296,8 @@ distclean-generic:
 maintainer-clean-generic:
 	@echo "This command is intended for maintainers to use"
 	@echo "it deletes files that may require special tools to rebuild."
-@ENABLE_DOCUMENTATION_FALSE@install-data-local:
 @ENABLE_DOCUMENTATION_FALSE@clean-local:
+@ENABLE_DOCUMENTATION_FALSE@install-data-local:
 @ENABLE_DOCUMENTATION_FALSE@uninstall-local:
 clean: clean-am
 
