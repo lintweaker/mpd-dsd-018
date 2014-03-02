@@ -24,6 +24,7 @@
 #include "Main.hxx"
 #include "event/MultiSocketMonitor.hxx"
 #include "event/Loop.hxx"
+#include "event/Call.hxx"
 #include "util/ASCII.hxx"
 #include "util/ReusableArray.hxx"
 #include "util/Error.hxx"
@@ -46,10 +47,22 @@ class AlsaMixerMonitor final : private MultiSocketMonitor {
 public:
 	AlsaMixerMonitor(EventLoop &_loop, snd_mixer_t *_mixer)
 		:MultiSocketMonitor(_loop), mixer(_mixer) {
+#ifdef USE_EPOLL
 		_loop.AddCall([this](){ InvalidateSockets(); });
+#else
+		_loop.AddIdle(InitAlsaMixerMonitor, this);
+#endif
 	}
 
 private:
+#ifndef USE_EPOLL
+	static gboolean InitAlsaMixerMonitor(gpointer data) {
+		AlsaMixerMonitor &amm = *(AlsaMixerMonitor *)data;
+		amm.InvalidateSockets();
+		return false;
+	}
+#endif
+
 	virtual int PrepareSockets() override;
 	virtual void DispatchSockets() override;
 };

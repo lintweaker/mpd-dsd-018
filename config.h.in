@@ -105,6 +105,9 @@
 /* Define to have bz2 archive support */
 #undef HAVE_BZ2
 
+/* Define to 1 if you have the <cdio/paranoia/paranoia.h> header file. */
+#undef HAVE_CDIO_PARANOIA_PARANOIA_H
+
 /* Define to 1 if you have the `daemon' function. */
 #undef HAVE_DAEMON
 

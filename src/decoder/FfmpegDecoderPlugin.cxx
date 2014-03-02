@@ -120,8 +120,7 @@ mpd_ffmpeg_stream_seek(void *opaque, int64_t pos, int whence)
 	if (whence == AVSEEK_SIZE)
 		return stream->input.size;
 
-	Error error;
-	if (!stream->input.LockSeek(pos, whence, error))
+	if (!stream->input.LockSeek(pos, whence, IgnoreError()))
 		return -1;
 
 	return stream->input.offset;
@@ -252,13 +251,14 @@ static DecoderCommand
 ffmpeg_send_packet(Decoder &decoder, InputStream &is,
 		   const AVPacket *packet,
 		   AVCodecContext *codec_context,
-		   const AVRational *time_base,
+		   const AVStream *stream,
 		   AVFrame *frame,
 		   uint8_t **buffer, int *buffer_size)
 {
 	if (packet->pts >= 0 && packet->pts != (int64_t)AV_NOPTS_VALUE)
 		decoder_timestamp(decoder,
-				  time_from_ffmpeg(packet->pts, *time_base));
+				  time_from_ffmpeg(packet->pts - stream->start_time,
+				  stream->time_base));
 
 	AVPacket packet2 = *packet;
 
@@ -342,11 +342,9 @@ ffmpeg_probe(Decoder *decoder, InputStream &is)
 		PADDING = 16,
 	};
 
-	Error error;
-
 	unsigned char buffer[BUFFER_SIZE];
 	size_t nbytes = decoder_read(decoder, is, buffer, BUFFER_SIZE);
-	if (nbytes <= PADDING || !is.LockRewind(error))
+	if (nbytes <= PADDING || !is.LockRewind(IgnoreError()))
 		return nullptr;
 
 	/* some ffmpeg parsers (e.g. ac3_parser.c) read a few bytes
@@ -473,7 +471,7 @@ ffmpeg_decode(Decoder &decoder, InputStream &input)
 		if (packet.stream_index == audio_stream)
 			cmd = ffmpeg_send_packet(decoder, input,
 						 &packet, codec_context,
-						 &av_stream->time_base,
+						 av_stream,
 						 frame,
 						 &interleaved_buffer, &interleaved_buffer_size);
 		else
@@ -484,7 +482,8 @@ ffmpeg_decode(Decoder &decoder, InputStream &input)
 		if (cmd == DecoderCommand::SEEK) {
 			int64_t where =
 				time_to_ffmpeg(decoder_seek_where(decoder),
-					       av_stream->time_base);
+					       av_stream->time_base) +
+				av_stream->start_time;
 
 			if (av_seek_frame(format_context, audio_stream, where,
 					  AV_TIME_BASE) < 0)
