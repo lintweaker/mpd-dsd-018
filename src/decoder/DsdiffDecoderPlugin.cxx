@@ -78,6 +78,8 @@ struct DsdiffMetaData {
 	InputStream::offset_type diar_offset;
 	/** offset for title tag */
 	InputStream::offset_type diti_offset;
+	/** offset for DSD data **/
+	InputStream::offset_type data_offset;
 };
 
 static bool lsbitfirst;
@@ -345,6 +347,7 @@ dsdiff_read_metadata(Decoder *decoder, InputStream &is,
 		} else if (chunk_header->id.Equals("DSD ")) {
 			const uint64_t chunk_size = chunk_header->GetSize();
 			metadata->chunk_size = chunk_size;
+			metadata->data_offset = is.GetOffset();
 			return true;
 		} else {
 			/* ignore unknown chunk */
@@ -371,7 +374,9 @@ bit_reverse_buffer(uint8_t *p, uint8_t *end)
 static bool
 dsdiff_decode_chunk(Decoder &decoder, InputStream &is,
 		    unsigned channels,
-		    uint64_t chunk_size)
+		    unsigned sample_rate,
+		    uint64_t chunk_size,
+		    InputStream::offset_type stream_start_offset)
 {
 	uint8_t buffer[8192];
 
@@ -384,6 +389,8 @@ dsdiff_decode_chunk(Decoder &decoder, InputStream &is,
 	/* Workaround for some DSDIFF files hanging at the end */
 	if (chunk_size %4 != 0)
 		chunk_size = ( chunk_size / (channels * 4)) * (channels * 4);
+
+	const uint64_t stream_end_offset = chunk_size + (uint64_t) stream_start_offset;
 
 	while (chunk_size > 0) {
 		/* see how much aligned data from the remaining chunk
@@ -415,9 +422,31 @@ dsdiff_decode_chunk(Decoder &decoder, InputStream &is,
 
 		case DecoderCommand::SEEK:
 
-			/* Not implemented yet */
-			decoder_seek_error(decoder);
-			break;
+			Error error;
+			InputStream::offset_type offset;
+			InputStream::offset_type curpos = is.GetOffset();
+
+			offset = InputStream::offset_type (stream_start_offset +
+				 ( channels * (sample_rate / 8) * decoder_seek_where(decoder)));
+
+			if (offset < stream_start_offset)
+				offset = stream_start_offset;
+
+			if ((unsigned) offset > stream_end_offset)
+				offset = stream_end_offset;
+
+			if (offset < curpos)
+				chunk_size = chunk_size + (curpos - offset);
+			else
+				chunk_size = chunk_size - (offset - curpos);
+
+			if (is.LockSeek(offset, SEEK_SET, error)) {
+				decoder_command_finished(decoder);
+			} else {
+				LogError(error);
+				decoder_seek_error(decoder);
+				break;
+			}
 		}
 	}
 	return dsdlib_skip(&decoder, is, chunk_size);
@@ -448,7 +477,7 @@ dsdiff_stream_decode(Decoder &decoder, InputStream &is)
 			 (float) metadata.sample_rate;
 
 	/* success: file was recognized */
-	decoder_initialized(decoder, audio_format, false, songtime);
+	decoder_initialized(decoder, audio_format, true, songtime);
 
 	/* every iteration of the following loop decodes one "DSD"
 	   chunk from a DFF file */
@@ -459,7 +488,9 @@ dsdiff_stream_decode(Decoder &decoder, InputStream &is)
 		if (chunk_header.id.Equals("DSD ")) {
 			if (!dsdiff_decode_chunk(decoder, is,
 						 metadata.channels,
-						 chunk_size))
+						 metadata.sample_rate,
+						 chunk_size,
+						 metadata.data_offset))
 					break;
 		} else {
 			/* ignore other chunks */
