@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2003-2013 The Music Player Daemon Project
+ * Copyright (C) 2003-2014 The Music Player Daemon Project
  * http://www.musicpd.org
  *
  * This program is free software; you can redistribute it and/or modify
@@ -38,18 +38,22 @@
 #include "DsdLib.hxx"
 #include "tag/TagHandler.hxx"
 #include "Log.hxx"
+#include "util/Domain.hxx"
 
 #include <unistd.h>
 #include <stdio.h> /* for SEEK_SET, SEEK_CUR */
 
+static constexpr Domain dsf_domain("dsf");
+
 struct DsfMetaData {
-	unsigned sample_rate, channels;
+	unsigned sample_rate, channels, block_size;
 	bool bitreverse;
 	uint64_t chunk_size;
 #ifdef HAVE_ID3TAG
 	InputStream::offset_type id3_offset;
 	uint64_t id3_size;
 #endif
+	InputStream::offset_type data_offset;
 };
 
 struct DsfHeader {
@@ -175,8 +179,10 @@ dsf_read_metadata(Decoder *decoder, InputStream &is,
 			    (dsf_fmt_chunk.channelnum * 4);
 
 	metadata->chunk_size = data_size;
+	metadata->block_size = chblksize;
 	metadata->channels = (unsigned) dsf_fmt_chunk.channelnum;
 	metadata->sample_rate = samplefreq;
+	metadata->data_offset = is.GetOffset();
 #ifdef HAVE_ID3TAG
 	/* metada_offset cannot be bigger then or equal to total file size */
 	if (metadata_offset >= size)
@@ -228,7 +234,10 @@ static bool
 dsf_decode_chunk(Decoder &decoder, InputStream &is,
 		    unsigned channels,
 		    uint64_t chunk_size,
-		    bool bitreverse)
+		    bool bitreverse,
+		    InputStream::offset_type stream_start_offset,
+		    unsigned sample_rate,
+		    unsigned block_size)
 {
 	uint8_t buffer[8192];
 
@@ -241,6 +250,8 @@ dsf_decode_chunk(Decoder &decoder, InputStream &is,
 	const unsigned buffer_frames = sizeof(buffer) / frame_size;
 	const unsigned buffer_samples = buffer_frames * frame_size;
 	const size_t buffer_size = buffer_samples * sample_size;
+
+	const uint64_t stream_end_offset = chunk_size + (uint64_t) stream_start_offset;
 
 	while (chunk_size > 0) {
 		/* see how much aligned data from the remaining chunk
@@ -274,10 +285,43 @@ dsf_decode_chunk(Decoder &decoder, InputStream &is,
 
 		case DecoderCommand::SEEK:
 
-			/* not implemented yet */
-			decoder_seek_error(decoder);
-			break;
+			Error error;
+			InputStream::offset_type offset;
+			InputStream::offset_type curpos = is.GetOffset();
+			offset = (InputStream::offset_type) (stream_start_offset +
+				 (channels * (sample_rate / 8) * decoder_seek_where(decoder)));
+
+			if (offset < stream_start_offset)
+				offset = stream_start_offset;
+
+			if ((unsigned) offset > stream_end_offset)
+				offset = stream_end_offset;
+
+			/* Round new offset to the nearest DSD data block */
+			if ( offset > stream_start_offset) {
+				offset -= stream_start_offset;
+				float i = (float) offset / (float) block_size;
+				unsigned t = (unsigned) i;
+				if ( t % 2 == 1 ) {
+					t -= 1;
+				}
+				offset = ( t * block_size) + stream_start_offset;
 			}
+
+			if (offset < curpos)
+				chunk_size = chunk_size + (curpos - offset);
+
+			if (offset > curpos)
+				chunk_size = chunk_size - (offset - curpos);
+
+			if  (is.LockSeek(offset, SEEK_SET, error)) {
+				decoder_command_finished(decoder);
+			} else {
+				LogError(error);
+				decoder_seek_error(decoder);
+				break;
+			}
+		}
 	}
 	return dsdlib_skip(&decoder, is, chunk_size);
 }
@@ -304,11 +348,14 @@ dsf_stream_decode(Decoder &decoder, InputStream &is)
 			 (float) metadata.sample_rate;
 
 	/* success: file was recognized */
-	decoder_initialized(decoder, audio_format, false, songtime);
+	decoder_initialized(decoder, audio_format, true, songtime);
 
 	if (!dsf_decode_chunk(decoder, is, metadata.channels,
 			      chunk_size,
-			      metadata.bitreverse))
+			      metadata.bitreverse,
+			      metadata.data_offset,
+			      metadata.sample_rate,
+			      metadata.block_size))
 		return;
 }
 
