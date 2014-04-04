@@ -274,7 +274,7 @@ dsf_decode_chunk(Decoder &decoder, InputStream &is,
 
 		dsf_to_pcm_order(buffer, dsf_scratch_buffer, nbytes);
 
-		const auto cmd = decoder_data(decoder, is, buffer, nbytes, 0);
+		const auto cmd = decoder_data(decoder, is, buffer, nbytes, sample_rate / 1000);
 		switch (cmd) {
 		case DecoderCommand::NONE:
 			break;

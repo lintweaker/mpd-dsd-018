@@ -411,7 +411,7 @@ dsdiff_decode_chunk(Decoder &decoder, InputStream &is,
 		if (lsbitfirst)
 			bit_reverse_buffer(buffer, buffer + nbytes);
 
-		const auto cmd = decoder_data(decoder, is, buffer, nbytes, 0);
+		const auto cmd = decoder_data(decoder, is, buffer, nbytes, sample_rate / 1000);
 		switch (cmd) {
 		case DecoderCommand::NONE:
 			break;
