@@ -26,4 +26,6 @@ and DSDIFF)
 
 08-Mar-14 Added seek support for DSDIFF and DSF DSD decoders
 
+04-Apr-14 Report bitrate for DSDIFF and DSF DSD decoders
+
 
