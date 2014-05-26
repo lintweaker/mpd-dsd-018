@@ -21,6 +21,9 @@
 - Added seek support for DSD DSDIFF and DSF
 9-Apr-14
 - Report bitrate for DSD DSDIFF and DSF decoders
+26-May-14
+- Update to mpd 0.18.10
+
 
 
 
