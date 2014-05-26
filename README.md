@@ -28,6 +28,6 @@ and DSDIFF)
 
 04-Apr-14 Report bitrate for DSDIFF and DSF DSD decoders
 
-26-May-14 Update to MPD 0.18.10
+26-May-14 Update to MPD 0.18.11
 
 
