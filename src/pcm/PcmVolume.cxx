@@ -154,6 +154,7 @@ pcm_volume(void *buffer, size_t length,
 	switch (format) {
 	case SampleFormat::UNDEFINED:
 	case SampleFormat::DSD:
+	case SampleFormat::DSD_U8:
 		/* not implemented */
 		return false;
 

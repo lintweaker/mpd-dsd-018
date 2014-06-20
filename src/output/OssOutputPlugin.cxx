@@ -422,6 +422,7 @@ sample_format_to_oss(SampleFormat format)
 	case SampleFormat::UNDEFINED:
 	case SampleFormat::FLOAT:
 	case SampleFormat::DSD:
+	case SampleFormat::DSD_U8:
 		return AFMT_QUERY;
 
 	case SampleFormat::S8:

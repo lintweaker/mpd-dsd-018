@@ -64,6 +64,9 @@ sample_format_to_string(SampleFormat format)
 
 	case SampleFormat::DSD:
 		return "dsd";
+
+	case SampleFormat::DSD_U8:
+		return "8";
 	}
 
 	/* unreachable */

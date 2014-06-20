@@ -23,6 +23,9 @@
 - Report bitrate for DSD DSDIFF and DSF decoders
 26-May-14
 - Update to mpd 0.18.11
+20-Jun-14
+- Preliminary support for native DSD output.
+
 
 
 

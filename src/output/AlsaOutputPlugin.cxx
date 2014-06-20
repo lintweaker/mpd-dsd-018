@@ -258,6 +258,9 @@ get_bitformat(SampleFormat sample_format)
 
 	case SampleFormat::FLOAT:
 		return SND_PCM_FORMAT_FLOAT;
+
+	case SampleFormat::DSD_U8:
+		return SND_PCM_FORMAT_DSD_U8;
 	}
 
 	assert(false);
