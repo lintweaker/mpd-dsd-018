@@ -71,6 +71,9 @@ bool
 dsdlib_skip(Decoder *decoder, InputStream &is,
 	    int64_t delta);
 
+bool
+dsdlib_valid_freq(uint32_t samplefreq);
+
 /**
  * Add tags from ID3 tag. All tags commonly found in the ID3 tags of
  * DSF and DSDIFF files are imported

@@ -27,6 +27,7 @@
 - Preliminary support for native DSD output.
 04-Jul-14
 - Fixes compile warnings for DSD_U8 in PcmFormat.cxx
+- Dsf: Allow up to DSD512. Enable DSD rates based on Fs=48kHz
 
 
 
