@@ -25,6 +25,8 @@
 - Update to mpd 0.18.11
 20-Jun-14
 - Preliminary support for native DSD output.
+04-Jul-14
+- Fixes compile warnings for DSD_U8 in PcmFormat.cxx
 
 
 
