@@ -66,6 +66,13 @@ struct AlsaOutput {
 	 */
 	bool dsd_usb;
 
+	/**
+	 * Enable native DSD playback support (requires ALSA driver support)
+	 *
+	 */
+
+	bool dsd_native;
+
 	/** libasound's buffer_time setting (in microseconds) */
 	unsigned int buffer_time;
 
@@ -153,6 +160,12 @@ alsa_configure(AlsaOutput *ad, const config_param &param)
 	ad->use_mmap = param.GetBlockValue("use_mmap", false);
 
 	ad->dsd_usb = param.GetBlockValue("dsd_usb", false);
+
+	ad->dsd_native = param.GetBlockValue("dsd_native", false);
+
+	/* If both dsd_usb and dsd_native are enabled, fall back to dsd_usb */
+	if (ad->dsd_usb && ad->dsd_native)
+		ad->dsd_native = false;
 
 	ad->buffer_time = param.GetBlockValue("buffer_time",
 					      MPD_ALSA_BUFFER_TIME_US);
@@ -622,9 +635,24 @@ alsa_setup_dsd(AlsaOutput *ad, const AudioFormat audio_format,
 	assert(ad->dsd_usb);
 	assert(audio_format.format == SampleFormat::DSD);
 
+	AudioFormat usb_format = audio_format;
+
+	if (ad->dsd_native) {
+
+		usb_format.format = SampleFormat::DSD_U8;
+		if (!alsa_setup(ad, usb_format, packed_r, reverse_endian_r, error)) {
+
+			error.Format(alsa_output_domain,
+				"Failed to configure native DSD playback on ALSA device \"%s\"",
+				alsa_device(ad));
+			g_free(ad->silence);
+			return false;
+		}
+		return true;
+	}
+
 	/* pass 24 bit to alsa_setup() */
 
-	AudioFormat usb_format = audio_format;
 	usb_format.format = SampleFormat::S24_P32;
 	usb_format.sample_rate /= 2;
 
@@ -663,7 +691,13 @@ alsa_setup_or_dsd(AlsaOutput *ad, AudioFormat &audio_format,
 
 	const bool dsd_usb = ad->dsd_usb &&
 		audio_format.format == SampleFormat::DSD;
-	const bool success = dsd_usb
+
+	const bool dsd_native = ad->dsd_native &&
+		audio_format.format == SampleFormat::DSD;
+
+	const bool dsd_enabled = dsd_usb || dsd_native;
+
+	const bool success = dsd_enabled
 		? alsa_setup_dsd(ad, audio_format,
 				 &shift8, &packed, &reverse_endian,
 				 error)

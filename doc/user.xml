@@ -1386,6 +1386,20 @@ systemctl start mpd.socket</programlisting>
                   option at your own risk.
                 </entry>
               </row>
+	      <row>
+		<entry>
+		  <varname>dsd_native</varname>
+		  <parameter>yes|no</parameter>
+		</entry>
+		<entry>
+		  If set to <parameter>yes</parameter>, then DSD will be
+		  passed natively to ALSA with DSD_U8 sample format. This requires
+		  ALSA driver support (SNDRV_PCM_FORMAT_DSD_U8).
+		  If both dsd_native and dsd_usb are configured, dsd_usb
+		  takes precedence.
+		  Default is <parameter>no</parameter>. Enable with caution!
+		</entry>
+		</row>
             </tbody>
           </tgroup>
         </informaltable>

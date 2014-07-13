@@ -1,0 +1,30 @@
+[13-Jul-14]
+Native DSD support now in a working state. It requires support in the ALSA
+driver (sample format SNDRV_PCM_FORMAT_DSD_U8).
+
+Tested on BeagleBone Black with Botic linux driver.
+See: http://www.diyaudio.com/forums/twisted-pear/258254-support-botic-linux-driver.html
+
+How to enable native DSD playback support:
+
+add the new 'dsd_native' config option to the audio_output section in the
+mpd.conf file. E.g.
+
+audio_output {
+        type            "alsa"
+        name            "Botic"
+        device          "hw:0,0"
+        dsd_native      "yes"
+
+# BOTIC fixup: request the lowest period time
+        period_time     "1"
+}
+
+
+For DoP (DSD-over-PCM) output, the 'dsd_usb' option is still available.
+If both 'dsd_native' and 'dsd_usb' are configured the 'dsd_usb' option takes
+precedence.
+
+** Warning ** Do not enable dsd_native on systems which do not support it **
+
+
