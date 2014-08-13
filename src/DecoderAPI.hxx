@@ -113,6 +113,25 @@ decoder_read(Decoder &decoder, InputStream &is,
 }
 
 /**
+ * Blocking read from the input stream.  Attempts to fill the buffer
+ * completely; there is no partial result.
+ *
+ * @return true on success, false on error or command or not enough
+ * data
+ */
+bool
+decoder_read_full(Decoder *decoder, InputStream &is,
+		  void *buffer, size_t size);
+
+/**
+ * Skip data on the #InputStream.
+ *
+ * @return true on success, false on error or command
+ */
+bool
+decoder_skip(Decoder *decoder, InputStream &is, size_t size);
+
+/**
  * Sets the time stamp for the next data chunk [seconds].  The MPD
  * core automatically counts it up, and a decoder plugin only needs to
  * use this function if it thinks that adding to the time stamp based

@@ -28,6 +28,7 @@
 #include "ClientFile.hxx"
 #include "Client.hxx"
 #include "Partition.hxx"
+#include "BulkEdit.hxx"
 #include "protocol/ArgParser.hxx"
 #include "protocol/Result.hxx"
 #include "ls.hxx"
@@ -43,7 +44,6 @@ CommandResult
 handle_add(Client &client, gcc_unused int argc, char *argv[])
 {
 	char *uri = argv[1];
-	PlaylistResult result;
 
 	if (memcmp(uri, "file:///", 8) == 0) {
 		const char *path_utf8 = uri + 7;
@@ -59,7 +59,7 @@ handle_add(Client &client, gcc_unused int argc, char *argv[])
 		if (!client_allow_file(client, path_fs, error))
 			return print_error(client, error);
 
-		result = client.partition.AppendFile(path_utf8);
+		auto result = client.partition.AppendFile(path_utf8);
 		return print_playlist_result(client, result);
 	}
 
@@ -70,9 +70,11 @@ handle_add(Client &client, gcc_unused int argc, char *argv[])
 			return CommandResult::ERROR;
 		}
 
-		result = client.partition.AppendURI(uri);
+		auto result = client.partition.AppendURI(uri);
 		return print_playlist_result(client, result);
 	}
+
+	const ScopeBulkEdit bulk_edit(client.partition);
 
 	const DatabaseSelection selection(uri, true);
 	Error error;

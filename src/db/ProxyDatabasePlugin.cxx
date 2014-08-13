@@ -398,8 +398,13 @@ Convert(const struct mpd_song *song)
 	Song *s = Song::NewDetached(mpd_song_get_uri(song));
 
 	s->mtime = mpd_song_get_last_modified(song);
+
+#if LIBMPDCLIENT_CHECK_VERSION(2,3,0)
 	s->start_ms = mpd_song_get_start(song) * 1000;
 	s->end_ms = mpd_song_get_end(song) * 1000;
+#else
+	s->start_ms = s->end_ms = 0;
+#endif
 
 	TagBuilder tag;
 	tag.SetTime(mpd_song_get_duration(song));
@@ -561,6 +566,23 @@ SearchSongs(struct mpd_connection *connection,
 	return result && CheckError(connection, error);
 }
 
+/**
+ * Check whether we can use the "base" constraint.  Requires
+ * libmpdclient 2.9 and MPD 0.18.
+ */
+gcc_pure
+static bool
+ServerSupportsSearchBase(const struct mpd_connection *connection)
+{
+#if LIBMPDCLIENT_CHECK_VERSION(2,9,0)
+	return mpd_connection_cmp_server_version(connection, 0, 18, 0) >= 0;
+#else
+	(void)connection;
+
+	return false;
+#endif
+}
+
 bool
 ProxyDatabase::Visit(const DatabaseSelection &selection,
 		     VisitDirectory visit_directory,
@@ -572,7 +594,10 @@ ProxyDatabase::Visit(const DatabaseSelection &selection,
 	if (!const_cast<ProxyDatabase *>(this)->EnsureConnected(error))
 		return nullptr;
 
-	if (!visit_directory && !visit_playlist && selection.recursive)
+	if (!visit_directory && !visit_playlist && selection.recursive &&
+	    (ServerSupportsSearchBase(connection)
+	     ? !selection.IsEmpty()
+	     : selection.HasOtherThanBase()))
 		/* this optimized code path can only be used under
 		   certain conditions */
 		return ::SearchSongs(connection, selection, visit_song, error);

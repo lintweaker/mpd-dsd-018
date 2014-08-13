@@ -181,6 +181,7 @@ src_mpd_SOURCES = \
 	src/PlaylistInfo.hxx \
 	src/PlaylistDatabase.cxx src/PlaylistDatabase.hxx \
 	src/PlaylistUpdate.cxx \
+	src/BulkEdit.hxx \
 	src/IdTable.hxx \
 	src/Queue.cxx src/Queue.hxx \
 	src/QueuePrint.cxx src/QueuePrint.hxx \
@@ -1218,6 +1219,7 @@ test_dump_playlist_LDADD = \
 	libpcm.a \
 	$(GLIB_LIBS)
 test_dump_playlist_SOURCES = test/dump_playlist.cxx \
+	test/FakeDecoderAPI.cxx \
 	$(DECODER_SRC) \
 	src/Log.cxx \
 	src/IOThread.cxx \
@@ -1271,6 +1273,7 @@ test_read_tags_LDADD = \
 	libutil.a \
 	$(GLIB_LIBS)
 test_read_tags_SOURCES = test/read_tags.cxx \
+	test/FakeDecoderAPI.cxx \
 	src/Log.cxx \
 	src/IOThread.cxx \
 	src/ReplayGainInfo.cxx \

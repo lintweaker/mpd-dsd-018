@@ -1021,21 +1021,22 @@ am__src_mpd_SOURCES_DIST = src/check.h src/gerror.h \
 	src/PlaylistVector.cxx src/PlaylistVector.hxx \
 	src/PlaylistInfo.hxx src/PlaylistDatabase.cxx \
 	src/PlaylistDatabase.hxx src/PlaylistUpdate.cxx \
-	src/IdTable.hxx src/Queue.cxx src/Queue.hxx src/QueuePrint.cxx \
-	src/QueuePrint.hxx src/QueueSave.cxx src/QueueSave.hxx \
-	src/ReplayGainConfig.cxx src/ReplayGainConfig.hxx \
-	src/ReplayGainInfo.cxx src/ReplayGainInfo.hxx \
-	src/SignalHandlers.cxx src/SignalHandlers.hxx src/Song.cxx \
-	src/Song.hxx src/SongUpdate.cxx src/SongPrint.cxx \
-	src/SongPrint.hxx src/SongSave.cxx src/SongSave.hxx \
-	src/SongSort.cxx src/SongSort.hxx src/StateFile.cxx \
-	src/StateFile.hxx src/Stats.cxx src/Stats.hxx src/TagPrint.cxx \
-	src/TagPrint.hxx src/TagSave.cxx src/TagSave.hxx \
-	src/TagFile.cxx src/TagFile.hxx src/TextFile.cxx \
-	src/TextFile.hxx src/TextInputStream.cxx src/Volume.cxx \
-	src/Volume.hxx src/SongFilter.cxx src/SongFilter.hxx \
-	src/SongPointer.hxx src/PlaylistFile.cxx src/PlaylistFile.hxx \
-	src/Timer.cxx src/DespotifyUtils.cxx src/DespotifyUtils.hxx \
+	src/BulkEdit.hxx src/IdTable.hxx src/Queue.cxx src/Queue.hxx \
+	src/QueuePrint.cxx src/QueuePrint.hxx src/QueueSave.cxx \
+	src/QueueSave.hxx src/ReplayGainConfig.cxx \
+	src/ReplayGainConfig.hxx src/ReplayGainInfo.cxx \
+	src/ReplayGainInfo.hxx src/SignalHandlers.cxx \
+	src/SignalHandlers.hxx src/Song.cxx src/Song.hxx \
+	src/SongUpdate.cxx src/SongPrint.cxx src/SongPrint.hxx \
+	src/SongSave.cxx src/SongSave.hxx src/SongSort.cxx \
+	src/SongSort.hxx src/StateFile.cxx src/StateFile.hxx \
+	src/Stats.cxx src/Stats.hxx src/TagPrint.cxx src/TagPrint.hxx \
+	src/TagSave.cxx src/TagSave.hxx src/TagFile.cxx \
+	src/TagFile.hxx src/TextFile.cxx src/TextFile.hxx \
+	src/TextInputStream.cxx src/Volume.cxx src/Volume.hxx \
+	src/SongFilter.cxx src/SongFilter.hxx src/SongPointer.hxx \
+	src/PlaylistFile.cxx src/PlaylistFile.hxx src/Timer.cxx \
+	src/DespotifyUtils.cxx src/DespotifyUtils.hxx \
 	src/InotifyDomain.cxx src/InotifyDomain.hxx \
 	src/InotifySource.cxx src/InotifySource.hxx \
 	src/InotifyQueue.cxx src/InotifyQueue.hxx \
@@ -1275,16 +1276,18 @@ test_DumpDatabase_OBJECTS = $(am_test_DumpDatabase_OBJECTS)
 @ENABLE_TEST_TRUE@	libconf.a libutil.a libsystem.a libfs.a \
 @ENABLE_TEST_TRUE@	$(am__DEPENDENCIES_1)
 am__test_dump_playlist_SOURCES_DIST = test/dump_playlist.cxx \
-	src/Log.cxx src/IOThread.cxx src/Song.cxx src/TagSave.cxx \
-	src/TagFile.cxx src/CheckAudioFormat.cxx \
-	src/TextInputStream.cxx src/cue/CueParser.cxx \
-	src/cue/CueParser.hxx src/ReplayGainInfo.cxx \
-	src/decoder/FlacMetadata.cxx src/DespotifyUtils.cxx
+	test/FakeDecoderAPI.cxx src/Log.cxx src/IOThread.cxx \
+	src/Song.cxx src/TagSave.cxx src/TagFile.cxx \
+	src/CheckAudioFormat.cxx src/TextInputStream.cxx \
+	src/cue/CueParser.cxx src/cue/CueParser.hxx \
+	src/ReplayGainInfo.cxx src/decoder/FlacMetadata.cxx \
+	src/DespotifyUtils.cxx
 @ENABLE_TEST_TRUE@@HAVE_FLAC_TRUE@am__objects_70 = src/ReplayGainInfo.$(OBJEXT) \
 @ENABLE_TEST_TRUE@@HAVE_FLAC_TRUE@	src/decoder/FlacMetadata.$(OBJEXT)
 @ENABLE_DESPOTIFY_TRUE@@ENABLE_TEST_TRUE@am__objects_71 = src/DespotifyUtils.$(OBJEXT)
 @ENABLE_TEST_TRUE@am_test_dump_playlist_OBJECTS =  \
 @ENABLE_TEST_TRUE@	test/dump_playlist.$(OBJEXT) \
+@ENABLE_TEST_TRUE@	test/FakeDecoderAPI.$(OBJEXT) \
 @ENABLE_TEST_TRUE@	$(am__objects_60) src/Log.$(OBJEXT) \
 @ENABLE_TEST_TRUE@	src/IOThread.$(OBJEXT) src/Song.$(OBJEXT) \
 @ENABLE_TEST_TRUE@	src/TagSave.$(OBJEXT) src/TagFile.$(OBJEXT) \
@@ -1342,12 +1345,14 @@ test_read_mixer_OBJECTS = $(am_test_read_mixer_OBJECTS)
 @ENABLE_TEST_TRUE@	libmixer_plugins.a $(am__DEPENDENCIES_10) \
 @ENABLE_TEST_TRUE@	libconf.a libutil.a libevent.a libsystem.a \
 @ENABLE_TEST_TRUE@	libfs.a $(am__DEPENDENCIES_1)
-am__test_read_tags_SOURCES_DIST = test/read_tags.cxx src/Log.cxx \
-	src/IOThread.cxx src/ReplayGainInfo.cxx \
-	src/CheckAudioFormat.cxx src/DespotifyUtils.cxx
+am__test_read_tags_SOURCES_DIST = test/read_tags.cxx \
+	test/FakeDecoderAPI.cxx src/Log.cxx src/IOThread.cxx \
+	src/ReplayGainInfo.cxx src/CheckAudioFormat.cxx \
+	src/DespotifyUtils.cxx
 @ENABLE_TEST_TRUE@am_test_read_tags_OBJECTS =  \
-@ENABLE_TEST_TRUE@	test/read_tags.$(OBJEXT) src/Log.$(OBJEXT) \
-@ENABLE_TEST_TRUE@	src/IOThread.$(OBJEXT) \
+@ENABLE_TEST_TRUE@	test/read_tags.$(OBJEXT) \
+@ENABLE_TEST_TRUE@	test/FakeDecoderAPI.$(OBJEXT) \
+@ENABLE_TEST_TRUE@	src/Log.$(OBJEXT) src/IOThread.$(OBJEXT) \
 @ENABLE_TEST_TRUE@	src/ReplayGainInfo.$(OBJEXT) \
 @ENABLE_TEST_TRUE@	src/CheckAudioFormat.$(OBJEXT) \
 @ENABLE_TEST_TRUE@	$(am__objects_60) $(am__objects_71)
@@ -2341,21 +2346,22 @@ src_mpd_SOURCES = $(mpd_headers) $(DECODER_SRC) $(OUTPUT_API_SRC) \
 	src/PlaylistVector.cxx src/PlaylistVector.hxx \
 	src/PlaylistInfo.hxx src/PlaylistDatabase.cxx \
 	src/PlaylistDatabase.hxx src/PlaylistUpdate.cxx \
-	src/IdTable.hxx src/Queue.cxx src/Queue.hxx src/QueuePrint.cxx \
-	src/QueuePrint.hxx src/QueueSave.cxx src/QueueSave.hxx \
-	src/ReplayGainConfig.cxx src/ReplayGainConfig.hxx \
-	src/ReplayGainInfo.cxx src/ReplayGainInfo.hxx \
-	src/SignalHandlers.cxx src/SignalHandlers.hxx src/Song.cxx \
-	src/Song.hxx src/SongUpdate.cxx src/SongPrint.cxx \
-	src/SongPrint.hxx src/SongSave.cxx src/SongSave.hxx \
-	src/SongSort.cxx src/SongSort.hxx src/StateFile.cxx \
-	src/StateFile.hxx src/Stats.cxx src/Stats.hxx src/TagPrint.cxx \
-	src/TagPrint.hxx src/TagSave.cxx src/TagSave.hxx \
-	src/TagFile.cxx src/TagFile.hxx src/TextFile.cxx \
-	src/TextFile.hxx src/TextInputStream.cxx src/Volume.cxx \
-	src/Volume.hxx src/SongFilter.cxx src/SongFilter.hxx \
-	src/SongPointer.hxx src/PlaylistFile.cxx src/PlaylistFile.hxx \
-	src/Timer.cxx $(am__append_1) $(am__append_2) $(am__append_3) \
+	src/BulkEdit.hxx src/IdTable.hxx src/Queue.cxx src/Queue.hxx \
+	src/QueuePrint.cxx src/QueuePrint.hxx src/QueueSave.cxx \
+	src/QueueSave.hxx src/ReplayGainConfig.cxx \
+	src/ReplayGainConfig.hxx src/ReplayGainInfo.cxx \
+	src/ReplayGainInfo.hxx src/SignalHandlers.cxx \
+	src/SignalHandlers.hxx src/Song.cxx src/Song.hxx \
+	src/SongUpdate.cxx src/SongPrint.cxx src/SongPrint.hxx \
+	src/SongSave.cxx src/SongSave.hxx src/SongSort.cxx \
+	src/SongSort.hxx src/StateFile.cxx src/StateFile.hxx \
+	src/Stats.cxx src/Stats.hxx src/TagPrint.cxx src/TagPrint.hxx \
+	src/TagSave.cxx src/TagSave.hxx src/TagFile.cxx \
+	src/TagFile.hxx src/TextFile.cxx src/TextFile.hxx \
+	src/TextInputStream.cxx src/Volume.cxx src/Volume.hxx \
+	src/SongFilter.cxx src/SongFilter.hxx src/SongPointer.hxx \
+	src/PlaylistFile.cxx src/PlaylistFile.hxx src/Timer.cxx \
+	$(am__append_1) $(am__append_2) $(am__append_3) \
 	$(am__append_7) $(am__append_40) $(am__append_41) \
 	$(am__append_42)
 @HAVE_WINDOWS_TRUE@noinst_DATA = src/win/mpd_win32_rc.rc
@@ -2894,8 +2900,9 @@ SPARSE_SRC = $(addprefix $(top_srcdir)/,$(filter %.c,$(src_mpd_SOURCES)))
 @ENABLE_TEST_TRUE@	$(GLIB_LIBS)
 
 @ENABLE_TEST_TRUE@test_dump_playlist_SOURCES = test/dump_playlist.cxx \
-@ENABLE_TEST_TRUE@	$(DECODER_SRC) src/Log.cxx src/IOThread.cxx \
-@ENABLE_TEST_TRUE@	src/Song.cxx src/TagSave.cxx src/TagFile.cxx \
+@ENABLE_TEST_TRUE@	test/FakeDecoderAPI.cxx $(DECODER_SRC) \
+@ENABLE_TEST_TRUE@	src/Log.cxx src/IOThread.cxx src/Song.cxx \
+@ENABLE_TEST_TRUE@	src/TagSave.cxx src/TagFile.cxx \
 @ENABLE_TEST_TRUE@	src/CheckAudioFormat.cxx \
 @ENABLE_TEST_TRUE@	src/TextInputStream.cxx \
 @ENABLE_TEST_TRUE@	src/cue/CueParser.cxx src/cue/CueParser.hxx \
@@ -2935,8 +2942,8 @@ SPARSE_SRC = $(addprefix $(top_srcdir)/,$(filter %.c,$(src_mpd_SOURCES)))
 @ENABLE_TEST_TRUE@	$(GLIB_LIBS)
 
 @ENABLE_TEST_TRUE@test_read_tags_SOURCES = test/read_tags.cxx \
-@ENABLE_TEST_TRUE@	src/Log.cxx src/IOThread.cxx \
-@ENABLE_TEST_TRUE@	src/ReplayGainInfo.cxx \
+@ENABLE_TEST_TRUE@	test/FakeDecoderAPI.cxx src/Log.cxx \
+@ENABLE_TEST_TRUE@	src/IOThread.cxx src/ReplayGainInfo.cxx \
 @ENABLE_TEST_TRUE@	src/CheckAudioFormat.cxx $(DECODER_SRC) \
 @ENABLE_TEST_TRUE@	$(am__append_78)
 @ENABLE_TEST_TRUE@@HAVE_ID3TAG_TRUE@test_dump_rva2_LDADD = \
@@ -4409,6 +4416,8 @@ test/DumpDatabase$(EXEEXT): $(test_DumpDatabase_OBJECTS) $(test_DumpDatabase_DEP
 	$(AM_V_CXXLD)$(CXXLINK) $(test_DumpDatabase_OBJECTS) $(test_DumpDatabase_LDADD) $(LIBS)
 test/dump_playlist.$(OBJEXT): test/$(am__dirstamp) \
 	test/$(DEPDIR)/$(am__dirstamp)
+test/FakeDecoderAPI.$(OBJEXT): test/$(am__dirstamp) \
+	test/$(DEPDIR)/$(am__dirstamp)
 src/IOThread.$(OBJEXT): src/$(am__dirstamp) \
 	src/$(DEPDIR)/$(am__dirstamp)
 src/TagFile.$(OBJEXT): src/$(am__dirstamp) \
@@ -5089,6 +5098,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@src/util/$(DEPDIR)/growing_fifo.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@src/util/$(DEPDIR)/list_sort.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@test/$(DEPDIR)/DumpDatabase.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@test/$(DEPDIR)/FakeDecoderAPI.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@test/$(DEPDIR)/FakeReplayGainConfig.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@test/$(DEPDIR)/ShutdownHandler.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@test/$(DEPDIR)/dump_playlist.Po@am__quote@

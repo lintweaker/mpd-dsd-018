@@ -31,10 +31,24 @@
 
 static constexpr Domain sndfile_domain("sndfile");
 
+struct SndfileInputStream {
+	Decoder *const decoder;
+	InputStream &is;
+
+	size_t Read(void *buffer, size_t size) {
+		/* libsndfile chokes on partial reads; therefore
+		   always force full reads */
+		return decoder_read_full(decoder, is, buffer, size)
+			? size
+			: 0;
+	}
+};
+
 static sf_count_t
 sndfile_vio_get_filelen(void *user_data)
 {
-	const InputStream &is = *(const InputStream *)user_data;
+	SndfileInputStream &sis = *(SndfileInputStream *)user_data;
+	const InputStream &is = sis.is;
 
 	return is.GetSize();
 }
@@ -42,10 +56,14 @@ sndfile_vio_get_filelen(void *user_data)
 static sf_count_t
 sndfile_vio_seek(sf_count_t offset, int whence, void *user_data)
 {
-	InputStream &is = *(InputStream *)user_data;
+	SndfileInputStream &sis = *(SndfileInputStream *)user_data;
+	InputStream &is = sis.is;
 
-	if (!is.LockSeek(offset, whence, IgnoreError()))
+	Error error;
+	if (!is.LockSeek(offset, whence, error)) {
+		LogError(error, "Seek failed");
 		return -1;
+	}
 
 	return is.GetOffset();
 }
@@ -53,30 +71,9 @@ sndfile_vio_seek(sf_count_t offset, int whence, void *user_data)
 static sf_count_t
 sndfile_vio_read(void *ptr, sf_count_t count, void *user_data)
 {
-	InputStream &is = *(InputStream *)user_data;
+	SndfileInputStream &sis = *(SndfileInputStream *)user_data;
 
-	sf_count_t total_bytes = 0;
-	Error error;
-
-	/* this loop is necessary because libsndfile chokes on partial
-	   reads */
-
-	do {
-		size_t nbytes = is.LockRead((char *)ptr + total_bytes,
-					    count - total_bytes, error);
-		if (nbytes == 0) {
-			if (error.IsDefined()) {
-				LogError(error);
-				return -1;
-			}
-
-			break;
-		}
-
-		total_bytes += nbytes;
-	} while (total_bytes < count);
-
-	return total_bytes;
+	return sis.Read(ptr, count);
 }
 
 static sf_count_t
@@ -91,7 +88,8 @@ sndfile_vio_write(gcc_unused const void *ptr,
 static sf_count_t
 sndfile_vio_tell(void *user_data)
 {
-	const InputStream &is = *(const InputStream *)user_data;
+	SndfileInputStream &sis = *(SndfileInputStream *)user_data;
+	const InputStream &is = sis.is;
 
 	return is.GetOffset();
 }
@@ -137,7 +135,8 @@ sndfile_stream_decode(Decoder &decoder, InputStream &is)
 
 	info.format = 0;
 
-	sf = sf_open_virtual(&vio, SFM_READ, &info, &is);
+	SndfileInputStream sis{&decoder, is};
+	sf = sf_open_virtual(&vio, SFM_READ, &info, &sis);
 	if (sf == nullptr) {
 		LogWarning(sndfile_domain, "sf_open_virtual() failed");
 		return;

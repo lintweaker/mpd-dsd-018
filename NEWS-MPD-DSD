@@ -31,6 +31,9 @@
 13-Jul-14
 - Updated native DSD output support, tested on BeagleBone Black with Botic
   driver
+13-Aug-14
+- Update to MPD 0.18.12
+
 
 
 

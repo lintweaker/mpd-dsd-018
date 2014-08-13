@@ -95,14 +95,14 @@ static bool
 dsdiff_read_id(Decoder *decoder, InputStream &is,
 	       DsdId *id)
 {
-	return dsdlib_read(decoder, is, id, sizeof(*id));
+	return decoder_read_full(decoder, is, id, sizeof(*id));
 }
 
 static bool
 dsdiff_read_chunk_header(Decoder *decoder, InputStream &is,
 			 DsdiffChunkHeader *header)
 {
-	return dsdlib_read(decoder, is, header, sizeof(*header));
+	return decoder_read_full(decoder, is, header, sizeof(*header));
 }
 
 static bool
@@ -114,8 +114,7 @@ dsdiff_read_payload(Decoder *decoder, InputStream &is,
 	if (size != (uint64_t)length)
 		return false;
 
-	size_t nbytes = decoder_read(decoder, is, data, length);
-	return nbytes == length;
+	return decoder_read_full(decoder, is, data, length);
 }
 
 /**
@@ -147,8 +146,8 @@ dsdiff_read_prop_snd(Decoder *decoder, InputStream &is,
 		} else if (header.id.Equals("CHNL")) {
 			uint16_t channels;
 			if (header.GetSize() < sizeof(channels) ||
-			    !dsdlib_read(decoder, is,
-					 &channels, sizeof(channels)) ||
+			    !decoder_read_full(decoder, is,
+					       &channels, sizeof(channels)) ||
 			    !dsdlib_skip_to(decoder, is, chunk_end_offset))
 				return false;
 
@@ -156,8 +155,8 @@ dsdiff_read_prop_snd(Decoder *decoder, InputStream &is,
 		} else if (header.id.Equals("CMPR")) {
 			DsdId type;
 			if (header.GetSize() < sizeof(type) ||
-			    !dsdlib_read(decoder, is,
-					 &type, sizeof(type)) ||
+			    !decoder_read_full(decoder, is,
+					       &type, sizeof(type)) ||
 			    !dsdlib_skip_to(decoder, is, chunk_end_offset))
 				return false;
 
@@ -210,7 +209,7 @@ dsdiff_handle_native_tag(InputStream &is,
 
 	struct dsdiff_native_tag metatag;
 
-	if (!dsdlib_read(nullptr, is, &metatag, sizeof(metatag)))
+	if (!decoder_read_full(nullptr, is, &metatag, sizeof(metatag)))
 		return;
 
 	uint32_t length = FromBE32(metatag.size);
@@ -223,7 +222,7 @@ dsdiff_handle_native_tag(InputStream &is,
 	char *label;
 	label = string;
 
-	if (!dsdlib_read(nullptr, is, label, (size_t)length))
+	if (!decoder_read_full(nullptr, is, label, (size_t)length))
 		return;
 
 	string[length] = '\0';
@@ -253,15 +252,17 @@ dsdiff_read_metadata_extra(Decoder *decoder, InputStream &is,
 	if (!dsdiff_read_chunk_header(decoder, is, chunk_header))
 		return false;
 
+	metadata->diar_offset = 0;
+	metadata->diti_offset = 0;
+
 #ifdef HAVE_ID3TAG
-	metadata->id3_size = 0;
+	metadata->id3_offset = 0;
 #endif
 
 	/* Now process all the remaining chunk headers in the stream
 	   and record their position and size */
 
-	const auto size = is.GetSize();
-	while (is.GetOffset() < size) {
+	do {
 		uint64_t chunk_size = chunk_header->GetSize();
 
 		/* DIIN chunk, is directly followed by other chunks  */
@@ -287,16 +288,11 @@ dsdiff_read_metadata_extra(Decoder *decoder, InputStream &is,
 			metadata->id3_size = chunk_size;
 		}
 #endif
-		if (chunk_size != 0) {
-			if (!dsdlib_skip(decoder, is, chunk_size))
-				break;
-		}
 
-		if (is.GetOffset() < size) {
-			if (!dsdiff_read_chunk_header(decoder, is, chunk_header))
-				return false;
-		}
-	}
+		if (!dsdlib_skip(decoder, is, chunk_size))
+			break;
+	} while (dsdiff_read_chunk_header(decoder, is, chunk_header));
+
 	/* done processing chunk headers, process tags if any */
 
 #ifdef HAVE_ID3TAG
@@ -330,7 +326,7 @@ dsdiff_read_metadata(Decoder *decoder, InputStream &is,
 		     DsdiffChunkHeader *chunk_header)
 {
 	DsdiffHeader header;
-	if (!dsdlib_read(decoder, is, &header, sizeof(header)) ||
+	if (!decoder_read_full(decoder, is, &header, sizeof(header)) ||
 	    !header.id.Equals("FRM8") ||
 	    !header.format.Equals("DSD "))
 		return false;
@@ -402,10 +398,10 @@ dsdiff_decode_chunk(Decoder &decoder, InputStream &is,
 			now_size = now_frames * frame_size;
 		}
 
-		size_t nbytes = decoder_read(decoder, is, buffer, now_size);
-		if (nbytes != now_size)
+		if (!decoder_read_full(&decoder, is, buffer, now_size))
 			return false;
 
+		const size_t nbytes = now_size;
 		chunk_size -= nbytes;
 
 		if (lsbitfirst)

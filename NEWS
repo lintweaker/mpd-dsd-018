@@ -1,3 +1,17 @@
+ver 0.18.12 (2014/07/30)
+* database
+  - proxy: fix build failure with libmpdclient 2.2
+  - proxy: fix add/search and other commands with libmpdclient < 2.9
+* decoder
+  - audiofile: improve responsiveness
+  - audiofile: fix WAV stream playback
+  - dsdiff, dsf: fix stream playback
+  - dsdiff: fix metadata parser bug (uninitialized variables)
+  - faad: estimate song duration for remote files
+  - sndfile: improve responsiveness
+* randomize next song when enabling "random" mode while not playing
+* randomize next song when adding to single-song queue
+
 ver 0.18.11 (2014/05/12)
 * decoder
   - opus: fix missing song length on high-latency files

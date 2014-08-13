@@ -35,3 +35,6 @@ and DSDIFF)
 04-Jul-14 Dsf: allow up to DSD512, enable DSD rates based on Fs=48kHz
 
 14-Jul-14 Update native DSD support
+
+13-Aug-14 Update to MPD 0.18.12
+

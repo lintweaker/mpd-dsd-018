@@ -20,6 +20,8 @@
 #ifndef MPD_DECODER_BUFFER_HXX
 #define MPD_DECODER_BUFFER_HXX
 
+#include "Compiler.h"
+
 #include <stddef.h>
 
 /**
@@ -50,11 +52,20 @@ decoder_buffer_new(Decoder *decoder, InputStream &is,
 void
 decoder_buffer_free(DecoderBuffer *buffer);
 
+gcc_pure
+const InputStream &
+decoder_buffer_get_stream(const DecoderBuffer *buffer);
+
+gcc_pure
 bool
 decoder_buffer_is_empty(const DecoderBuffer *buffer);
 
+gcc_pure
 bool
 decoder_buffer_is_full(const DecoderBuffer *buffer);
+
+void
+decoder_buffer_clear(DecoderBuffer *buffer);
 
 /**
  * Read data from the input_stream and append it to the buffer.
@@ -65,6 +76,13 @@ decoder_buffer_is_full(const DecoderBuffer *buffer);
  */
 bool
 decoder_buffer_fill(DecoderBuffer *buffer);
+
+/**
+ * How many bytes are stored in the buffer?
+ */
+gcc_pure
+size_t
+decoder_buffer_available(const DecoderBuffer *buffer);
 
 /**
  * Reads data from the buffer.  This data is not yet consumed, you
