@@ -480,6 +480,8 @@ libdecoder_plugins_a_SOURCES = \
 	src/decoder/DsdiffDecoderPlugin.hxx \
 	src/decoder/DsfDecoderPlugin.cxx \
 	src/decoder/DsfDecoderPlugin.hxx \
+	src/decoder/DsdHybridDecoderPlugin.cxx \
+	src/decoder/DsdHybridDecoderPlugin.hxx \
 	src/decoder/DsdLib.cxx \
 	src/decoder/DsdLib.hxx \
 	src/DecoderBuffer.cxx src/DecoderBuffer.hxx \

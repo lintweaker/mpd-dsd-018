@@ -26,6 +26,7 @@
 #include "decoder/PcmDecoderPlugin.hxx"
 #include "decoder/DsdiffDecoderPlugin.hxx"
 #include "decoder/DsfDecoderPlugin.hxx"
+#include "decoder/DsdHybridDecoderPlugin.hxx"
 #include "decoder/FlacDecoderPlugin.h"
 #include "decoder/OpusDecoderPlugin.h"
 #include "decoder/VorbisDecoderPlugin.h"
@@ -75,6 +76,7 @@ const struct DecoderPlugin *const decoder_plugins[] = {
 #endif
 	&dsdiff_decoder_plugin,
 	&dsf_decoder_plugin,
+	&dsdhybrid_decoder_plugin,
 #ifdef HAVE_FAAD
 	&faad_decoder_plugin,
 #endif
