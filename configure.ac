@@ -155,6 +155,7 @@ AC_SEARCH_LIBS([exp], [m],,
 
 AC_CHECK_HEADERS(locale.h)
 AC_CHECK_HEADERS(valgrind/memcheck.h)
+AC_CHECK_HEADERS([sys/prctl.h], AC_CHECK_FUNCS([prctl]))
 
 dnl ---------------------------------------------------------------------------
 dnl Allow tools to be specifically built
@@ -467,6 +468,12 @@ AC_ARG_WITH(tremor-includes,
 		[directory where Tremor header files are installed (optional)]),,
 	tremor_includes="")
 
+dnl ----------------rtopt-------------
+AC_ARG_ENABLE(rtopt,
+	AS_HELP_STRING([--enable-rtopt], [enable realtime support]),,
+	[enable_rtopt=no])
+dnl ----------------rtopt-------------
+
 dnl ---------------------------------------------------------------------------
 dnl Mandatory Libraries
 dnl ---------------------------------------------------------------------------
@@ -604,6 +611,14 @@ if test x$enable_libwrap = xyes; then
 	AC_SUBST(LIBWRAP_LDFLAGS)
 	AC_DEFINE(HAVE_LIBWRAP, 1, [define to enable libwrap library])
 fi
+
+dnl ---------------------------------- rtopt ---------------------------------
+
+if test x$enable_rtopt = xyes; then
+	AC_DEFINE([ENABLE_RTOPT], 1, [Define to enable realtime option support])
+fi
+
+AM_CONDITIONAL(ENABLE_RTOPT, test x$enable_rtopt = xyes)
 
 dnl ---------------------------------------------------------------------------
 dnl Metadata Plugins
@@ -1577,6 +1592,7 @@ results(lsr, [libsamplerate])
 results(libmpdclient, [libmpdclient])
 results(inotify, [inotify])
 results(sqlite, [SQLite])
+results(rtopt, [rtopt])
 
 printf '\nMetadata support:\n\t'
 results(id3,[ID3])

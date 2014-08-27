@@ -38,6 +38,10 @@
 #include "tag/ApeReplayGain.hxx"
 #include "Log.hxx"
 
+#ifdef ENABLE_RTOPT
+#include "rt_opt.hxx"
+#endif
+
 #include <functional>
 
 static constexpr Domain decoder_thread_domain("decoder_thread");
@@ -405,6 +409,9 @@ static void
 decoder_task(void *arg)
 {
 	DecoderControl &dc = *(DecoderControl *)arg;
+#ifdef ENABLE_RTOPT
+       rtopt_change_priority(RTOPT_DECODER_PRIORITY_NAME);
+#endif
 
 	dc.Lock();
 

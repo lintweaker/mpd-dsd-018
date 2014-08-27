@@ -78,6 +78,10 @@
 #include "ArchiveList.hxx"
 #endif
 
+#ifdef ENABLE_RTOPT
+#include "rt_opt.hxx"
+#endif
+
 #include <glib.h>
 
 #include <unistd.h>
@@ -408,6 +412,10 @@ int mpd_main(int argc, char *argv[])
 		LogError(error);
 		return EXIT_FAILURE;
 	}
+#ifdef ENABLE_RTOPT
+	rtopt_init();
+	rtopt_change_priority(RTOPT_MAIN_PRIORITY_NAME);
+#endif
 
 	daemonize_set_user();
 
@@ -504,6 +512,9 @@ int mpd_main(int argc, char *argv[])
 
 #ifdef WIN32
 	win32_app_started();
+#endif
+#ifdef ENABLE_RTOPT
+	rtopt_memlock();
 #endif
 
 	/* run the main loop */

@@ -35,6 +35,10 @@
 #include "Log.hxx"
 #include "Compiler.h"
 
+#ifdef ENABLE_RTOPT
+#include "rt_opt.hxx"
+#endif
+
 #include <glib.h>
 
 #include <assert.h>
@@ -572,6 +576,10 @@ static void
 audio_output_task(void *arg)
 {
 	struct audio_output *ao = (struct audio_output *)arg;
+#ifdef ENABLE_RTOPT
+	rtopt_change_output_priority(ao->name);
+	rtopt_change_output_timerslack(ao->name);
+#endif
 
 	ao->mutex.lock();
 

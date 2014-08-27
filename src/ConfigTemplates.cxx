@@ -20,6 +20,7 @@
 #include "ConfigTemplates.hxx"
 #include "ConfigOption.hxx"
 
+#include <config.h>
 #include <string.h>
 
 const ConfigTemplate config_templates[] = {
@@ -77,6 +78,9 @@ const ConfigTemplate config_templates[] = {
 	{ "despotify_high_bitrate", false, false },
 	{ "filter", true, true },
 	{ "database", false, true },
+#ifdef ENABLE_RTOPT
+	{ "realtime_option", false, true }
+#endif
 };
 
 static constexpr unsigned n_config_templates =

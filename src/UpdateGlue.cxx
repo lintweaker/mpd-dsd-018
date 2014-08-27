@@ -35,6 +35,9 @@
 #include "system/FatalError.hxx"
 #include "thread/Id.hxx"
 #include "thread/Thread.hxx"
+#ifdef ENABLE_RTOPT
+#include "rt_opt.hxx"
+#endif
 
 #include <assert.h>
 
@@ -68,6 +71,9 @@ update_task(gcc_unused void *ctx)
 			    next.path_utf8.c_str());
 	else
 		LogDebug(update_domain, "starting");
+#ifdef ENABLE_RTOPT
+       rtopt_change_priority(RTOPT_UPDATE_PRIORITY_NAME);
+#endif
 
 	modified = update_walk(next.path_utf8.c_str(), next.discard);
 

@@ -20,6 +20,7 @@
 #ifndef MPD_CONFIG_OPTION_HXX
 #define MPD_CONFIG_OPTION_HXX
 
+#include <config.h>
 #include "Compiler.h"
 
 enum ConfigOption {
@@ -77,6 +78,9 @@ enum ConfigOption {
 	CONF_DESPOTIFY_HIGH_BITRATE,
 	CONF_AUDIO_FILTER,
 	CONF_DATABASE,
+#ifdef ENABLE_RTOPT
+	CONF_RTOPT,
+#endif
 	CONF_MAX
 };
 

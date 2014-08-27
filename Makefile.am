@@ -64,6 +64,10 @@ mpd_headers = \
 	src/TimePrint.cxx src/TimePrint.hxx \
 	src/Timer.hxx
 
+if ENABLE_RTOPT
+mpd_headers += src/rt_opt.hxx
+endif
+
 src_mpd_SOURCES = \
 	$(mpd_headers) \
 	$(DECODER_SRC) \
@@ -315,6 +319,11 @@ libevent_a_SOURCES = \
 	src/event/ServerSocket.cxx src/event/ServerSocket.hxx \
 	src/event/Call.hxx src/event/Call.cxx \
 	src/event/Loop.cxx src/event/Loop.hxx
+
+if ENABLE_RTOPT
+src_mpd_SOURCES += \
+	src/rt_opt.cxx
+endif
 
 # PCM library
 
