@@ -1,5 +1,7 @@
 readme for Yan's MPD RT enchancements
 
+Compile with added '--enable-rtopt' configure option.
+
 To enable RT mpd.conf needs the following paragraph added:
 
 realtime_option {
