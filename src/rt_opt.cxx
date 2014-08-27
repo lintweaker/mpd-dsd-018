@@ -305,9 +305,16 @@ set_parameter(void) {
 
 	enable_memlock = param->GetBlockValue(RTOPT_MEMLOCK_NAME,false);
 
+	/* Work around 'call of overloaded ‘GetBlockValue(const char*, size_t)’ is ambiguous' compiler errors */
+#if 0
 	stack_reserve = param->GetBlockValue(RTOPT_STACKRESERVE_NAME,RTOPT_DEFAULT_STACK_RESERVE) * 1024;
 
 	heap_reserve  = param->GetBlockValue(RTOPT_HEAPRESERVE_NAME,RTOPT_DEFAULT_HEAP_RESERVE) * 1024;
+#else
+	stack_reserve = param->GetBlockValue(((const char*)"stack_reserve"), 0) * 1024;
+
+	heap_reserve  = param->GetBlockValue(((const char*)"heap_reserve"), 0) * 1024;
+#endif
 
 	if ( enable_memlock ) {
 	  FormatDebug(rt_opt_domain,
