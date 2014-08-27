@@ -1,0 +1,27 @@
+readme for Yan's MPD RT enchancements
+
+To enable RT mpd.conf needs the following paragraph added:
+
+realtime_option {
+	memlock			"yes"
+	stack_reserve		"1024"
+	heap_reserve		"10240"
+
+	main_priority		"OTHER:0"
+	player_priority		"FIFO:32"
+	decoder_priority	"FIFO:31"
+	update_priority		"OTHER:0"
+}
+
+Add a 'priority' option to your configured audio outputs:
+
+audio_output {
+	type            "alsa"
+	name            "My ALSA Device"
+	device          "hw:0,0"
+	priority        "FIFO:32"
+}
+
+You can play with the priority settings "FIFO:xx" to get the optimal settings for your
+device and setup.
+

@@ -1,40 +1,14 @@
-mpd-dsd-018
-===========
+mpd-dsd-018-rt
+=============
 
-Version of stable MPD 0.18 for fasttracking DSD playback development
+RT branch of MPD-DSD-018. For test purposes only.
+This version contains mpd-dsd-018 (0.18.6) enhanced with Yan's MPD RT patches.
 
-Development train:
+Additional configuration in mpd.conf is needed to use the RT features.
+See README-RT.
 
-develop in mpd-dsd-018 -> when a feature is ready, propose as patch to mpd-devel 
 
-[history]
-05-Nov-13 Patch To enable DSD128 in DSF decoder sent to MPD devel list
 
-07-Nov-13 MPD 0.18.2 released with DSD128 patch for DSF included
 
-09-Nov-13 Fixed DSD DSDIFF decoder, patch sent to MPD devel list
 
-10-Nov-13 DSDIFF fix is added to MPD 0.18 git
-
-11-Nov-13 Added temporary workaround for hang at the end of certain songs (DSF
-and DSDIFF)
-
-13-Nov-13 MPD 0.18.4 released with DSDIFF fix included
-
-02-Mar-14 Updated to MPD 0.18.9. Currently no (real) differences with upstream
-	  MPD.
-
-08-Mar-14 Added seek support for DSDIFF and DSF DSD decoders
-
-04-Apr-14 Report bitrate for DSDIFF and DSF DSD decoders
-
-26-May-14 Update to MPD 0.18.11
-
-20-Jun-14 Prepare for DSD native output support
-
-04-Jul-14 Dsf: allow up to DSD512, enable DSD rates based on Fs=48kHz
-
-14-Jul-14 Update native DSD support
-
-13-Aug-14 Update to MPD 0.18.12
 
