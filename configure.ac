@@ -1,6 +1,6 @@
 AC_PREREQ(2.60)
 
-AC_INIT(mpd, 0.18.13-dsd, gtmkramer@xs4all.nl)
+AC_INIT(mpd, 0.18.14-dsd, gtmkramer@xs4all.nl)
 
 VERSION_MAJOR=0
 VERSION_MINOR=18

@@ -1066,6 +1066,7 @@ C_TESTS = \
 	test/test_mixramp \
 	test/test_icy_parser \
 	test/test_pcm \
+	test/test_protocol \
 	test/test_queue_priority
 
 if ENABLE_ARCHIVE
@@ -1538,6 +1539,16 @@ test_test_archive_CXXFLAGS = $(AM_CXXFLAGS) -Wno-error=deprecated-declarations
 test_test_archive_LDADD = \
 	libarchive.a \
 	$(GLIB_LIBS) \
+	$(CPPUNIT_LIBS)
+
+test_test_protocol_SOURCES = \
+	src/protocol/ArgParser.cxx \
+	test/test_protocol.cxx
+test_test_protocol_CPPFLAGS = $(AM_CPPFLAGS) $(CPPUNIT_CFLAGS) -DCPPUNIT_HAVE_RTTI=0
+test_test_protocol_CXXFLAGS = $(AM_CXXFLAGS) -Wno-error=deprecated-declarations
+test_test_protocol_LDADD = \
+	libsystem.a \
+	libutil.a \
 	$(CPPUNIT_LIBS)
 
 test_test_queue_priority_SOURCES = \
