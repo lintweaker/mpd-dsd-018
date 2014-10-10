@@ -895,6 +895,7 @@ am__installdirs = "$(DESTDIR)$(bindir)" "$(DESTDIR)$(man1dir)" \
 @ENABLE_TEST_TRUE@	test/test_mixramp$(EXEEXT) \
 @ENABLE_TEST_TRUE@	test/test_icy_parser$(EXEEXT) \
 @ENABLE_TEST_TRUE@	test/test_pcm$(EXEEXT) \
+@ENABLE_TEST_TRUE@	test/test_protocol$(EXEEXT) \
 @ENABLE_TEST_TRUE@	test/test_queue_priority$(EXEEXT) \
 @ENABLE_TEST_TRUE@	$(am__EXEEXT_1)
 @ENABLE_TEST_TRUE@@HAVE_AVAHI_TRUE@am__EXEEXT_3 =  \
@@ -1575,6 +1576,15 @@ test_test_pcm_OBJECTS = $(am_test_test_pcm_OBJECTS)
 @ENABLE_TEST_TRUE@	$(am__DEPENDENCIES_1)
 test_test_pcm_LINK = $(CXXLD) $(test_test_pcm_CXXFLAGS) $(CXXFLAGS) \
 	$(AM_LDFLAGS) $(LDFLAGS) -o $@
+am__test_test_protocol_SOURCES_DIST = src/protocol/ArgParser.cxx \
+	test/test_protocol.cxx
+@ENABLE_TEST_TRUE@am_test_test_protocol_OBJECTS = src/protocol/test_test_protocol-ArgParser.$(OBJEXT) \
+@ENABLE_TEST_TRUE@	test/test_test_protocol-test_protocol.$(OBJEXT)
+test_test_protocol_OBJECTS = $(am_test_test_protocol_OBJECTS)
+@ENABLE_TEST_TRUE@test_test_protocol_DEPENDENCIES = libsystem.a \
+@ENABLE_TEST_TRUE@	libutil.a $(am__DEPENDENCIES_1)
+test_test_protocol_LINK = $(CXXLD) $(test_test_protocol_CXXFLAGS) \
+	$(CXXFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
 am__test_test_queue_priority_SOURCES_DIST = src/Queue.cxx \
 	test/test_queue_priority.cxx
 @ENABLE_TEST_TRUE@am_test_test_queue_priority_OBJECTS = src/test_test_queue_priority-Queue.$(OBJEXT) \
@@ -1698,8 +1708,9 @@ SOURCES = $(libarchive_a_SOURCES) $(libconf_a_SOURCES) \
 	$(test_run_resolver_SOURCES) $(test_software_volume_SOURCES) \
 	$(test_test_archive_SOURCES) $(test_test_byte_reverse_SOURCES) \
 	$(test_test_icy_parser_SOURCES) $(test_test_mixramp_SOURCES) \
-	$(test_test_pcm_SOURCES) $(test_test_queue_priority_SOURCES) \
-	$(test_test_util_SOURCES) $(test_test_vorbis_encoder_SOURCES) \
+	$(test_test_pcm_SOURCES) $(test_test_protocol_SOURCES) \
+	$(test_test_queue_priority_SOURCES) $(test_test_util_SOURCES) \
+	$(test_test_vorbis_encoder_SOURCES) \
 	$(test_visit_archive_SOURCES)
 DIST_SOURCES = $(am__libarchive_a_SOURCES_DIST) $(libconf_a_SOURCES) \
 	$(am__libdb_plugins_a_SOURCES_DIST) \
@@ -1739,6 +1750,7 @@ DIST_SOURCES = $(am__libarchive_a_SOURCES_DIST) $(libconf_a_SOURCES) \
 	$(am__test_test_icy_parser_SOURCES_DIST) \
 	$(am__test_test_mixramp_SOURCES_DIST) \
 	$(am__test_test_pcm_SOURCES_DIST) \
+	$(am__test_test_protocol_SOURCES_DIST) \
 	$(am__test_test_queue_priority_SOURCES_DIST) \
 	$(am__test_test_util_SOURCES_DIST) \
 	$(am__test_test_vorbis_encoder_SOURCES_DIST) \
@@ -2783,8 +2795,8 @@ SPARSE_SRC = $(addprefix $(top_srcdir)/,$(filter %.c,$(src_mpd_SOURCES)))
 #
 @ENABLE_TEST_TRUE@C_TESTS = test/test_util test/test_byte_reverse \
 @ENABLE_TEST_TRUE@	test/test_mixramp test/test_icy_parser \
-@ENABLE_TEST_TRUE@	test/test_pcm test/test_queue_priority \
-@ENABLE_TEST_TRUE@	$(am__append_71)
+@ENABLE_TEST_TRUE@	test/test_pcm test/test_protocol \
+@ENABLE_TEST_TRUE@	test/test_queue_priority $(am__append_71)
 @ENABLE_TEST_TRUE@test_read_conf_LDADD = \
 @ENABLE_TEST_TRUE@	libconf.a \
 @ENABLE_TEST_TRUE@	libutil.a \
@@ -3184,6 +3196,17 @@ SPARSE_SRC = $(addprefix $(top_srcdir)/,$(filter %.c,$(src_mpd_SOURCES)))
 @ENABLE_TEST_TRUE@test_test_archive_LDADD = \
 @ENABLE_TEST_TRUE@	libarchive.a \
 @ENABLE_TEST_TRUE@	$(GLIB_LIBS) \
+@ENABLE_TEST_TRUE@	$(CPPUNIT_LIBS)
+
+@ENABLE_TEST_TRUE@test_test_protocol_SOURCES = \
+@ENABLE_TEST_TRUE@	src/protocol/ArgParser.cxx \
+@ENABLE_TEST_TRUE@	test/test_protocol.cxx
+
+@ENABLE_TEST_TRUE@test_test_protocol_CPPFLAGS = $(AM_CPPFLAGS) $(CPPUNIT_CFLAGS) -DCPPUNIT_HAVE_RTTI=0
+@ENABLE_TEST_TRUE@test_test_protocol_CXXFLAGS = $(AM_CXXFLAGS) -Wno-error=deprecated-declarations
+@ENABLE_TEST_TRUE@test_test_protocol_LDADD = \
+@ENABLE_TEST_TRUE@	libsystem.a \
+@ENABLE_TEST_TRUE@	libutil.a \
 @ENABLE_TEST_TRUE@	$(CPPUNIT_LIBS)
 
 @ENABLE_TEST_TRUE@test_test_queue_priority_SOURCES = \
@@ -4627,6 +4650,15 @@ test/test_test_pcm-test_pcm_main.$(OBJEXT): test/$(am__dirstamp) \
 test/test_pcm$(EXEEXT): $(test_test_pcm_OBJECTS) $(test_test_pcm_DEPENDENCIES) $(EXTRA_test_test_pcm_DEPENDENCIES) test/$(am__dirstamp)
 	@rm -f test/test_pcm$(EXEEXT)
 	$(AM_V_CXXLD)$(test_test_pcm_LINK) $(test_test_pcm_OBJECTS) $(test_test_pcm_LDADD) $(LIBS)
+src/protocol/test_test_protocol-ArgParser.$(OBJEXT):  \
+	src/protocol/$(am__dirstamp) \
+	src/protocol/$(DEPDIR)/$(am__dirstamp)
+test/test_test_protocol-test_protocol.$(OBJEXT): test/$(am__dirstamp) \
+	test/$(DEPDIR)/$(am__dirstamp)
+
+test/test_protocol$(EXEEXT): $(test_test_protocol_OBJECTS) $(test_test_protocol_DEPENDENCIES) $(EXTRA_test_test_protocol_DEPENDENCIES) test/$(am__dirstamp)
+	@rm -f test/test_protocol$(EXEEXT)
+	$(AM_V_CXXLD)$(test_test_protocol_LINK) $(test_test_protocol_OBJECTS) $(test_test_protocol_LDADD) $(LIBS)
 src/test_test_queue_priority-Queue.$(OBJEXT): src/$(am__dirstamp) \
 	src/$(DEPDIR)/$(am__dirstamp)
 test/test_test_queue_priority-test_queue_priority.$(OBJEXT):  \
@@ -5057,6 +5089,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@src/protocol/$(DEPDIR)/src_mpd-Ack.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@src/protocol/$(DEPDIR)/src_mpd-ArgParser.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@src/protocol/$(DEPDIR)/src_mpd-Result.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@src/protocol/$(DEPDIR)/test_test_protocol-ArgParser.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@src/system/$(DEPDIR)/Clock.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@src/system/$(DEPDIR)/EPollFD.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@src/system/$(DEPDIR)/EventFD.Po@am__quote@
@@ -5131,6 +5164,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@test/$(DEPDIR)/test_test_pcm-test_pcm_mix.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@test/$(DEPDIR)/test_test_pcm-test_pcm_pack.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@test/$(DEPDIR)/test_test_pcm-test_pcm_volume.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@test/$(DEPDIR)/test_test_protocol-test_protocol.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@test/$(DEPDIR)/test_test_queue_priority-test_queue_priority.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@test/$(DEPDIR)/test_test_util-test_util.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@test/$(DEPDIR)/test_test_vorbis_encoder-test_vorbis_encoder.Po@am__quote@
@@ -9452,6 +9486,34 @@ test/test_test_pcm-test_pcm_main.obj: test/test_pcm_main.cxx
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(test_test_pcm_CPPFLAGS) $(CPPFLAGS) $(test_test_pcm_CXXFLAGS) $(CXXFLAGS) -c -o test/test_test_pcm-test_pcm_main.obj `if test -f 'test/test_pcm_main.cxx'; then $(CYGPATH_W) 'test/test_pcm_main.cxx'; else $(CYGPATH_W) '$(srcdir)/test/test_pcm_main.cxx'; fi`
 
+src/protocol/test_test_protocol-ArgParser.o: src/protocol/ArgParser.cxx
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(test_test_protocol_CPPFLAGS) $(CPPFLAGS) $(test_test_protocol_CXXFLAGS) $(CXXFLAGS) -MT src/protocol/test_test_protocol-ArgParser.o -MD -MP -MF src/protocol/$(DEPDIR)/test_test_protocol-ArgParser.Tpo -c -o src/protocol/test_test_protocol-ArgParser.o `test -f 'src/protocol/ArgParser.cxx' || echo '$(srcdir)/'`src/protocol/ArgParser.cxx
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) src/protocol/$(DEPDIR)/test_test_protocol-ArgParser.Tpo src/protocol/$(DEPDIR)/test_test_protocol-ArgParser.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='src/protocol/ArgParser.cxx' object='src/protocol/test_test_protocol-ArgParser.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(test_test_protocol_CPPFLAGS) $(CPPFLAGS) $(test_test_protocol_CXXFLAGS) $(CXXFLAGS) -c -o src/protocol/test_test_protocol-ArgParser.o `test -f 'src/protocol/ArgParser.cxx' || echo '$(srcdir)/'`src/protocol/ArgParser.cxx
+
+src/protocol/test_test_protocol-ArgParser.obj: src/protocol/ArgParser.cxx
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(test_test_protocol_CPPFLAGS) $(CPPFLAGS) $(test_test_protocol_CXXFLAGS) $(CXXFLAGS) -MT src/protocol/test_test_protocol-ArgParser.obj -MD -MP -MF src/protocol/$(DEPDIR)/test_test_protocol-ArgParser.Tpo -c -o src/protocol/test_test_protocol-ArgParser.obj `if test -f 'src/protocol/ArgParser.cxx'; then $(CYGPATH_W) 'src/protocol/ArgParser.cxx'; else $(CYGPATH_W) '$(srcdir)/src/protocol/ArgParser.cxx'; fi`
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) src/protocol/$(DEPDIR)/test_test_protocol-ArgParser.Tpo src/protocol/$(DEPDIR)/test_test_protocol-ArgParser.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='src/protocol/ArgParser.cxx' object='src/protocol/test_test_protocol-ArgParser.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(test_test_protocol_CPPFLAGS) $(CPPFLAGS) $(test_test_protocol_CXXFLAGS) $(CXXFLAGS) -c -o src/protocol/test_test_protocol-ArgParser.obj `if test -f 'src/protocol/ArgParser.cxx'; then $(CYGPATH_W) 'src/protocol/ArgParser.cxx'; else $(CYGPATH_W) '$(srcdir)/src/protocol/ArgParser.cxx'; fi`
+
+test/test_test_protocol-test_protocol.o: test/test_protocol.cxx
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(test_test_protocol_CPPFLAGS) $(CPPFLAGS) $(test_test_protocol_CXXFLAGS) $(CXXFLAGS) -MT test/test_test_protocol-test_protocol.o -MD -MP -MF test/$(DEPDIR)/test_test_protocol-test_protocol.Tpo -c -o test/test_test_protocol-test_protocol.o `test -f 'test/test_protocol.cxx' || echo '$(srcdir)/'`test/test_protocol.cxx
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) test/$(DEPDIR)/test_test_protocol-test_protocol.Tpo test/$(DEPDIR)/test_test_protocol-test_protocol.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='test/test_protocol.cxx' object='test/test_test_protocol-test_protocol.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(test_test_protocol_CPPFLAGS) $(CPPFLAGS) $(test_test_protocol_CXXFLAGS) $(CXXFLAGS) -c -o test/test_test_protocol-test_protocol.o `test -f 'test/test_protocol.cxx' || echo '$(srcdir)/'`test/test_protocol.cxx
+
+test/test_test_protocol-test_protocol.obj: test/test_protocol.cxx
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(test_test_protocol_CPPFLAGS) $(CPPFLAGS) $(test_test_protocol_CXXFLAGS) $(CXXFLAGS) -MT test/test_test_protocol-test_protocol.obj -MD -MP -MF test/$(DEPDIR)/test_test_protocol-test_protocol.Tpo -c -o test/test_test_protocol-test_protocol.obj `if test -f 'test/test_protocol.cxx'; then $(CYGPATH_W) 'test/test_protocol.cxx'; else $(CYGPATH_W) '$(srcdir)/test/test_protocol.cxx'; fi`
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) test/$(DEPDIR)/test_test_protocol-test_protocol.Tpo test/$(DEPDIR)/test_test_protocol-test_protocol.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='test/test_protocol.cxx' object='test/test_test_protocol-test_protocol.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(test_test_protocol_CPPFLAGS) $(CPPFLAGS) $(test_test_protocol_CXXFLAGS) $(CXXFLAGS) -c -o test/test_test_protocol-test_protocol.obj `if test -f 'test/test_protocol.cxx'; then $(CYGPATH_W) 'test/test_protocol.cxx'; else $(CYGPATH_W) '$(srcdir)/test/test_protocol.cxx'; fi`
+
 src/test_test_queue_priority-Queue.o: src/Queue.cxx
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(test_test_queue_priority_CPPFLAGS) $(CPPFLAGS) $(test_test_queue_priority_CXXFLAGS) $(CXXFLAGS) -MT src/test_test_queue_priority-Queue.o -MD -MP -MF src/$(DEPDIR)/test_test_queue_priority-Queue.Tpo -c -o src/test_test_queue_priority-Queue.o `test -f 'src/Queue.cxx' || echo '$(srcdir)/'`src/Queue.cxx
 @am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) src/$(DEPDIR)/test_test_queue_priority-Queue.Tpo src/$(DEPDIR)/test_test_queue_priority-Queue.Po
@@ -10006,6 +10068,13 @@ test/test_pcm.log: test/test_pcm$(EXEEXT)
 	--log-file $$b.log --trs-file $$b.trs \
 	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
 	"$$tst" $(AM_TESTS_FD_REDIRECT)
+test/test_protocol.log: test/test_protocol$(EXEEXT)
+	@p='test/test_protocol$(EXEEXT)'; \
+	b='test/test_protocol'; \
+	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
+	--log-file $$b.log --trs-file $$b.trs \
+	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
+	"$$tst" $(AM_TESTS_FD_REDIRECT)
 test/test_queue_priority.log: test/test_queue_priority$(EXEEXT)
 	@p='test/test_queue_priority$(EXEEXT)'; \
 	b='test/test_queue_priority'; \
@@ -10310,8 +10379,8 @@ maintainer-clean-generic:
 	@echo "This command is intended for maintainers to use"
 	@echo "it deletes files that may require special tools to rebuild."
 @ENABLE_DOCUMENTATION_FALSE@uninstall-local:
-@ENABLE_DOCUMENTATION_FALSE@install-data-local:
 @ENABLE_DOCUMENTATION_FALSE@clean-local:
+@ENABLE_DOCUMENTATION_FALSE@install-data-local:
 clean: clean-am
 
 clean-am: clean-binPROGRAMS clean-generic clean-local \
