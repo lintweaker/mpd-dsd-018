@@ -12,6 +12,9 @@
 /* Define when despotify is enabled */
 #undef ENABLE_DESPOTIFY
 
+/* Define for the DSD decoder */
+#undef ENABLE_DSD
+
 /* Define to enable the encoder plugins */
 #undef ENABLE_ENCODER
 
@@ -110,9 +113,6 @@
 
 /* Define to 1 if you have the `daemon' function. */
 #undef HAVE_DAEMON
-
-/* Define for the DSD decoder */
-#undef HAVE_DSD
 
 /* Define to use FAAD2 for AAC decoding */
 #undef HAVE_FAAD
