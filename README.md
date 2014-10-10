@@ -37,4 +37,5 @@ and DSDIFF)
 14-Jul-14 Update native DSD support
 
 13-Aug-14 Update to MPD 0.18.12
+10-Oct-14 Update to MPD 0.18.13
 
