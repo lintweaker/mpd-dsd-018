@@ -81,22 +81,6 @@ POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
 bin_PROGRAMS = src/mpd$(EXEEXT)
-@HAVE_WINDOWS_FALSE@src_mpd_DEPENDENCIES = $(am__DEPENDENCIES_2) \
-@HAVE_WINDOWS_FALSE@	$(am__DEPENDENCIES_4) \
-@HAVE_WINDOWS_FALSE@	$(am__DEPENDENCIES_1) \
-@HAVE_WINDOWS_FALSE@	$(am__DEPENDENCIES_1) \
-@HAVE_WINDOWS_FALSE@	$(am__DEPENDENCIES_1) \
-@HAVE_WINDOWS_FALSE@	$(am__DEPENDENCIES_6) \
-@HAVE_WINDOWS_FALSE@	$(am__DEPENDENCIES_7) \
-@HAVE_WINDOWS_FALSE@	$(am__DEPENDENCIES_8) \
-@HAVE_WINDOWS_FALSE@	$(am__DEPENDENCIES_9) \
-@HAVE_WINDOWS_FALSE@	$(am__DEPENDENCIES_10) \
-@HAVE_WINDOWS_FALSE@	$(am__DEPENDENCIES_12) \
-@HAVE_WINDOWS_FALSE@	$(am__DEPENDENCIES_13) \
-@HAVE_WINDOWS_FALSE@	$(am__DEPENDENCIES_14) libconf.a \
-@HAVE_WINDOWS_FALSE@	libevent.a libthread.a libsystem.a \
-@HAVE_WINDOWS_FALSE@	libutil.a libfs.a $(am__DEPENDENCIES_1) \
-@HAVE_WINDOWS_FALSE@	$(am__DEPENDENCIES_1)
 @ENABLE_DESPOTIFY_TRUE@am__append_1 = \
 @ENABLE_DESPOTIFY_TRUE@	src/DespotifyUtils.cxx src/DespotifyUtils.hxx
 
@@ -402,7 +386,8 @@ bin_PROGRAMS = src/mpd$(EXEEXT)
 subdir = .
 DIST_COMMON = $(srcdir)/Makefile.in $(srcdir)/Makefile.am \
 	$(top_srcdir)/configure $(am__configure_deps) \
-	$(srcdir)/config.h.in $(top_srcdir)/src/win/mpd_win32_rc.rc.in \
+	$(srcdir)/config.h.in \
+	$(top_srcdir)/src/win32/mpd_win32_rc.rc.in \
 	$(top_srcdir)/doc/doxygen.conf.in $(srcdir)/mpd.service.in \
 	depcomp test-driver AUTHORS COPYING INSTALL NEWS README \
 	compile config.guess config.sub install-sh missing
@@ -423,7 +408,7 @@ am__CONFIG_DISTCLEAN_FILES = config.status config.cache config.log \
  configure.lineno config.status.lineno
 mkinstalldirs = $(install_sh) -d
 CONFIG_HEADER = config.h
-CONFIG_CLEAN_FILES = src/win/mpd_win32_rc.rc doc/doxygen.conf \
+CONFIG_CLEAN_FILES = src/win32/mpd_win32_rc.rc doc/doxygen.conf \
 	mpd.service
 CONFIG_CLEAN_VPATH_FILES =
 LIBRARIES = $(noinst_LIBRARIES)
@@ -999,7 +984,7 @@ am__src_mpd_SOURCES_DIST = src/check.h src/gerror.h \
 	src/Listen.cxx src/Listen.hxx src/LogInit.cxx src/LogInit.hxx \
 	src/Log.cxx src/Log.hxx src/LogV.hxx src/ls.cxx src/ls.hxx \
 	src/IOThread.cxx src/IOThread.hxx src/Main.cxx src/Main.hxx \
-	src/Instance.cxx src/Instance.hxx src/Win32Main.cxx \
+	src/Instance.cxx src/Instance.hxx src/win32/Win32Main.cxx \
 	src/GlobalEvents.cxx src/GlobalEvents.hxx src/Daemon.cxx \
 	src/Daemon.hxx src/AudioCompress/compress.c \
 	src/MixRampInfo.hxx src/MusicBuffer.cxx src/MusicBuffer.hxx \
@@ -1150,7 +1135,7 @@ am_src_mpd_OBJECTS = $(am__objects_59) $(am__objects_60) \
 	src/src_mpd-LogInit.$(OBJEXT) src/src_mpd-Log.$(OBJEXT) \
 	src/src_mpd-ls.$(OBJEXT) src/src_mpd-IOThread.$(OBJEXT) \
 	src/src_mpd-Main.$(OBJEXT) src/src_mpd-Instance.$(OBJEXT) \
-	src/src_mpd-Win32Main.$(OBJEXT) \
+	src/win32/src_mpd-Win32Main.$(OBJEXT) \
 	src/src_mpd-GlobalEvents.$(OBJEXT) \
 	src/src_mpd-Daemon.$(OBJEXT) \
 	src/AudioCompress/src_mpd-compress.$(OBJEXT) \
@@ -1233,6 +1218,15 @@ am__DEPENDENCIES_12 = libfilter_plugins.a $(am__DEPENDENCIES_11)
 @ENABLE_ENCODER_TRUE@	$(am__DEPENDENCIES_1) \
 @ENABLE_ENCODER_TRUE@	$(am__DEPENDENCIES_1)
 am__DEPENDENCIES_14 = libmixer_plugins.a $(am__DEPENDENCIES_1)
+src_mpd_DEPENDENCIES = $(am__DEPENDENCIES_2) $(am__DEPENDENCIES_4) \
+	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
+	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_6) \
+	$(am__DEPENDENCIES_7) $(am__DEPENDENCIES_8) \
+	$(am__DEPENDENCIES_9) $(am__DEPENDENCIES_10) \
+	$(am__DEPENDENCIES_12) $(am__DEPENDENCIES_13) \
+	$(am__DEPENDENCIES_14) libconf.a libevent.a libthread.a \
+	libsystem.a libutil.a libfs.a $(am__DEPENDENCIES_1) \
+	$(am__DEPENDENCIES_1)
 src_mpd_LINK = $(CXXLD) $(AM_CXXFLAGS) $(CXXFLAGS) $(src_mpd_LDFLAGS) \
 	$(LDFLAGS) -o $@
 am__src_pcm_dsd2pcm_dsd2pcm_SOURCES_DIST = src/pcm/dsd2pcm/dsd2pcm.c \
@@ -2324,7 +2318,7 @@ src_mpd_SOURCES = $(mpd_headers) $(DECODER_SRC) $(OUTPUT_API_SRC) \
 	src/Listen.cxx src/Listen.hxx src/LogInit.cxx src/LogInit.hxx \
 	src/Log.cxx src/Log.hxx src/LogV.hxx src/ls.cxx src/ls.hxx \
 	src/IOThread.cxx src/IOThread.hxx src/Main.cxx src/Main.hxx \
-	src/Instance.cxx src/Instance.hxx src/Win32Main.cxx \
+	src/Instance.cxx src/Instance.hxx src/win32/Win32Main.cxx \
 	src/GlobalEvents.cxx src/GlobalEvents.hxx src/Daemon.cxx \
 	src/Daemon.hxx src/AudioCompress/compress.c \
 	src/MixRampInfo.hxx src/MusicBuffer.cxx src/MusicBuffer.hxx \
@@ -2364,9 +2358,9 @@ src_mpd_SOURCES = $(mpd_headers) $(DECODER_SRC) $(OUTPUT_API_SRC) \
 	$(am__append_1) $(am__append_2) $(am__append_3) \
 	$(am__append_7) $(am__append_40) $(am__append_41) \
 	$(am__append_42)
-@HAVE_WINDOWS_TRUE@noinst_DATA = src/win/mpd_win32_rc.rc
-@HAVE_WINDOWS_TRUE@src_mpd_DEPENDENCIES = src/win/mpd_win32_rc.$(OBJEXT)
-@HAVE_WINDOWS_TRUE@src_mpd_LDFLAGS = -Wl,src/win/mpd_win32_rc.$(OBJEXT)
+@HAVE_WINDOWS_TRUE@noinst_DATA = src/win32/mpd_win32_rc.rc
+@HAVE_WINDOWS_TRUE@EXTRA_src_mpd_DEPENDENCIES = src/win32/mpd_win32_rc.$(OBJEXT)
+@HAVE_WINDOWS_TRUE@src_mpd_LDFLAGS = -Wl,src/win32/mpd_win32_rc.$(OBJEXT)
 
 # Generic utility library
 libutil_a_SOURCES = \
@@ -3236,7 +3230,7 @@ EXTRA_DIST = $(doc_DATA) autogen.sh \
 	test/test_archive_zzip.sh \
 	$(wildcard scripts/*.sh) \
 	$(man_MANS) $(DOCBOOK_FILES) doc/mpdconf.example doc/doxygen.conf \
-	src/win/mpd_win32_rc.rc.in src/win/mpd.ico
+	src/win32/mpd_win32_rc.rc.in src/win32/mpd.ico
 
 all: config.h
 	$(MAKE) $(AM_MAKEFLAGS) all-am
@@ -3292,7 +3286,7 @@ $(srcdir)/config.h.in:  $(am__configure_deps)
 
 distclean-hdr:
 	-rm -f config.h stamp-h1
-src/win/mpd_win32_rc.rc: $(top_builddir)/config.status $(top_srcdir)/src/win/mpd_win32_rc.rc.in
+src/win32/mpd_win32_rc.rc: $(top_builddir)/config.status $(top_srcdir)/src/win32/mpd_win32_rc.rc.in
 	cd $(top_builddir) && $(SHELL) ./config.status $@
 doc/doxygen.conf: $(top_builddir)/config.status $(top_srcdir)/doc/doxygen.conf.in
 	cd $(top_builddir) && $(SHELL) ./config.status $@
@@ -4222,8 +4216,14 @@ src/src_mpd-Main.$(OBJEXT): src/$(am__dirstamp) \
 	src/$(DEPDIR)/$(am__dirstamp)
 src/src_mpd-Instance.$(OBJEXT): src/$(am__dirstamp) \
 	src/$(DEPDIR)/$(am__dirstamp)
-src/src_mpd-Win32Main.$(OBJEXT): src/$(am__dirstamp) \
-	src/$(DEPDIR)/$(am__dirstamp)
+src/win32/$(am__dirstamp):
+	@$(MKDIR_P) src/win32
+	@: > src/win32/$(am__dirstamp)
+src/win32/$(DEPDIR)/$(am__dirstamp):
+	@$(MKDIR_P) src/win32/$(DEPDIR)
+	@: > src/win32/$(DEPDIR)/$(am__dirstamp)
+src/win32/src_mpd-Win32Main.$(OBJEXT): src/win32/$(am__dirstamp) \
+	src/win32/$(DEPDIR)/$(am__dirstamp)
 src/src_mpd-GlobalEvents.$(OBJEXT): src/$(am__dirstamp) \
 	src/$(DEPDIR)/$(am__dirstamp)
 src/src_mpd-Daemon.$(OBJEXT): src/$(am__dirstamp) \
@@ -4688,6 +4688,7 @@ mostlyclean-compile:
 	-rm -f src/tag/*.$(OBJEXT)
 	-rm -f src/thread/*.$(OBJEXT)
 	-rm -f src/util/*.$(OBJEXT)
+	-rm -f src/win32/*.$(OBJEXT)
 	-rm -f test/*.$(OBJEXT)
 
 distclean-compile:
@@ -4883,7 +4884,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/src_mpd-UpdateSong.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/src_mpd-UpdateWalk.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/src_mpd-Volume.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/src_mpd-Win32Main.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/src_mpd-ZeroconfAvahi.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/src_mpd-ZeroconfBonjour.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/src_mpd-ZeroconfGlue.Po@am__quote@
@@ -5097,6 +5097,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@src/util/$(DEPDIR)/fifo_buffer.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@src/util/$(DEPDIR)/growing_fifo.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@src/util/$(DEPDIR)/list_sort.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@src/win32/$(DEPDIR)/src_mpd-Win32Main.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@test/$(DEPDIR)/DumpDatabase.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@test/$(DEPDIR)/FakeDecoderAPI.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@test/$(DEPDIR)/FakeReplayGainConfig.Po@am__quote@
@@ -8303,19 +8304,19 @@ src/src_mpd-Instance.obj: src/Instance.cxx
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(src_mpd_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o src/src_mpd-Instance.obj `if test -f 'src/Instance.cxx'; then $(CYGPATH_W) 'src/Instance.cxx'; else $(CYGPATH_W) '$(srcdir)/src/Instance.cxx'; fi`
 
-src/src_mpd-Win32Main.o: src/Win32Main.cxx
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(src_mpd_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT src/src_mpd-Win32Main.o -MD -MP -MF src/$(DEPDIR)/src_mpd-Win32Main.Tpo -c -o src/src_mpd-Win32Main.o `test -f 'src/Win32Main.cxx' || echo '$(srcdir)/'`src/Win32Main.cxx
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) src/$(DEPDIR)/src_mpd-Win32Main.Tpo src/$(DEPDIR)/src_mpd-Win32Main.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='src/Win32Main.cxx' object='src/src_mpd-Win32Main.o' libtool=no @AMDEPBACKSLASH@
+src/win32/src_mpd-Win32Main.o: src/win32/Win32Main.cxx
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(src_mpd_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT src/win32/src_mpd-Win32Main.o -MD -MP -MF src/win32/$(DEPDIR)/src_mpd-Win32Main.Tpo -c -o src/win32/src_mpd-Win32Main.o `test -f 'src/win32/Win32Main.cxx' || echo '$(srcdir)/'`src/win32/Win32Main.cxx
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) src/win32/$(DEPDIR)/src_mpd-Win32Main.Tpo src/win32/$(DEPDIR)/src_mpd-Win32Main.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='src/win32/Win32Main.cxx' object='src/win32/src_mpd-Win32Main.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(src_mpd_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o src/src_mpd-Win32Main.o `test -f 'src/Win32Main.cxx' || echo '$(srcdir)/'`src/Win32Main.cxx
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(src_mpd_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o src/win32/src_mpd-Win32Main.o `test -f 'src/win32/Win32Main.cxx' || echo '$(srcdir)/'`src/win32/Win32Main.cxx
 
-src/src_mpd-Win32Main.obj: src/Win32Main.cxx
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(src_mpd_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT src/src_mpd-Win32Main.obj -MD -MP -MF src/$(DEPDIR)/src_mpd-Win32Main.Tpo -c -o src/src_mpd-Win32Main.obj `if test -f 'src/Win32Main.cxx'; then $(CYGPATH_W) 'src/Win32Main.cxx'; else $(CYGPATH_W) '$(srcdir)/src/Win32Main.cxx'; fi`
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) src/$(DEPDIR)/src_mpd-Win32Main.Tpo src/$(DEPDIR)/src_mpd-Win32Main.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='src/Win32Main.cxx' object='src/src_mpd-Win32Main.obj' libtool=no @AMDEPBACKSLASH@
+src/win32/src_mpd-Win32Main.obj: src/win32/Win32Main.cxx
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(src_mpd_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT src/win32/src_mpd-Win32Main.obj -MD -MP -MF src/win32/$(DEPDIR)/src_mpd-Win32Main.Tpo -c -o src/win32/src_mpd-Win32Main.obj `if test -f 'src/win32/Win32Main.cxx'; then $(CYGPATH_W) 'src/win32/Win32Main.cxx'; else $(CYGPATH_W) '$(srcdir)/src/win32/Win32Main.cxx'; fi`
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) src/win32/$(DEPDIR)/src_mpd-Win32Main.Tpo src/win32/$(DEPDIR)/src_mpd-Win32Main.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='src/win32/Win32Main.cxx' object='src/win32/src_mpd-Win32Main.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(src_mpd_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o src/src_mpd-Win32Main.obj `if test -f 'src/Win32Main.cxx'; then $(CYGPATH_W) 'src/Win32Main.cxx'; else $(CYGPATH_W) '$(srcdir)/src/Win32Main.cxx'; fi`
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(src_mpd_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o src/win32/src_mpd-Win32Main.obj `if test -f 'src/win32/Win32Main.cxx'; then $(CYGPATH_W) 'src/win32/Win32Main.cxx'; else $(CYGPATH_W) '$(srcdir)/src/win32/Win32Main.cxx'; fi`
 
 src/src_mpd-GlobalEvents.o: src/GlobalEvents.cxx
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(src_mpd_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT src/src_mpd-GlobalEvents.o -MD -MP -MF src/$(DEPDIR)/src_mpd-GlobalEvents.Tpo -c -o src/src_mpd-GlobalEvents.o `test -f 'src/GlobalEvents.cxx' || echo '$(srcdir)/'`src/GlobalEvents.cxx
@@ -10300,15 +10301,17 @@ distclean-generic:
 	-rm -f src/thread/$(am__dirstamp)
 	-rm -f src/util/$(DEPDIR)/$(am__dirstamp)
 	-rm -f src/util/$(am__dirstamp)
+	-rm -f src/win32/$(DEPDIR)/$(am__dirstamp)
+	-rm -f src/win32/$(am__dirstamp)
 	-rm -f test/$(DEPDIR)/$(am__dirstamp)
 	-rm -f test/$(am__dirstamp)
 
 maintainer-clean-generic:
 	@echo "This command is intended for maintainers to use"
 	@echo "it deletes files that may require special tools to rebuild."
-@ENABLE_DOCUMENTATION_FALSE@clean-local:
 @ENABLE_DOCUMENTATION_FALSE@uninstall-local:
 @ENABLE_DOCUMENTATION_FALSE@install-data-local:
+@ENABLE_DOCUMENTATION_FALSE@clean-local:
 clean: clean-am
 
 clean-am: clean-binPROGRAMS clean-generic clean-local \
@@ -10316,7 +10319,7 @@ clean-am: clean-binPROGRAMS clean-generic clean-local \
 
 distclean: distclean-am
 	-rm -f $(am__CONFIG_DISTCLEAN_FILES)
-	-rm -rf src/$(DEPDIR) src/AudioCompress/$(DEPDIR) src/archive/$(DEPDIR) src/command/$(DEPDIR) src/cue/$(DEPDIR) src/db/$(DEPDIR) src/decoder/$(DEPDIR) src/encoder/$(DEPDIR) src/event/$(DEPDIR) src/filter/$(DEPDIR) src/fs/$(DEPDIR) src/input/$(DEPDIR) src/mixer/$(DEPDIR) src/output/$(DEPDIR) src/pcm/$(DEPDIR) src/pcm/dsd2pcm/$(DEPDIR) src/playlist/$(DEPDIR) src/protocol/$(DEPDIR) src/system/$(DEPDIR) src/tag/$(DEPDIR) src/thread/$(DEPDIR) src/util/$(DEPDIR) test/$(DEPDIR)
+	-rm -rf src/$(DEPDIR) src/AudioCompress/$(DEPDIR) src/archive/$(DEPDIR) src/command/$(DEPDIR) src/cue/$(DEPDIR) src/db/$(DEPDIR) src/decoder/$(DEPDIR) src/encoder/$(DEPDIR) src/event/$(DEPDIR) src/filter/$(DEPDIR) src/fs/$(DEPDIR) src/input/$(DEPDIR) src/mixer/$(DEPDIR) src/output/$(DEPDIR) src/pcm/$(DEPDIR) src/pcm/dsd2pcm/$(DEPDIR) src/playlist/$(DEPDIR) src/protocol/$(DEPDIR) src/system/$(DEPDIR) src/tag/$(DEPDIR) src/thread/$(DEPDIR) src/util/$(DEPDIR) src/win32/$(DEPDIR) test/$(DEPDIR)
 	-rm -f Makefile
 distclean-am: clean-am distclean-compile distclean-generic \
 	distclean-hdr distclean-tags
@@ -10366,7 +10369,7 @@ installcheck-am:
 maintainer-clean: maintainer-clean-am
 	-rm -f $(am__CONFIG_DISTCLEAN_FILES)
 	-rm -rf $(top_srcdir)/autom4te.cache
-	-rm -rf src/$(DEPDIR) src/AudioCompress/$(DEPDIR) src/archive/$(DEPDIR) src/command/$(DEPDIR) src/cue/$(DEPDIR) src/db/$(DEPDIR) src/decoder/$(DEPDIR) src/encoder/$(DEPDIR) src/event/$(DEPDIR) src/filter/$(DEPDIR) src/fs/$(DEPDIR) src/input/$(DEPDIR) src/mixer/$(DEPDIR) src/output/$(DEPDIR) src/pcm/$(DEPDIR) src/pcm/dsd2pcm/$(DEPDIR) src/playlist/$(DEPDIR) src/protocol/$(DEPDIR) src/system/$(DEPDIR) src/tag/$(DEPDIR) src/thread/$(DEPDIR) src/util/$(DEPDIR) test/$(DEPDIR)
+	-rm -rf src/$(DEPDIR) src/AudioCompress/$(DEPDIR) src/archive/$(DEPDIR) src/command/$(DEPDIR) src/cue/$(DEPDIR) src/db/$(DEPDIR) src/decoder/$(DEPDIR) src/encoder/$(DEPDIR) src/event/$(DEPDIR) src/filter/$(DEPDIR) src/fs/$(DEPDIR) src/input/$(DEPDIR) src/mixer/$(DEPDIR) src/output/$(DEPDIR) src/pcm/$(DEPDIR) src/pcm/dsd2pcm/$(DEPDIR) src/playlist/$(DEPDIR) src/protocol/$(DEPDIR) src/system/$(DEPDIR) src/tag/$(DEPDIR) src/thread/$(DEPDIR) src/util/$(DEPDIR) src/win32/$(DEPDIR) test/$(DEPDIR)
 	-rm -f Makefile
 maintainer-clean-am: distclean-am maintainer-clean-generic
 
@@ -10420,7 +10423,7 @@ uninstall-man: uninstall-man1 uninstall-man5
 # Windows resource file
 #
 
-src/win/mpd_win32_rc.$(OBJEXT): src/win/mpd_win32_rc.rc
+src/win32/mpd_win32_rc.$(OBJEXT): src/win32/mpd_win32_rc.rc
 	$(WINDRES) -i $< -o $@
 sparse-check:
 	$(SPARSE) -I. $(src_mpd_CFLAGS) $(src_mpd_CPPFLAGS) $(SPARSE_FLAGS) $(SPARSE_CPPFLAGS) $(SPARSE_SRC)

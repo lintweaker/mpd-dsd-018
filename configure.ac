@@ -1,6 +1,6 @@
 AC_PREREQ(2.60)
 
-AC_INIT(mpd, 0.18.12-dsd, gtmkramer@xs4all.nl)
+AC_INIT(mpd, 0.18.13-dsd, gtmkramer@xs4all.nl)
 
 VERSION_MAJOR=0
 VERSION_MINOR=18
@@ -70,7 +70,7 @@ host_is_darwin=no
 case "$host_os" in
 mingw32* | windows*)
 	AC_CONFIG_FILES([
-		src/win/mpd_win32_rc.rc
+		src/win32/mpd_win32_rc.rc
 	])
 	AC_CHECK_TOOL(WINDRES, windres)
 	AM_CPPFLAGS="$AM_CPPFLAGS -DWIN32_LEAN_AND_MEAN"

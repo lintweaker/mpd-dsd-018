@@ -388,7 +388,7 @@ dsdiff_decode_chunk(Decoder &decoder, InputStream &is,
 
 	const uint64_t stream_end_offset = chunk_size + (uint64_t) stream_start_offset;
 
-	while (chunk_size > 0) {
+	while (chunk_size >= frame_size) {
 		/* see how much aligned data from the remaining chunk
 		   fits into the local buffer */
 		size_t now_size = buffer_size;
