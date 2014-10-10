@@ -1,0 +1,21 @@
+***************
+*** 476,487 ****
+  libdecoder_plugins_a_SOURCES = \
+  	src/decoder/PcmDecoderPlugin.cxx \
+  	src/decoder/PcmDecoderPlugin.hxx \
+- 	src/decoder/DsdiffDecoderPlugin.cxx \
+- 	src/decoder/DsdiffDecoderPlugin.hxx \
+- 	src/decoder/DsfDecoderPlugin.cxx \
+- 	src/decoder/DsfDecoderPlugin.hxx \
+- 	src/decoder/DsdLib.cxx \
+- 	src/decoder/DsdLib.hxx \
+  	src/DecoderBuffer.cxx src/DecoderBuffer.hxx \
+  	src/DecoderPlugin.cxx \
+  	src/DecoderList.cxx src/DecoderList.hxx
+--- 476,481 ----
+  libdecoder_plugins_a_SOURCES = \
+  	src/decoder/PcmDecoderPlugin.cxx \
+  	src/decoder/PcmDecoderPlugin.hxx \
+  	src/DecoderBuffer.cxx src/DecoderBuffer.hxx \
+  	src/DecoderPlugin.cxx \
+  	src/DecoderList.cxx src/DecoderList.hxx

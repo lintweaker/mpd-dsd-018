@@ -74,9 +74,11 @@ const struct DecoderPlugin *const decoder_plugins[] = {
 #ifdef HAVE_AUDIOFILE
 	&audiofile_decoder_plugin,
 #endif
+#ifdef ENABLE_DSD
 	&dsdiff_decoder_plugin,
 	&dsf_decoder_plugin,
 	&dsdhybrid_decoder_plugin,
+#endif
 #ifdef HAVE_FAAD
 	&faad_decoder_plugin,
 #endif

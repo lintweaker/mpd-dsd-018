@@ -39,5 +39,7 @@ and DSDIFF)
 13-Aug-14 Update to MPD 0.18.12
 10-Oct-14 Update to MPD 0.18.13
 	  Update to MPD 0.18.14
+	  Update to MPP 0.18.15
+
 
 
