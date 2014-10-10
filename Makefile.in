@@ -124,19 +124,27 @@ bin_PROGRAMS = src/mpd$(EXEEXT)
 @HAVE_ID3TAG_TRUE@	src/tag/Riff.cxx src/tag/Riff.hxx \
 @HAVE_ID3TAG_TRUE@	src/tag/Aiff.cxx src/tag/Aiff.hxx
 
-@HAVE_MAD_TRUE@am__append_12 = \
+@ENABLE_DSD_TRUE@am__append_12 = \
+@ENABLE_DSD_TRUE@	src/decoder/DsdiffDecoderPlugin.cxx \
+@ENABLE_DSD_TRUE@	src/decoder/DsdiffDecoderPlugin.hxx \
+@ENABLE_DSD_TRUE@	src/decoder/DsfDecoderPlugin.cxx \
+@ENABLE_DSD_TRUE@	src/decoder/DsfDecoderPlugin.hxx \
+@ENABLE_DSD_TRUE@	src/decoder/DsdLib.cxx \
+@ENABLE_DSD_TRUE@	src/decoder/DsdLib.hxx
+
+@HAVE_MAD_TRUE@am__append_13 = \
 @HAVE_MAD_TRUE@	src/decoder/MadDecoderPlugin.cxx \
 @HAVE_MAD_TRUE@	src/decoder/MadDecoderPlugin.hxx
 
-@HAVE_MPG123_TRUE@am__append_13 = \
+@HAVE_MPG123_TRUE@am__append_14 = \
 @HAVE_MPG123_TRUE@	src/decoder/Mpg123DecoderPlugin.cxx \
 @HAVE_MPG123_TRUE@	src/decoder/Mpg123DecoderPlugin.hxx
 
-@HAVE_MPCDEC_TRUE@am__append_14 = \
+@HAVE_MPCDEC_TRUE@am__append_15 = \
 @HAVE_MPCDEC_TRUE@	src/decoder/MpcdecDecoderPlugin.cxx \
 @HAVE_MPCDEC_TRUE@	src/decoder/MpcdecDecoderPlugin.hxx
 
-@HAVE_OPUS_TRUE@am__append_15 = \
+@HAVE_OPUS_TRUE@am__append_16 = \
 @HAVE_OPUS_TRUE@	src/decoder/OggUtil.cxx \
 @HAVE_OPUS_TRUE@	src/decoder/OggUtil.hxx \
 @HAVE_OPUS_TRUE@	src/decoder/OggSyncState.hxx \
@@ -150,27 +158,27 @@ bin_PROGRAMS = src/mpd$(EXEEXT)
 @HAVE_OPUS_TRUE@	src/decoder/OpusDecoderPlugin.cxx \
 @HAVE_OPUS_TRUE@	src/decoder/OpusDecoderPlugin.h
 
-@HAVE_WAVPACK_TRUE@am__append_16 = \
+@HAVE_WAVPACK_TRUE@am__append_17 = \
 @HAVE_WAVPACK_TRUE@	src/decoder/WavpackDecoderPlugin.cxx \
 @HAVE_WAVPACK_TRUE@	src/decoder/WavpackDecoderPlugin.hxx
 
-@HAVE_ADPLUG_TRUE@am__append_17 = \
+@HAVE_ADPLUG_TRUE@am__append_18 = \
 @HAVE_ADPLUG_TRUE@	src/decoder/AdPlugDecoderPlugin.cxx \
 @HAVE_ADPLUG_TRUE@	src/decoder/AdPlugDecoderPlugin.h
 
-@HAVE_FAAD_TRUE@am__append_18 = \
+@HAVE_FAAD_TRUE@am__append_19 = \
 @HAVE_FAAD_TRUE@	src/decoder/FaadDecoderPlugin.cxx src/decoder/FaadDecoderPlugin.hxx
 
-@HAVE_XIPH_TRUE@am__append_19 = \
+@HAVE_XIPH_TRUE@am__append_20 = \
 @HAVE_XIPH_TRUE@	src/decoder/XiphTags.cxx src/decoder/XiphTags.hxx \
 @HAVE_XIPH_TRUE@	src/decoder/OggCodec.cxx src/decoder/OggCodec.hxx
 
-@ENABLE_VORBIS_DECODER_TRUE@am__append_20 = \
+@ENABLE_VORBIS_DECODER_TRUE@am__append_21 = \
 @ENABLE_VORBIS_DECODER_TRUE@	src/decoder/VorbisDomain.cxx src/decoder/VorbisDomain.hxx \
 @ENABLE_VORBIS_DECODER_TRUE@	src/decoder/VorbisComments.cxx src/decoder/VorbisComments.hxx \
 @ENABLE_VORBIS_DECODER_TRUE@	src/decoder/VorbisDecoderPlugin.cxx src/decoder/VorbisDecoderPlugin.h
 
-@HAVE_FLAC_TRUE@am__append_21 = \
+@HAVE_FLAC_TRUE@am__append_22 = \
 @HAVE_FLAC_TRUE@	src/decoder/FlacInput.cxx src/decoder/FlacInput.hxx \
 @HAVE_FLAC_TRUE@	src/decoder/FlacIOHandle.cxx src/decoder/FlacIOHandle.hxx \
 @HAVE_FLAC_TRUE@	src/decoder/FlacMetadata.cxx src/decoder/FlacMetadata.hxx \
@@ -180,168 +188,168 @@ bin_PROGRAMS = src/mpd$(EXEEXT)
 @HAVE_FLAC_TRUE@	src/decoder/FlacDecoderPlugin.cxx \
 @HAVE_FLAC_TRUE@	src/decoder/FlacDecoderPlugin.h
 
-@HAVE_AUDIOFILE_TRUE@am__append_22 = \
+@HAVE_AUDIOFILE_TRUE@am__append_23 = \
 @HAVE_AUDIOFILE_TRUE@	src/decoder/AudiofileDecoderPlugin.cxx \
 @HAVE_AUDIOFILE_TRUE@	src/decoder/AudiofileDecoderPlugin.hxx
 
-@ENABLE_MIKMOD_DECODER_TRUE@am__append_23 = \
+@ENABLE_MIKMOD_DECODER_TRUE@am__append_24 = \
 @ENABLE_MIKMOD_DECODER_TRUE@	src/decoder/MikmodDecoderPlugin.cxx \
 @ENABLE_MIKMOD_DECODER_TRUE@	src/decoder/MikmodDecoderPlugin.hxx
 
-@HAVE_MODPLUG_TRUE@am__append_24 = libmodplug_decoder_plugin.a
-@HAVE_MODPLUG_TRUE@am__append_25 = libmodplug_decoder_plugin.a $(MODPLUG_LIBS)
-@ENABLE_SIDPLAY_TRUE@am__append_26 = \
+@HAVE_MODPLUG_TRUE@am__append_25 = libmodplug_decoder_plugin.a
+@HAVE_MODPLUG_TRUE@am__append_26 = libmodplug_decoder_plugin.a $(MODPLUG_LIBS)
+@ENABLE_SIDPLAY_TRUE@am__append_27 = \
 @ENABLE_SIDPLAY_TRUE@	src/decoder/SidplayDecoderPlugin.cxx \
 @ENABLE_SIDPLAY_TRUE@	src/decoder/SidplayDecoderPlugin.hxx
 
-@ENABLE_FLUIDSYNTH_TRUE@am__append_27 = \
+@ENABLE_FLUIDSYNTH_TRUE@am__append_28 = \
 @ENABLE_FLUIDSYNTH_TRUE@	src/decoder/FluidsynthDecoderPlugin.cxx \
 @ENABLE_FLUIDSYNTH_TRUE@	src/decoder/FluidsynthDecoderPlugin.hxx
 
-@ENABLE_WILDMIDI_TRUE@am__append_28 = \
+@ENABLE_WILDMIDI_TRUE@am__append_29 = \
 @ENABLE_WILDMIDI_TRUE@	src/decoder/WildmidiDecoderPlugin.cxx \
 @ENABLE_WILDMIDI_TRUE@	src/decoder/WildmidiDecoderPlugin.hxx
 
-@HAVE_FFMPEG_TRUE@am__append_29 = \
+@HAVE_FFMPEG_TRUE@am__append_30 = \
 @HAVE_FFMPEG_TRUE@	src/decoder/FfmpegMetaData.cxx \
 @HAVE_FFMPEG_TRUE@	src/decoder/FfmpegMetaData.hxx \
 @HAVE_FFMPEG_TRUE@	src/decoder/FfmpegDecoderPlugin.cxx \
 @HAVE_FFMPEG_TRUE@	src/decoder/FfmpegDecoderPlugin.hxx
 
-@ENABLE_SNDFILE_TRUE@am__append_30 = \
+@ENABLE_SNDFILE_TRUE@am__append_31 = \
 @ENABLE_SNDFILE_TRUE@	src/decoder/SndfileDecoderPlugin.cxx \
 @ENABLE_SNDFILE_TRUE@	src/decoder/SndfileDecoderPlugin.hxx
 
-@HAVE_GME_TRUE@am__append_31 = \
+@HAVE_GME_TRUE@am__append_32 = \
 @HAVE_GME_TRUE@	src/decoder/GmeDecoderPlugin.cxx src/decoder/GmeDecoderPlugin.hxx
 
 
 # encoder plugins
-@ENABLE_ENCODER_TRUE@am__append_32 = libencoder_plugins.a
-@ENABLE_ENCODER_TRUE@@HAVE_OGG_ENCODER_TRUE@am__append_33 = \
+@ENABLE_ENCODER_TRUE@am__append_33 = libencoder_plugins.a
+@ENABLE_ENCODER_TRUE@@HAVE_OGG_ENCODER_TRUE@am__append_34 = \
 @ENABLE_ENCODER_TRUE@@HAVE_OGG_ENCODER_TRUE@	src/encoder/OggSerial.cxx src/encoder/OggSerial.hxx \
 @ENABLE_ENCODER_TRUE@@HAVE_OGG_ENCODER_TRUE@	src/encoder/OggStream.hxx
 
-@ENABLE_ENCODER_TRUE@@ENABLE_WAVE_ENCODER_TRUE@am__append_34 = \
+@ENABLE_ENCODER_TRUE@@ENABLE_WAVE_ENCODER_TRUE@am__append_35 = \
 @ENABLE_ENCODER_TRUE@@ENABLE_WAVE_ENCODER_TRUE@	src/encoder/WaveEncoderPlugin.cxx \
 @ENABLE_ENCODER_TRUE@@ENABLE_WAVE_ENCODER_TRUE@	src/encoder/WaveEncoderPlugin.hxx
 
-@ENABLE_ENCODER_TRUE@@ENABLE_VORBIS_ENCODER_TRUE@am__append_35 = \
+@ENABLE_ENCODER_TRUE@@ENABLE_VORBIS_ENCODER_TRUE@am__append_36 = \
 @ENABLE_ENCODER_TRUE@@ENABLE_VORBIS_ENCODER_TRUE@	src/encoder/VorbisEncoderPlugin.cxx \
 @ENABLE_ENCODER_TRUE@@ENABLE_VORBIS_ENCODER_TRUE@	src/encoder/VorbisEncoderPlugin.hxx
 
-@ENABLE_ENCODER_TRUE@@HAVE_OPUS_TRUE@am__append_36 = \
+@ENABLE_ENCODER_TRUE@@HAVE_OPUS_TRUE@am__append_37 = \
 @ENABLE_ENCODER_TRUE@@HAVE_OPUS_TRUE@	src/encoder/OpusEncoderPlugin.cxx \
 @ENABLE_ENCODER_TRUE@@HAVE_OPUS_TRUE@	src/encoder/OpusEncoderPlugin.hxx
 
-@ENABLE_ENCODER_TRUE@@ENABLE_LAME_ENCODER_TRUE@am__append_37 = \
+@ENABLE_ENCODER_TRUE@@ENABLE_LAME_ENCODER_TRUE@am__append_38 = \
 @ENABLE_ENCODER_TRUE@@ENABLE_LAME_ENCODER_TRUE@	src/encoder/LameEncoderPlugin.cxx \
 @ENABLE_ENCODER_TRUE@@ENABLE_LAME_ENCODER_TRUE@	src/encoder/LameEncoderPlugin.hxx
 
-@ENABLE_ENCODER_TRUE@@ENABLE_TWOLAME_ENCODER_TRUE@am__append_38 = \
+@ENABLE_ENCODER_TRUE@@ENABLE_TWOLAME_ENCODER_TRUE@am__append_39 = \
 @ENABLE_ENCODER_TRUE@@ENABLE_TWOLAME_ENCODER_TRUE@	src/encoder/TwolameEncoderPlugin.cxx \
 @ENABLE_ENCODER_TRUE@@ENABLE_TWOLAME_ENCODER_TRUE@	src/encoder/TwolameEncoderPlugin.hxx
 
-@ENABLE_ENCODER_TRUE@@ENABLE_FLAC_ENCODER_TRUE@am__append_39 = \
+@ENABLE_ENCODER_TRUE@@ENABLE_FLAC_ENCODER_TRUE@am__append_40 = \
 @ENABLE_ENCODER_TRUE@@ENABLE_FLAC_ENCODER_TRUE@	src/encoder/FlacEncoderPlugin.cxx src/encoder/FlacEncoderPlugin.hxx
 
-@HAVE_ZEROCONF_TRUE@am__append_40 = \
+@HAVE_ZEROCONF_TRUE@am__append_41 = \
 @HAVE_ZEROCONF_TRUE@	src/ZeroconfInternal.hxx \
 @HAVE_ZEROCONF_TRUE@	src/ZeroconfGlue.cxx src/ZeroconfGlue.hxx
 
-@HAVE_AVAHI_TRUE@@HAVE_ZEROCONF_TRUE@am__append_41 = \
+@HAVE_AVAHI_TRUE@@HAVE_ZEROCONF_TRUE@am__append_42 = \
 @HAVE_AVAHI_TRUE@@HAVE_ZEROCONF_TRUE@	src/AvahiPoll.cxx src/AvahiPoll.hxx \
 @HAVE_AVAHI_TRUE@@HAVE_ZEROCONF_TRUE@	src/ZeroconfAvahi.cxx src/ZeroconfAvahi.hxx
 
-@HAVE_BONJOUR_TRUE@@HAVE_ZEROCONF_TRUE@am__append_42 = src/ZeroconfBonjour.cxx src/ZeroconfBonjour.hxx
-@ENABLE_CURL_TRUE@am__append_43 = \
+@HAVE_BONJOUR_TRUE@@HAVE_ZEROCONF_TRUE@am__append_43 = src/ZeroconfBonjour.cxx src/ZeroconfBonjour.hxx
+@ENABLE_CURL_TRUE@am__append_44 = \
 @ENABLE_CURL_TRUE@	src/input/CurlInputPlugin.cxx src/input/CurlInputPlugin.hxx \
 @ENABLE_CURL_TRUE@	src/IcyMetaDataParser.cxx src/IcyMetaDataParser.hxx
 
-@ENABLE_CDIO_PARANOIA_TRUE@am__append_44 = \
+@ENABLE_CDIO_PARANOIA_TRUE@am__append_45 = \
 @ENABLE_CDIO_PARANOIA_TRUE@	src/input/CdioParanoiaInputPlugin.cxx \
 @ENABLE_CDIO_PARANOIA_TRUE@	src/input/CdioParanoiaInputPlugin.hxx
 
-@HAVE_FFMPEG_TRUE@am__append_45 = \
+@HAVE_FFMPEG_TRUE@am__append_46 = \
 @HAVE_FFMPEG_TRUE@	src/input/FfmpegInputPlugin.cxx src/input/FfmpegInputPlugin.hxx
 
-@ENABLE_MMS_TRUE@am__append_46 = \
+@ENABLE_MMS_TRUE@am__append_47 = \
 @ENABLE_MMS_TRUE@	src/input/MmsInputPlugin.cxx src/input/MmsInputPlugin.hxx
 
-@ENABLE_DESPOTIFY_TRUE@am__append_47 = \
+@ENABLE_DESPOTIFY_TRUE@am__append_48 = \
 @ENABLE_DESPOTIFY_TRUE@	src/input/DespotifyInputPlugin.cxx \
 @ENABLE_DESPOTIFY_TRUE@	src/input/DespotifyInputPlugin.hxx
 
-@HAVE_ALSA_TRUE@am__append_48 = \
+@HAVE_ALSA_TRUE@am__append_49 = \
 @HAVE_ALSA_TRUE@	src/output/AlsaOutputPlugin.cxx \
 @HAVE_ALSA_TRUE@	src/output/AlsaOutputPlugin.hxx
 
-@HAVE_ALSA_TRUE@am__append_49 = src/mixer/AlsaMixerPlugin.cxx
-@HAVE_ROAR_TRUE@am__append_50 = \
+@HAVE_ALSA_TRUE@am__append_50 = src/mixer/AlsaMixerPlugin.cxx
+@HAVE_ROAR_TRUE@am__append_51 = \
 @HAVE_ROAR_TRUE@	src/output/RoarOutputPlugin.cxx src/output/RoarOutputPlugin.hxx
 
-@HAVE_ROAR_TRUE@am__append_51 = src/mixer/RoarMixerPlugin.cxx
-@HAVE_AO_TRUE@am__append_52 = \
+@HAVE_ROAR_TRUE@am__append_52 = src/mixer/RoarMixerPlugin.cxx
+@HAVE_AO_TRUE@am__append_53 = \
 @HAVE_AO_TRUE@	src/output/AoOutputPlugin.cxx src/output/AoOutputPlugin.hxx
 
-@HAVE_FIFO_TRUE@am__append_53 = \
+@HAVE_FIFO_TRUE@am__append_54 = \
 @HAVE_FIFO_TRUE@	src/output/FifoOutputPlugin.cxx src/output/FifoOutputPlugin.hxx
 
-@ENABLE_PIPE_OUTPUT_TRUE@am__append_54 = \
+@ENABLE_PIPE_OUTPUT_TRUE@am__append_55 = \
 @ENABLE_PIPE_OUTPUT_TRUE@	src/output/PipeOutputPlugin.cxx src/output/PipeOutputPlugin.hxx
 
-@HAVE_JACK_TRUE@am__append_55 = \
+@HAVE_JACK_TRUE@am__append_56 = \
 @HAVE_JACK_TRUE@	src/output/JackOutputPlugin.cxx src/output/JackOutputPlugin.hxx
 
-@HAVE_OSS_TRUE@am__append_56 = \
+@HAVE_OSS_TRUE@am__append_57 = \
 @HAVE_OSS_TRUE@	src/output/OssOutputPlugin.cxx \
 @HAVE_OSS_TRUE@	src/output/OssOutputPlugin.hxx
 
-@HAVE_OSS_TRUE@am__append_57 = src/mixer/OssMixerPlugin.cxx
-@HAVE_OPENAL_TRUE@am__append_58 = \
+@HAVE_OSS_TRUE@am__append_58 = src/mixer/OssMixerPlugin.cxx
+@HAVE_OPENAL_TRUE@am__append_59 = \
 @HAVE_OPENAL_TRUE@	src/output/OpenALOutputPlugin.cxx src/output/OpenALOutputPlugin.hxx
 
-@HAVE_OSX_TRUE@am__append_59 = \
+@HAVE_OSX_TRUE@am__append_60 = \
 @HAVE_OSX_TRUE@	src/output/OSXOutputPlugin.cxx \
 @HAVE_OSX_TRUE@	src/output/OSXOutputPlugin.hxx
 
-@HAVE_PULSE_TRUE@am__append_60 = \
+@HAVE_PULSE_TRUE@am__append_61 = \
 @HAVE_PULSE_TRUE@	src/output/PulseOutputPlugin.cxx src/output/PulseOutputPlugin.hxx
 
-@HAVE_PULSE_TRUE@am__append_61 = \
+@HAVE_PULSE_TRUE@am__append_62 = \
 @HAVE_PULSE_TRUE@	src/mixer/PulseMixerPlugin.cxx src/mixer/PulseMixerPlugin.hxx
 
-@HAVE_SHOUT_TRUE@am__append_62 = \
+@HAVE_SHOUT_TRUE@am__append_63 = \
 @HAVE_SHOUT_TRUE@	src/output/ShoutOutputPlugin.cxx src/output/ShoutOutputPlugin.hxx
 
-@ENABLE_RECORDER_OUTPUT_TRUE@am__append_63 = \
+@ENABLE_RECORDER_OUTPUT_TRUE@am__append_64 = \
 @ENABLE_RECORDER_OUTPUT_TRUE@	src/output/RecorderOutputPlugin.cxx src/output/RecorderOutputPlugin.hxx
 
-@ENABLE_HTTPD_OUTPUT_TRUE@am__append_64 = \
+@ENABLE_HTTPD_OUTPUT_TRUE@am__append_65 = \
 @ENABLE_HTTPD_OUTPUT_TRUE@	src/IcyMetaDataServer.cxx src/IcyMetaDataServer.hxx \
 @ENABLE_HTTPD_OUTPUT_TRUE@	src/output/HttpdInternal.hxx \
 @ENABLE_HTTPD_OUTPUT_TRUE@	src/output/HttpdClient.cxx src/output/HttpdClient.hxx \
 @ENABLE_HTTPD_OUTPUT_TRUE@	src/output/HttpdOutputPlugin.cxx src/output/HttpdOutputPlugin.hxx
 
-@ENABLE_SOLARIS_OUTPUT_TRUE@am__append_65 = \
+@ENABLE_SOLARIS_OUTPUT_TRUE@am__append_66 = \
 @ENABLE_SOLARIS_OUTPUT_TRUE@	src/output/SolarisOutputPlugin.cxx src/output/SolarisOutputPlugin.hxx
 
-@ENABLE_WINMM_OUTPUT_TRUE@am__append_66 = \
+@ENABLE_WINMM_OUTPUT_TRUE@am__append_67 = \
 @ENABLE_WINMM_OUTPUT_TRUE@	src/output/WinmmOutputPlugin.cxx src/output/WinmmOutputPlugin.hxx
 
-@ENABLE_WINMM_OUTPUT_TRUE@am__append_67 = src/mixer/WinmmMixerPlugin.cxx
-@ENABLE_DESPOTIFY_TRUE@am__append_68 = \
+@ENABLE_WINMM_OUTPUT_TRUE@am__append_68 = src/mixer/WinmmMixerPlugin.cxx
+@ENABLE_DESPOTIFY_TRUE@am__append_69 = \
 @ENABLE_DESPOTIFY_TRUE@	src/playlist/DespotifyPlaylistPlugin.cxx \
 @ENABLE_DESPOTIFY_TRUE@	src/playlist/DespotifyPlaylistPlugin.hxx
 
-@ENABLE_SOUNDCLOUD_TRUE@am__append_69 = \
+@ENABLE_SOUNDCLOUD_TRUE@am__append_70 = \
 @ENABLE_SOUNDCLOUD_TRUE@	src/playlist/SoundCloudPlaylistPlugin.cxx \
 @ENABLE_SOUNDCLOUD_TRUE@	src/playlist/SoundCloudPlaylistPlugin.hxx
 
-@ENABLE_SOUNDCLOUD_TRUE@am__append_70 = $(YAJL_LIBS)
-@ENABLE_ARCHIVE_TRUE@@ENABLE_TEST_TRUE@am__append_71 = test/test_archive
-@ENABLE_TEST_TRUE@TESTS = $(am__EXEEXT_2) $(am__append_85) \
-@ENABLE_TEST_TRUE@	$(am__append_86) $(am__append_87)
+@ENABLE_SOUNDCLOUD_TRUE@am__append_71 = $(YAJL_LIBS)
+@ENABLE_ARCHIVE_TRUE@@ENABLE_TEST_TRUE@am__append_72 = test/test_archive
+@ENABLE_TEST_TRUE@TESTS = $(am__EXEEXT_2) $(am__append_86) \
+@ENABLE_TEST_TRUE@	$(am__append_87) $(am__append_88)
 @ENABLE_TEST_TRUE@noinst_PROGRAMS = $(am__EXEEXT_2) \
 @ENABLE_TEST_TRUE@	test/read_conf$(EXEEXT) \
 @ENABLE_TEST_TRUE@	test/run_resolver$(EXEEXT) \
@@ -359,30 +367,30 @@ bin_PROGRAMS = src/mpd$(EXEEXT)
 @ENABLE_TEST_TRUE@	$(am__EXEEXT_3) $(am__EXEEXT_4) \
 @ENABLE_TEST_TRUE@	$(am__EXEEXT_5) $(am__EXEEXT_6) \
 @ENABLE_TEST_TRUE@	$(am__EXEEXT_7) $(am__EXEEXT_8) \
-@ENABLE_TEST_TRUE@	$(am__EXEEXT_9) \
-@ENABLE_TEST_TRUE@	src/pcm/dsd2pcm/dsd2pcm$(EXEEXT)
-@ENABLE_TEST_TRUE@@HAVE_AVAHI_TRUE@am__append_72 = test/run_avahi
-@ENABLE_ARCHIVE_TRUE@@ENABLE_TEST_TRUE@am__append_73 = test/visit_archive
-@ENABLE_TEST_TRUE@@HAVE_ID3TAG_TRUE@am__append_74 = test/dump_rva2
+@ENABLE_TEST_TRUE@	$(am__EXEEXT_9) $(am__EXEEXT_10)
+@ENABLE_TEST_TRUE@@HAVE_AVAHI_TRUE@am__append_73 = test/run_avahi
+@ENABLE_ARCHIVE_TRUE@@ENABLE_TEST_TRUE@am__append_74 = test/visit_archive
+@ENABLE_TEST_TRUE@@HAVE_ID3TAG_TRUE@am__append_75 = test/dump_rva2
 
 # this debug program is still ALSA specific
-@ENABLE_TEST_TRUE@@HAVE_ALSA_TRUE@am__append_75 = test/read_mixer
-@ENABLE_ARCHIVE_TRUE@@ENABLE_DESPOTIFY_TRUE@@ENABLE_TEST_TRUE@am__append_76 = src/DespotifyUtils.cxx
-@ENABLE_TEST_TRUE@@HAVE_FLAC_TRUE@am__append_77 = \
+@ENABLE_TEST_TRUE@@HAVE_ALSA_TRUE@am__append_76 = test/read_mixer
+@ENABLE_ARCHIVE_TRUE@@ENABLE_DESPOTIFY_TRUE@@ENABLE_TEST_TRUE@am__append_77 = src/DespotifyUtils.cxx
+@ENABLE_TEST_TRUE@@HAVE_FLAC_TRUE@am__append_78 = \
 @ENABLE_TEST_TRUE@@HAVE_FLAC_TRUE@	src/ReplayGainInfo.cxx \
 @ENABLE_TEST_TRUE@@HAVE_FLAC_TRUE@	src/decoder/FlacMetadata.cxx
 
-@ENABLE_DESPOTIFY_TRUE@@ENABLE_TEST_TRUE@am__append_78 = src/DespotifyUtils.cxx
 @ENABLE_DESPOTIFY_TRUE@@ENABLE_TEST_TRUE@am__append_79 = src/DespotifyUtils.cxx
 @ENABLE_DESPOTIFY_TRUE@@ENABLE_TEST_TRUE@am__append_80 = src/DespotifyUtils.cxx
 @ENABLE_DESPOTIFY_TRUE@@ENABLE_TEST_TRUE@am__append_81 = src/DespotifyUtils.cxx
 @ENABLE_DESPOTIFY_TRUE@@ENABLE_TEST_TRUE@am__append_82 = src/DespotifyUtils.cxx
-@ENABLE_ENCODER_TRUE@@ENABLE_TEST_TRUE@am__append_83 = test/run_encoder
-@ENABLE_TEST_TRUE@@ENABLE_VORBIS_ENCODER_TRUE@am__append_84 = test/test_vorbis_encoder
-@ENABLE_BZIP2_TEST_TRUE@@ENABLE_TEST_TRUE@am__append_85 = test/test_archive_bzip2.sh
-@ENABLE_TEST_TRUE@@ENABLE_ZZIP_TEST_TRUE@am__append_86 = test/test_archive_zzip.sh
-@ENABLE_ISO9660_TEST_TRUE@@ENABLE_TEST_TRUE@am__append_87 = test/test_archive_iso9660.sh
-@ENABLE_INOTIFY_TRUE@@ENABLE_TEST_TRUE@am__append_88 = test/run_inotify
+@ENABLE_DESPOTIFY_TRUE@@ENABLE_TEST_TRUE@am__append_83 = src/DespotifyUtils.cxx
+@ENABLE_ENCODER_TRUE@@ENABLE_TEST_TRUE@am__append_84 = test/run_encoder
+@ENABLE_TEST_TRUE@@ENABLE_VORBIS_ENCODER_TRUE@am__append_85 = test/test_vorbis_encoder
+@ENABLE_BZIP2_TEST_TRUE@@ENABLE_TEST_TRUE@am__append_86 = test/test_archive_bzip2.sh
+@ENABLE_TEST_TRUE@@ENABLE_ZZIP_TEST_TRUE@am__append_87 = test/test_archive_zzip.sh
+@ENABLE_ISO9660_TEST_TRUE@@ENABLE_TEST_TRUE@am__append_88 = test/test_archive_iso9660.sh
+@ENABLE_INOTIFY_TRUE@@ENABLE_TEST_TRUE@am__append_89 = test/run_inotify
+@ENABLE_DSD_TRUE@@ENABLE_TEST_TRUE@am__append_90 = src/pcm/dsd2pcm/dsd2pcm
 subdir = .
 DIST_COMMON = $(srcdir)/Makefile.in $(srcdir)/Makefile.am \
 	$(top_srcdir)/configure $(am__configure_deps) \
@@ -469,15 +477,14 @@ libdecoder_plugins_a_AR = $(AR) $(ARFLAGS)
 libdecoder_plugins_a_LIBADD =
 am__libdecoder_plugins_a_SOURCES_DIST =  \
 	src/decoder/PcmDecoderPlugin.cxx \
-	src/decoder/PcmDecoderPlugin.hxx \
+	src/decoder/PcmDecoderPlugin.hxx src/DecoderBuffer.cxx \
+	src/DecoderBuffer.hxx src/DecoderPlugin.cxx \
+	src/DecoderList.cxx src/DecoderList.hxx \
 	src/decoder/DsdiffDecoderPlugin.cxx \
 	src/decoder/DsdiffDecoderPlugin.hxx \
 	src/decoder/DsfDecoderPlugin.cxx \
 	src/decoder/DsfDecoderPlugin.hxx src/decoder/DsdLib.cxx \
-	src/decoder/DsdLib.hxx src/DecoderBuffer.cxx \
-	src/DecoderBuffer.hxx src/DecoderPlugin.cxx \
-	src/DecoderList.cxx src/DecoderList.hxx \
-	src/decoder/MadDecoderPlugin.cxx \
+	src/decoder/DsdLib.hxx src/decoder/MadDecoderPlugin.cxx \
 	src/decoder/MadDecoderPlugin.hxx \
 	src/decoder/Mpg123DecoderPlugin.cxx \
 	src/decoder/Mpg123DecoderPlugin.hxx \
@@ -526,44 +533,44 @@ am__libdecoder_plugins_a_SOURCES_DIST =  \
 	src/decoder/SndfileDecoderPlugin.hxx \
 	src/decoder/GmeDecoderPlugin.cxx \
 	src/decoder/GmeDecoderPlugin.hxx
-@HAVE_MAD_TRUE@am__objects_5 = src/decoder/libdecoder_plugins_a-MadDecoderPlugin.$(OBJEXT)
-@HAVE_MPG123_TRUE@am__objects_6 = src/decoder/libdecoder_plugins_a-Mpg123DecoderPlugin.$(OBJEXT)
-@HAVE_MPCDEC_TRUE@am__objects_7 = src/decoder/libdecoder_plugins_a-MpcdecDecoderPlugin.$(OBJEXT)
-@HAVE_OPUS_TRUE@am__objects_8 = src/decoder/libdecoder_plugins_a-OggUtil.$(OBJEXT) \
+@ENABLE_DSD_TRUE@am__objects_5 = src/decoder/libdecoder_plugins_a-DsdiffDecoderPlugin.$(OBJEXT) \
+@ENABLE_DSD_TRUE@	src/decoder/libdecoder_plugins_a-DsfDecoderPlugin.$(OBJEXT) \
+@ENABLE_DSD_TRUE@	src/decoder/libdecoder_plugins_a-DsdLib.$(OBJEXT)
+@HAVE_MAD_TRUE@am__objects_6 = src/decoder/libdecoder_plugins_a-MadDecoderPlugin.$(OBJEXT)
+@HAVE_MPG123_TRUE@am__objects_7 = src/decoder/libdecoder_plugins_a-Mpg123DecoderPlugin.$(OBJEXT)
+@HAVE_MPCDEC_TRUE@am__objects_8 = src/decoder/libdecoder_plugins_a-MpcdecDecoderPlugin.$(OBJEXT)
+@HAVE_OPUS_TRUE@am__objects_9 = src/decoder/libdecoder_plugins_a-OggUtil.$(OBJEXT) \
 @HAVE_OPUS_TRUE@	src/decoder/libdecoder_plugins_a-OggFind.$(OBJEXT) \
 @HAVE_OPUS_TRUE@	src/decoder/libdecoder_plugins_a-OpusDomain.$(OBJEXT) \
 @HAVE_OPUS_TRUE@	src/decoder/libdecoder_plugins_a-OpusHead.$(OBJEXT) \
 @HAVE_OPUS_TRUE@	src/decoder/libdecoder_plugins_a-OpusTags.$(OBJEXT) \
 @HAVE_OPUS_TRUE@	src/decoder/libdecoder_plugins_a-OpusDecoderPlugin.$(OBJEXT)
-@HAVE_WAVPACK_TRUE@am__objects_9 = src/decoder/libdecoder_plugins_a-WavpackDecoderPlugin.$(OBJEXT)
-@HAVE_ADPLUG_TRUE@am__objects_10 = src/decoder/libdecoder_plugins_a-AdPlugDecoderPlugin.$(OBJEXT)
-@HAVE_FAAD_TRUE@am__objects_11 = src/decoder/libdecoder_plugins_a-FaadDecoderPlugin.$(OBJEXT)
-@HAVE_XIPH_TRUE@am__objects_12 = src/decoder/libdecoder_plugins_a-XiphTags.$(OBJEXT) \
+@HAVE_WAVPACK_TRUE@am__objects_10 = src/decoder/libdecoder_plugins_a-WavpackDecoderPlugin.$(OBJEXT)
+@HAVE_ADPLUG_TRUE@am__objects_11 = src/decoder/libdecoder_plugins_a-AdPlugDecoderPlugin.$(OBJEXT)
+@HAVE_FAAD_TRUE@am__objects_12 = src/decoder/libdecoder_plugins_a-FaadDecoderPlugin.$(OBJEXT)
+@HAVE_XIPH_TRUE@am__objects_13 = src/decoder/libdecoder_plugins_a-XiphTags.$(OBJEXT) \
 @HAVE_XIPH_TRUE@	src/decoder/libdecoder_plugins_a-OggCodec.$(OBJEXT)
-@ENABLE_VORBIS_DECODER_TRUE@am__objects_13 = src/decoder/libdecoder_plugins_a-VorbisDomain.$(OBJEXT) \
+@ENABLE_VORBIS_DECODER_TRUE@am__objects_14 = src/decoder/libdecoder_plugins_a-VorbisDomain.$(OBJEXT) \
 @ENABLE_VORBIS_DECODER_TRUE@	src/decoder/libdecoder_plugins_a-VorbisComments.$(OBJEXT) \
 @ENABLE_VORBIS_DECODER_TRUE@	src/decoder/libdecoder_plugins_a-VorbisDecoderPlugin.$(OBJEXT)
-@HAVE_FLAC_TRUE@am__objects_14 = src/decoder/libdecoder_plugins_a-FlacInput.$(OBJEXT) \
+@HAVE_FLAC_TRUE@am__objects_15 = src/decoder/libdecoder_plugins_a-FlacInput.$(OBJEXT) \
 @HAVE_FLAC_TRUE@	src/decoder/libdecoder_plugins_a-FlacIOHandle.$(OBJEXT) \
 @HAVE_FLAC_TRUE@	src/decoder/libdecoder_plugins_a-FlacMetadata.$(OBJEXT) \
 @HAVE_FLAC_TRUE@	src/decoder/libdecoder_plugins_a-FlacPcm.$(OBJEXT) \
 @HAVE_FLAC_TRUE@	src/decoder/libdecoder_plugins_a-FlacDomain.$(OBJEXT) \
 @HAVE_FLAC_TRUE@	src/decoder/libdecoder_plugins_a-FlacCommon.$(OBJEXT) \
 @HAVE_FLAC_TRUE@	src/decoder/libdecoder_plugins_a-FlacDecoderPlugin.$(OBJEXT)
-@HAVE_AUDIOFILE_TRUE@am__objects_15 = src/decoder/libdecoder_plugins_a-AudiofileDecoderPlugin.$(OBJEXT)
-@ENABLE_MIKMOD_DECODER_TRUE@am__objects_16 = src/decoder/libdecoder_plugins_a-MikmodDecoderPlugin.$(OBJEXT)
-@ENABLE_SIDPLAY_TRUE@am__objects_17 = src/decoder/libdecoder_plugins_a-SidplayDecoderPlugin.$(OBJEXT)
-@ENABLE_FLUIDSYNTH_TRUE@am__objects_18 = src/decoder/libdecoder_plugins_a-FluidsynthDecoderPlugin.$(OBJEXT)
-@ENABLE_WILDMIDI_TRUE@am__objects_19 = src/decoder/libdecoder_plugins_a-WildmidiDecoderPlugin.$(OBJEXT)
-@HAVE_FFMPEG_TRUE@am__objects_20 = src/decoder/libdecoder_plugins_a-FfmpegMetaData.$(OBJEXT) \
+@HAVE_AUDIOFILE_TRUE@am__objects_16 = src/decoder/libdecoder_plugins_a-AudiofileDecoderPlugin.$(OBJEXT)
+@ENABLE_MIKMOD_DECODER_TRUE@am__objects_17 = src/decoder/libdecoder_plugins_a-MikmodDecoderPlugin.$(OBJEXT)
+@ENABLE_SIDPLAY_TRUE@am__objects_18 = src/decoder/libdecoder_plugins_a-SidplayDecoderPlugin.$(OBJEXT)
+@ENABLE_FLUIDSYNTH_TRUE@am__objects_19 = src/decoder/libdecoder_plugins_a-FluidsynthDecoderPlugin.$(OBJEXT)
+@ENABLE_WILDMIDI_TRUE@am__objects_20 = src/decoder/libdecoder_plugins_a-WildmidiDecoderPlugin.$(OBJEXT)
+@HAVE_FFMPEG_TRUE@am__objects_21 = src/decoder/libdecoder_plugins_a-FfmpegMetaData.$(OBJEXT) \
 @HAVE_FFMPEG_TRUE@	src/decoder/libdecoder_plugins_a-FfmpegDecoderPlugin.$(OBJEXT)
-@ENABLE_SNDFILE_TRUE@am__objects_21 = src/decoder/libdecoder_plugins_a-SndfileDecoderPlugin.$(OBJEXT)
-@HAVE_GME_TRUE@am__objects_22 = src/decoder/libdecoder_plugins_a-GmeDecoderPlugin.$(OBJEXT)
+@ENABLE_SNDFILE_TRUE@am__objects_22 = src/decoder/libdecoder_plugins_a-SndfileDecoderPlugin.$(OBJEXT)
+@HAVE_GME_TRUE@am__objects_23 = src/decoder/libdecoder_plugins_a-GmeDecoderPlugin.$(OBJEXT)
 am_libdecoder_plugins_a_OBJECTS =  \
 	src/decoder/libdecoder_plugins_a-PcmDecoderPlugin.$(OBJEXT) \
-	src/decoder/libdecoder_plugins_a-DsdiffDecoderPlugin.$(OBJEXT) \
-	src/decoder/libdecoder_plugins_a-DsfDecoderPlugin.$(OBJEXT) \
-	src/decoder/libdecoder_plugins_a-DsdLib.$(OBJEXT) \
 	src/libdecoder_plugins_a-DecoderBuffer.$(OBJEXT) \
 	src/libdecoder_plugins_a-DecoderPlugin.$(OBJEXT) \
 	src/libdecoder_plugins_a-DecoderList.$(OBJEXT) \
@@ -572,7 +579,8 @@ am_libdecoder_plugins_a_OBJECTS =  \
 	$(am__objects_11) $(am__objects_12) $(am__objects_13) \
 	$(am__objects_14) $(am__objects_15) $(am__objects_16) \
 	$(am__objects_17) $(am__objects_18) $(am__objects_19) \
-	$(am__objects_20) $(am__objects_21) $(am__objects_22)
+	$(am__objects_20) $(am__objects_21) $(am__objects_22) \
+	$(am__objects_23)
 libdecoder_plugins_a_OBJECTS = $(am_libdecoder_plugins_a_OBJECTS)
 libencoder_plugins_a_AR = $(AR) $(ARFLAGS)
 libencoder_plugins_a_LIBADD =
@@ -593,19 +601,19 @@ am__libencoder_plugins_a_SOURCES_DIST = src/EncoderAPI.hxx \
 	src/encoder/TwolameEncoderPlugin.hxx \
 	src/encoder/FlacEncoderPlugin.cxx \
 	src/encoder/FlacEncoderPlugin.hxx
-@ENABLE_ENCODER_TRUE@@HAVE_OGG_ENCODER_TRUE@am__objects_23 = src/encoder/libencoder_plugins_a-OggSerial.$(OBJEXT)
-@ENABLE_ENCODER_TRUE@@ENABLE_WAVE_ENCODER_TRUE@am__objects_24 = src/encoder/libencoder_plugins_a-WaveEncoderPlugin.$(OBJEXT)
-@ENABLE_ENCODER_TRUE@@ENABLE_VORBIS_ENCODER_TRUE@am__objects_25 = src/encoder/libencoder_plugins_a-VorbisEncoderPlugin.$(OBJEXT)
-@ENABLE_ENCODER_TRUE@@HAVE_OPUS_TRUE@am__objects_26 = src/encoder/libencoder_plugins_a-OpusEncoderPlugin.$(OBJEXT)
-@ENABLE_ENCODER_TRUE@@ENABLE_LAME_ENCODER_TRUE@am__objects_27 = src/encoder/libencoder_plugins_a-LameEncoderPlugin.$(OBJEXT)
-@ENABLE_ENCODER_TRUE@@ENABLE_TWOLAME_ENCODER_TRUE@am__objects_28 = src/encoder/libencoder_plugins_a-TwolameEncoderPlugin.$(OBJEXT)
-@ENABLE_ENCODER_TRUE@@ENABLE_FLAC_ENCODER_TRUE@am__objects_29 = src/encoder/libencoder_plugins_a-FlacEncoderPlugin.$(OBJEXT)
+@ENABLE_ENCODER_TRUE@@HAVE_OGG_ENCODER_TRUE@am__objects_24 = src/encoder/libencoder_plugins_a-OggSerial.$(OBJEXT)
+@ENABLE_ENCODER_TRUE@@ENABLE_WAVE_ENCODER_TRUE@am__objects_25 = src/encoder/libencoder_plugins_a-WaveEncoderPlugin.$(OBJEXT)
+@ENABLE_ENCODER_TRUE@@ENABLE_VORBIS_ENCODER_TRUE@am__objects_26 = src/encoder/libencoder_plugins_a-VorbisEncoderPlugin.$(OBJEXT)
+@ENABLE_ENCODER_TRUE@@HAVE_OPUS_TRUE@am__objects_27 = src/encoder/libencoder_plugins_a-OpusEncoderPlugin.$(OBJEXT)
+@ENABLE_ENCODER_TRUE@@ENABLE_LAME_ENCODER_TRUE@am__objects_28 = src/encoder/libencoder_plugins_a-LameEncoderPlugin.$(OBJEXT)
+@ENABLE_ENCODER_TRUE@@ENABLE_TWOLAME_ENCODER_TRUE@am__objects_29 = src/encoder/libencoder_plugins_a-TwolameEncoderPlugin.$(OBJEXT)
+@ENABLE_ENCODER_TRUE@@ENABLE_FLAC_ENCODER_TRUE@am__objects_30 = src/encoder/libencoder_plugins_a-FlacEncoderPlugin.$(OBJEXT)
 @ENABLE_ENCODER_TRUE@am_libencoder_plugins_a_OBJECTS = src/encoder/libencoder_plugins_a-NullEncoderPlugin.$(OBJEXT) \
 @ENABLE_ENCODER_TRUE@	src/libencoder_plugins_a-EncoderList.$(OBJEXT) \
-@ENABLE_ENCODER_TRUE@	$(am__objects_23) $(am__objects_24) \
-@ENABLE_ENCODER_TRUE@	$(am__objects_25) $(am__objects_26) \
-@ENABLE_ENCODER_TRUE@	$(am__objects_27) $(am__objects_28) \
-@ENABLE_ENCODER_TRUE@	$(am__objects_29)
+@ENABLE_ENCODER_TRUE@	$(am__objects_24) $(am__objects_25) \
+@ENABLE_ENCODER_TRUE@	$(am__objects_26) $(am__objects_27) \
+@ENABLE_ENCODER_TRUE@	$(am__objects_28) $(am__objects_29) \
+@ENABLE_ENCODER_TRUE@	$(am__objects_30)
 libencoder_plugins_a_OBJECTS = $(am_libencoder_plugins_a_OBJECTS)
 libevent_a_AR = $(AR) $(ARFLAGS)
 libevent_a_LIBADD =
@@ -656,19 +664,19 @@ am__libinput_a_SOURCES_DIST = src/InputInit.cxx src/InputInit.hxx \
 	src/input/MmsInputPlugin.hxx \
 	src/input/DespotifyInputPlugin.cxx \
 	src/input/DespotifyInputPlugin.hxx
-@ENABLE_CURL_TRUE@am__objects_30 = src/input/libinput_a-CurlInputPlugin.$(OBJEXT) \
+@ENABLE_CURL_TRUE@am__objects_31 = src/input/libinput_a-CurlInputPlugin.$(OBJEXT) \
 @ENABLE_CURL_TRUE@	src/libinput_a-IcyMetaDataParser.$(OBJEXT)
-@ENABLE_CDIO_PARANOIA_TRUE@am__objects_31 = src/input/libinput_a-CdioParanoiaInputPlugin.$(OBJEXT)
-@HAVE_FFMPEG_TRUE@am__objects_32 = src/input/libinput_a-FfmpegInputPlugin.$(OBJEXT)
-@ENABLE_MMS_TRUE@am__objects_33 = src/input/libinput_a-MmsInputPlugin.$(OBJEXT)
-@ENABLE_DESPOTIFY_TRUE@am__objects_34 = src/input/libinput_a-DespotifyInputPlugin.$(OBJEXT)
+@ENABLE_CDIO_PARANOIA_TRUE@am__objects_32 = src/input/libinput_a-CdioParanoiaInputPlugin.$(OBJEXT)
+@HAVE_FFMPEG_TRUE@am__objects_33 = src/input/libinput_a-FfmpegInputPlugin.$(OBJEXT)
+@ENABLE_MMS_TRUE@am__objects_34 = src/input/libinput_a-MmsInputPlugin.$(OBJEXT)
+@ENABLE_DESPOTIFY_TRUE@am__objects_35 = src/input/libinput_a-DespotifyInputPlugin.$(OBJEXT)
 am_libinput_a_OBJECTS = src/libinput_a-InputInit.$(OBJEXT) \
 	src/libinput_a-InputRegistry.$(OBJEXT) \
 	src/libinput_a-InputStream.$(OBJEXT) \
 	src/input/libinput_a-RewindInputPlugin.$(OBJEXT) \
 	src/input/libinput_a-FileInputPlugin.$(OBJEXT) \
-	$(am__objects_30) $(am__objects_31) $(am__objects_32) \
-	$(am__objects_33) $(am__objects_34)
+	$(am__objects_31) $(am__objects_32) $(am__objects_33) \
+	$(am__objects_34) $(am__objects_35)
 libinput_a_OBJECTS = $(am_libinput_a_OBJECTS)
 libmixer_plugins_a_AR = $(AR) $(ARFLAGS)
 libmixer_plugins_a_LIBADD =
@@ -678,15 +686,15 @@ am__libmixer_plugins_a_SOURCES_DIST =  \
 	src/mixer/AlsaMixerPlugin.cxx src/mixer/RoarMixerPlugin.cxx \
 	src/mixer/OssMixerPlugin.cxx src/mixer/PulseMixerPlugin.cxx \
 	src/mixer/PulseMixerPlugin.hxx src/mixer/WinmmMixerPlugin.cxx
-@HAVE_ALSA_TRUE@am__objects_35 = src/mixer/libmixer_plugins_a-AlsaMixerPlugin.$(OBJEXT)
-@HAVE_ROAR_TRUE@am__objects_36 = src/mixer/libmixer_plugins_a-RoarMixerPlugin.$(OBJEXT)
-@HAVE_OSS_TRUE@am__objects_37 = src/mixer/libmixer_plugins_a-OssMixerPlugin.$(OBJEXT)
-@HAVE_PULSE_TRUE@am__objects_38 = src/mixer/libmixer_plugins_a-PulseMixerPlugin.$(OBJEXT)
-@ENABLE_WINMM_OUTPUT_TRUE@am__objects_39 = src/mixer/libmixer_plugins_a-WinmmMixerPlugin.$(OBJEXT)
+@HAVE_ALSA_TRUE@am__objects_36 = src/mixer/libmixer_plugins_a-AlsaMixerPlugin.$(OBJEXT)
+@HAVE_ROAR_TRUE@am__objects_37 = src/mixer/libmixer_plugins_a-RoarMixerPlugin.$(OBJEXT)
+@HAVE_OSS_TRUE@am__objects_38 = src/mixer/libmixer_plugins_a-OssMixerPlugin.$(OBJEXT)
+@HAVE_PULSE_TRUE@am__objects_39 = src/mixer/libmixer_plugins_a-PulseMixerPlugin.$(OBJEXT)
+@ENABLE_WINMM_OUTPUT_TRUE@am__objects_40 = src/mixer/libmixer_plugins_a-WinmmMixerPlugin.$(OBJEXT)
 am_libmixer_plugins_a_OBJECTS =  \
 	src/mixer/libmixer_plugins_a-SoftwareMixerPlugin.$(OBJEXT) \
-	$(am__objects_35) $(am__objects_36) $(am__objects_37) \
-	$(am__objects_38) $(am__objects_39)
+	$(am__objects_36) $(am__objects_37) $(am__objects_38) \
+	$(am__objects_39) $(am__objects_40)
 libmixer_plugins_a_OBJECTS = $(am_libmixer_plugins_a_OBJECTS)
 libmodplug_decoder_plugin_a_AR = $(AR) $(ARFLAGS)
 libmodplug_decoder_plugin_a_LIBADD =
@@ -729,30 +737,30 @@ am__liboutput_plugins_a_SOURCES_DIST =  \
 	src/output/SolarisOutputPlugin.hxx \
 	src/output/WinmmOutputPlugin.cxx \
 	src/output/WinmmOutputPlugin.hxx
-@HAVE_ALSA_TRUE@am__objects_40 = src/output/liboutput_plugins_a-AlsaOutputPlugin.$(OBJEXT)
-@HAVE_ROAR_TRUE@am__objects_41 = src/output/liboutput_plugins_a-RoarOutputPlugin.$(OBJEXT)
-@HAVE_AO_TRUE@am__objects_42 = src/output/liboutput_plugins_a-AoOutputPlugin.$(OBJEXT)
-@HAVE_FIFO_TRUE@am__objects_43 = src/output/liboutput_plugins_a-FifoOutputPlugin.$(OBJEXT)
-@ENABLE_PIPE_OUTPUT_TRUE@am__objects_44 = src/output/liboutput_plugins_a-PipeOutputPlugin.$(OBJEXT)
-@HAVE_JACK_TRUE@am__objects_45 = src/output/liboutput_plugins_a-JackOutputPlugin.$(OBJEXT)
-@HAVE_OSS_TRUE@am__objects_46 = src/output/liboutput_plugins_a-OssOutputPlugin.$(OBJEXT)
-@HAVE_OPENAL_TRUE@am__objects_47 = src/output/liboutput_plugins_a-OpenALOutputPlugin.$(OBJEXT)
-@HAVE_OSX_TRUE@am__objects_48 = src/output/liboutput_plugins_a-OSXOutputPlugin.$(OBJEXT)
-@HAVE_PULSE_TRUE@am__objects_49 = src/output/liboutput_plugins_a-PulseOutputPlugin.$(OBJEXT)
-@HAVE_SHOUT_TRUE@am__objects_50 = src/output/liboutput_plugins_a-ShoutOutputPlugin.$(OBJEXT)
-@ENABLE_RECORDER_OUTPUT_TRUE@am__objects_51 = src/output/liboutput_plugins_a-RecorderOutputPlugin.$(OBJEXT)
-@ENABLE_HTTPD_OUTPUT_TRUE@am__objects_52 = src/liboutput_plugins_a-IcyMetaDataServer.$(OBJEXT) \
+@HAVE_ALSA_TRUE@am__objects_41 = src/output/liboutput_plugins_a-AlsaOutputPlugin.$(OBJEXT)
+@HAVE_ROAR_TRUE@am__objects_42 = src/output/liboutput_plugins_a-RoarOutputPlugin.$(OBJEXT)
+@HAVE_AO_TRUE@am__objects_43 = src/output/liboutput_plugins_a-AoOutputPlugin.$(OBJEXT)
+@HAVE_FIFO_TRUE@am__objects_44 = src/output/liboutput_plugins_a-FifoOutputPlugin.$(OBJEXT)
+@ENABLE_PIPE_OUTPUT_TRUE@am__objects_45 = src/output/liboutput_plugins_a-PipeOutputPlugin.$(OBJEXT)
+@HAVE_JACK_TRUE@am__objects_46 = src/output/liboutput_plugins_a-JackOutputPlugin.$(OBJEXT)
+@HAVE_OSS_TRUE@am__objects_47 = src/output/liboutput_plugins_a-OssOutputPlugin.$(OBJEXT)
+@HAVE_OPENAL_TRUE@am__objects_48 = src/output/liboutput_plugins_a-OpenALOutputPlugin.$(OBJEXT)
+@HAVE_OSX_TRUE@am__objects_49 = src/output/liboutput_plugins_a-OSXOutputPlugin.$(OBJEXT)
+@HAVE_PULSE_TRUE@am__objects_50 = src/output/liboutput_plugins_a-PulseOutputPlugin.$(OBJEXT)
+@HAVE_SHOUT_TRUE@am__objects_51 = src/output/liboutput_plugins_a-ShoutOutputPlugin.$(OBJEXT)
+@ENABLE_RECORDER_OUTPUT_TRUE@am__objects_52 = src/output/liboutput_plugins_a-RecorderOutputPlugin.$(OBJEXT)
+@ENABLE_HTTPD_OUTPUT_TRUE@am__objects_53 = src/liboutput_plugins_a-IcyMetaDataServer.$(OBJEXT) \
 @ENABLE_HTTPD_OUTPUT_TRUE@	src/output/liboutput_plugins_a-HttpdClient.$(OBJEXT) \
 @ENABLE_HTTPD_OUTPUT_TRUE@	src/output/liboutput_plugins_a-HttpdOutputPlugin.$(OBJEXT)
-@ENABLE_SOLARIS_OUTPUT_TRUE@am__objects_53 = src/output/liboutput_plugins_a-SolarisOutputPlugin.$(OBJEXT)
-@ENABLE_WINMM_OUTPUT_TRUE@am__objects_54 = src/output/liboutput_plugins_a-WinmmOutputPlugin.$(OBJEXT)
+@ENABLE_SOLARIS_OUTPUT_TRUE@am__objects_54 = src/output/liboutput_plugins_a-SolarisOutputPlugin.$(OBJEXT)
+@ENABLE_WINMM_OUTPUT_TRUE@am__objects_55 = src/output/liboutput_plugins_a-WinmmOutputPlugin.$(OBJEXT)
 am_liboutput_plugins_a_OBJECTS =  \
 	src/output/liboutput_plugins_a-NullOutputPlugin.$(OBJEXT) \
-	$(am__objects_40) $(am__objects_41) $(am__objects_42) \
-	$(am__objects_43) $(am__objects_44) $(am__objects_45) \
-	$(am__objects_46) $(am__objects_47) $(am__objects_48) \
-	$(am__objects_49) $(am__objects_50) $(am__objects_51) \
-	$(am__objects_52) $(am__objects_53) $(am__objects_54)
+	$(am__objects_41) $(am__objects_42) $(am__objects_43) \
+	$(am__objects_44) $(am__objects_45) $(am__objects_46) \
+	$(am__objects_47) $(am__objects_48) $(am__objects_49) \
+	$(am__objects_50) $(am__objects_51) $(am__objects_52) \
+	$(am__objects_53) $(am__objects_54) $(am__objects_55)
 liboutput_plugins_a_OBJECTS = $(am_liboutput_plugins_a_OBJECTS)
 libpcm_a_AR = $(AR) $(ARFLAGS)
 libpcm_a_LIBADD =
@@ -771,7 +779,7 @@ am__libpcm_a_SOURCES_DIST = src/pcm/PcmBuffer.cxx \
 	src/pcm/PcmResampleInternal.hxx src/pcm/PcmDither.cxx \
 	src/pcm/PcmDither.hxx src/pcm/PcmPrng.hxx src/pcm/PcmUtils.hxx \
 	src/pcm/PcmResampleLibsamplerate.cxx
-@HAVE_LIBSAMPLERATE_TRUE@am__objects_55 = src/pcm/libpcm_a-PcmResampleLibsamplerate.$(OBJEXT)
+@HAVE_LIBSAMPLERATE_TRUE@am__objects_56 = src/pcm/libpcm_a-PcmResampleLibsamplerate.$(OBJEXT)
 am_libpcm_a_OBJECTS = src/pcm/libpcm_a-PcmBuffer.$(OBJEXT) \
 	src/pcm/libpcm_a-PcmExport.$(OBJEXT) \
 	src/pcm/libpcm_a-PcmConvert.$(OBJEXT) \
@@ -785,7 +793,7 @@ am_libpcm_a_OBJECTS = src/pcm/libpcm_a-PcmBuffer.$(OBJEXT) \
 	src/pcm/libpcm_a-PcmFormat.$(OBJEXT) \
 	src/pcm/libpcm_a-PcmResample.$(OBJEXT) \
 	src/pcm/libpcm_a-PcmResampleFallback.$(OBJEXT) \
-	src/pcm/libpcm_a-PcmDither.$(OBJEXT) $(am__objects_55)
+	src/pcm/libpcm_a-PcmDither.$(OBJEXT) $(am__objects_56)
 libpcm_a_OBJECTS = $(am_libpcm_a_OBJECTS)
 libplaylist_plugins_a_AR = $(AR) $(ARFLAGS)
 libplaylist_plugins_a_LIBADD =
@@ -813,8 +821,8 @@ am__libplaylist_plugins_a_SOURCES_DIST = src/PlaylistPlugin.hxx \
 	src/playlist/DespotifyPlaylistPlugin.hxx \
 	src/playlist/SoundCloudPlaylistPlugin.cxx \
 	src/playlist/SoundCloudPlaylistPlugin.hxx
-@ENABLE_DESPOTIFY_TRUE@am__objects_56 = src/playlist/libplaylist_plugins_a-DespotifyPlaylistPlugin.$(OBJEXT)
-@ENABLE_SOUNDCLOUD_TRUE@am__objects_57 = src/playlist/libplaylist_plugins_a-SoundCloudPlaylistPlugin.$(OBJEXT)
+@ENABLE_DESPOTIFY_TRUE@am__objects_57 = src/playlist/libplaylist_plugins_a-DespotifyPlaylistPlugin.$(OBJEXT)
+@ENABLE_SOUNDCLOUD_TRUE@am__objects_58 = src/playlist/libplaylist_plugins_a-SoundCloudPlaylistPlugin.$(OBJEXT)
 am_libplaylist_plugins_a_OBJECTS =  \
 	src/libplaylist_plugins_a-MemorySongEnumerator.$(OBJEXT) \
 	src/playlist/libplaylist_plugins_a-ExtM3uPlaylistPlugin.$(OBJEXT) \
@@ -826,7 +834,7 @@ am_libplaylist_plugins_a_OBJECTS =  \
 	src/playlist/libplaylist_plugins_a-CuePlaylistPlugin.$(OBJEXT) \
 	src/playlist/libplaylist_plugins_a-EmbeddedCuePlaylistPlugin.$(OBJEXT) \
 	src/libplaylist_plugins_a-PlaylistRegistry.$(OBJEXT) \
-	$(am__objects_56) $(am__objects_57)
+	$(am__objects_57) $(am__objects_58)
 libplaylist_plugins_a_OBJECTS = $(am_libplaylist_plugins_a_OBJECTS)
 libsystem_a_AR = $(AR) $(ARFLAGS)
 libsystem_a_LIBADD =
@@ -853,7 +861,7 @@ am__libtag_a_SOURCES_DIST = src/tag/TagType.h src/tag/Tag.cxx \
 	src/tag/TagId3.hxx src/tag/TagRva2.cxx src/tag/TagRva2.hxx \
 	src/tag/Riff.cxx src/tag/Riff.hxx src/tag/Aiff.cxx \
 	src/tag/Aiff.hxx
-@HAVE_ID3TAG_TRUE@am__objects_58 = src/tag/libtag_a-TagId3.$(OBJEXT) \
+@HAVE_ID3TAG_TRUE@am__objects_59 = src/tag/libtag_a-TagId3.$(OBJEXT) \
 @HAVE_ID3TAG_TRUE@	src/tag/libtag_a-TagRva2.$(OBJEXT) \
 @HAVE_ID3TAG_TRUE@	src/tag/libtag_a-Riff.$(OBJEXT) \
 @HAVE_ID3TAG_TRUE@	src/tag/libtag_a-Aiff.$(OBJEXT)
@@ -868,7 +876,7 @@ am_libtag_a_OBJECTS = src/tag/libtag_a-Tag.$(OBJEXT) \
 	src/tag/libtag_a-TagTable.$(OBJEXT) \
 	src/tag/libtag_a-ApeLoader.$(OBJEXT) \
 	src/tag/libtag_a-ApeReplayGain.$(OBJEXT) \
-	src/tag/libtag_a-ApeTag.$(OBJEXT) $(am__objects_58)
+	src/tag/libtag_a-ApeTag.$(OBJEXT) $(am__objects_59)
 libtag_a_OBJECTS = $(am_libtag_a_OBJECTS)
 libthread_a_AR = $(AR) $(ARFLAGS)
 libthread_a_LIBADD =
@@ -908,6 +916,7 @@ am__installdirs = "$(DESTDIR)$(bindir)" "$(DESTDIR)$(man1dir)" \
 @ENABLE_ENCODER_TRUE@@ENABLE_TEST_TRUE@am__EXEEXT_7 = test/run_encoder$(EXEEXT)
 @ENABLE_TEST_TRUE@@ENABLE_VORBIS_ENCODER_TRUE@am__EXEEXT_8 = test/test_vorbis_encoder$(EXEEXT)
 @ENABLE_INOTIFY_TRUE@@ENABLE_TEST_TRUE@am__EXEEXT_9 = test/run_inotify$(EXEEXT)
+@ENABLE_DSD_TRUE@@ENABLE_TEST_TRUE@am__EXEEXT_10 = src/pcm/dsd2pcm/dsd2pcm$(EXEEXT)
 PROGRAMS = $(bin_PROGRAMS) $(noinst_PROGRAMS)
 am__src_mpd_SOURCES_DIST = src/check.h src/gerror.h \
 	src/TextInputStream.hxx src/AudioCompress/config.h \
@@ -1036,9 +1045,9 @@ am__src_mpd_SOURCES_DIST = src/check.h src/gerror.h \
 	src/ZeroconfGlue.hxx src/AvahiPoll.cxx src/AvahiPoll.hxx \
 	src/ZeroconfAvahi.cxx src/ZeroconfAvahi.hxx \
 	src/ZeroconfBonjour.cxx src/ZeroconfBonjour.hxx
-am__objects_59 = src/src_mpd-TimePrint.$(OBJEXT)
-am__objects_60 =
-am__objects_61 = src/src_mpd-OutputList.$(OBJEXT) \
+am__objects_60 = src/src_mpd-TimePrint.$(OBJEXT)
+am__objects_61 =
+am__objects_62 = src/src_mpd-OutputList.$(OBJEXT) \
 	src/src_mpd-OutputAll.$(OBJEXT) \
 	src/src_mpd-OutputThread.$(OBJEXT) \
 	src/src_mpd-OutputError.$(OBJEXT) \
@@ -1049,28 +1058,28 @@ am__objects_61 = src/src_mpd-OutputList.$(OBJEXT) \
 	src/src_mpd-OutputPlugin.$(OBJEXT) \
 	src/src_mpd-OutputFinish.$(OBJEXT) \
 	src/src_mpd-OutputInit.$(OBJEXT)
-am__objects_62 = src/src_mpd-MixerControl.$(OBJEXT) \
+am__objects_63 = src/src_mpd-MixerControl.$(OBJEXT) \
 	src/src_mpd-MixerType.$(OBJEXT) src/src_mpd-MixerAll.$(OBJEXT)
-@ENABLE_DESPOTIFY_TRUE@am__objects_63 =  \
+@ENABLE_DESPOTIFY_TRUE@am__objects_64 =  \
 @ENABLE_DESPOTIFY_TRUE@	src/src_mpd-DespotifyUtils.$(OBJEXT)
-@ENABLE_INOTIFY_TRUE@am__objects_64 =  \
+@ENABLE_INOTIFY_TRUE@am__objects_65 =  \
 @ENABLE_INOTIFY_TRUE@	src/src_mpd-InotifyDomain.$(OBJEXT) \
 @ENABLE_INOTIFY_TRUE@	src/src_mpd-InotifySource.$(OBJEXT) \
 @ENABLE_INOTIFY_TRUE@	src/src_mpd-InotifyQueue.$(OBJEXT) \
 @ENABLE_INOTIFY_TRUE@	src/src_mpd-InotifyUpdate.$(OBJEXT)
-@ENABLE_SQLITE_TRUE@am__objects_65 = src/command/src_mpd-StickerCommands.$(OBJEXT) \
+@ENABLE_SQLITE_TRUE@am__objects_66 = src/command/src_mpd-StickerCommands.$(OBJEXT) \
 @ENABLE_SQLITE_TRUE@	src/src_mpd-StickerDatabase.$(OBJEXT) \
 @ENABLE_SQLITE_TRUE@	src/src_mpd-StickerPrint.$(OBJEXT) \
 @ENABLE_SQLITE_TRUE@	src/src_mpd-SongSticker.$(OBJEXT)
-@ENABLE_ARCHIVE_TRUE@am__objects_66 =  \
+@ENABLE_ARCHIVE_TRUE@am__objects_67 =  \
 @ENABLE_ARCHIVE_TRUE@	src/src_mpd-UpdateArchive.$(OBJEXT)
-@HAVE_ZEROCONF_TRUE@am__objects_67 =  \
+@HAVE_ZEROCONF_TRUE@am__objects_68 =  \
 @HAVE_ZEROCONF_TRUE@	src/src_mpd-ZeroconfGlue.$(OBJEXT)
-@HAVE_AVAHI_TRUE@@HAVE_ZEROCONF_TRUE@am__objects_68 = src/src_mpd-AvahiPoll.$(OBJEXT) \
+@HAVE_AVAHI_TRUE@@HAVE_ZEROCONF_TRUE@am__objects_69 = src/src_mpd-AvahiPoll.$(OBJEXT) \
 @HAVE_AVAHI_TRUE@@HAVE_ZEROCONF_TRUE@	src/src_mpd-ZeroconfAvahi.$(OBJEXT)
-@HAVE_BONJOUR_TRUE@@HAVE_ZEROCONF_TRUE@am__objects_69 = src/src_mpd-ZeroconfBonjour.$(OBJEXT)
-am_src_mpd_OBJECTS = $(am__objects_59) $(am__objects_60) \
-	$(am__objects_61) $(am__objects_62) \
+@HAVE_BONJOUR_TRUE@@HAVE_ZEROCONF_TRUE@am__objects_70 = src/src_mpd-ZeroconfBonjour.$(OBJEXT)
+am_src_mpd_OBJECTS = $(am__objects_60) $(am__objects_61) \
+	$(am__objects_62) $(am__objects_63) \
 	src/src_mpd-notify.$(OBJEXT) src/src_mpd-AudioConfig.$(OBJEXT) \
 	src/src_mpd-CheckAudioFormat.$(OBJEXT) \
 	src/src_mpd-AudioFormat.$(OBJEXT) \
@@ -1176,9 +1185,9 @@ am_src_mpd_OBJECTS = $(am__objects_59) $(am__objects_60) \
 	src/src_mpd-TextInputStream.$(OBJEXT) \
 	src/src_mpd-Volume.$(OBJEXT) src/src_mpd-SongFilter.$(OBJEXT) \
 	src/src_mpd-PlaylistFile.$(OBJEXT) src/src_mpd-Timer.$(OBJEXT) \
-	$(am__objects_63) $(am__objects_64) $(am__objects_65) \
-	$(am__objects_66) $(am__objects_67) $(am__objects_68) \
-	$(am__objects_69)
+	$(am__objects_64) $(am__objects_65) $(am__objects_66) \
+	$(am__objects_67) $(am__objects_68) $(am__objects_69) \
+	$(am__objects_70)
 src_mpd_OBJECTS = $(am_src_mpd_OBJECTS)
 am__DEPENDENCIES_1 =
 am__DEPENDENCIES_2 = libdb_plugins.a $(am__DEPENDENCIES_1)
@@ -1234,13 +1243,13 @@ am__src_pcm_dsd2pcm_dsd2pcm_SOURCES_DIST = src/pcm/dsd2pcm/dsd2pcm.c \
 	src/pcm/dsd2pcm/dsd2pcm.h src/pcm/dsd2pcm/dsd2pcm.hpp \
 	src/pcm/dsd2pcm/noiseshape.c src/pcm/dsd2pcm/noiseshape.h \
 	src/pcm/dsd2pcm/noiseshape.hpp src/pcm/dsd2pcm/main.cpp
-@ENABLE_TEST_TRUE@am_src_pcm_dsd2pcm_dsd2pcm_OBJECTS =  \
-@ENABLE_TEST_TRUE@	src/pcm/dsd2pcm/dsd2pcm.$(OBJEXT) \
-@ENABLE_TEST_TRUE@	src/pcm/dsd2pcm/noiseshape.$(OBJEXT) \
-@ENABLE_TEST_TRUE@	src/pcm/dsd2pcm/main.$(OBJEXT)
+@ENABLE_DSD_TRUE@@ENABLE_TEST_TRUE@am_src_pcm_dsd2pcm_dsd2pcm_OBJECTS = src/pcm/dsd2pcm/dsd2pcm.$(OBJEXT) \
+@ENABLE_DSD_TRUE@@ENABLE_TEST_TRUE@	src/pcm/dsd2pcm/noiseshape.$(OBJEXT) \
+@ENABLE_DSD_TRUE@@ENABLE_TEST_TRUE@	src/pcm/dsd2pcm/main.$(OBJEXT)
 src_pcm_dsd2pcm_dsd2pcm_OBJECTS =  \
 	$(am_src_pcm_dsd2pcm_dsd2pcm_OBJECTS)
-@ENABLE_TEST_TRUE@src_pcm_dsd2pcm_dsd2pcm_DEPENDENCIES = libutil.a
+@ENABLE_DSD_TRUE@@ENABLE_TEST_TRUE@src_pcm_dsd2pcm_dsd2pcm_DEPENDENCIES =  \
+@ENABLE_DSD_TRUE@@ENABLE_TEST_TRUE@	libutil.a
 am__test_DumpDatabase_SOURCES_DIST = test/DumpDatabase.cxx \
 	src/protocol/Ack.cxx src/Log.cxx src/DatabaseError.cxx \
 	src/DatabaseRegistry.cxx src/DatabaseSelection.cxx \
@@ -1277,19 +1286,19 @@ am__test_dump_playlist_SOURCES_DIST = test/dump_playlist.cxx \
 	src/cue/CueParser.cxx src/cue/CueParser.hxx \
 	src/ReplayGainInfo.cxx src/decoder/FlacMetadata.cxx \
 	src/DespotifyUtils.cxx
-@ENABLE_TEST_TRUE@@HAVE_FLAC_TRUE@am__objects_70 = src/ReplayGainInfo.$(OBJEXT) \
+@ENABLE_TEST_TRUE@@HAVE_FLAC_TRUE@am__objects_71 = src/ReplayGainInfo.$(OBJEXT) \
 @ENABLE_TEST_TRUE@@HAVE_FLAC_TRUE@	src/decoder/FlacMetadata.$(OBJEXT)
-@ENABLE_DESPOTIFY_TRUE@@ENABLE_TEST_TRUE@am__objects_71 = src/DespotifyUtils.$(OBJEXT)
+@ENABLE_DESPOTIFY_TRUE@@ENABLE_TEST_TRUE@am__objects_72 = src/DespotifyUtils.$(OBJEXT)
 @ENABLE_TEST_TRUE@am_test_dump_playlist_OBJECTS =  \
 @ENABLE_TEST_TRUE@	test/dump_playlist.$(OBJEXT) \
 @ENABLE_TEST_TRUE@	test/FakeDecoderAPI.$(OBJEXT) \
-@ENABLE_TEST_TRUE@	$(am__objects_60) src/Log.$(OBJEXT) \
+@ENABLE_TEST_TRUE@	$(am__objects_61) src/Log.$(OBJEXT) \
 @ENABLE_TEST_TRUE@	src/IOThread.$(OBJEXT) src/Song.$(OBJEXT) \
 @ENABLE_TEST_TRUE@	src/TagSave.$(OBJEXT) src/TagFile.$(OBJEXT) \
 @ENABLE_TEST_TRUE@	src/CheckAudioFormat.$(OBJEXT) \
 @ENABLE_TEST_TRUE@	src/TextInputStream.$(OBJEXT) \
 @ENABLE_TEST_TRUE@	src/cue/CueParser.$(OBJEXT) \
-@ENABLE_TEST_TRUE@	$(am__objects_70) $(am__objects_71)
+@ENABLE_TEST_TRUE@	$(am__objects_71) $(am__objects_72)
 test_dump_playlist_OBJECTS = $(am_test_dump_playlist_OBJECTS)
 @ENABLE_TEST_TRUE@test_dump_playlist_DEPENDENCIES =  \
 @ENABLE_TEST_TRUE@	$(am__DEPENDENCIES_4) $(am__DEPENDENCIES_1) \
@@ -1314,7 +1323,7 @@ am__test_dump_text_file_SOURCES_DIST = test/dump_text_file.cxx \
 @ENABLE_TEST_TRUE@	test/dump_text_file.$(OBJEXT) \
 @ENABLE_TEST_TRUE@	src/Log.$(OBJEXT) src/IOThread.$(OBJEXT) \
 @ENABLE_TEST_TRUE@	src/TextInputStream.$(OBJEXT) \
-@ENABLE_TEST_TRUE@	$(am__objects_71)
+@ENABLE_TEST_TRUE@	$(am__objects_72)
 test_dump_text_file_OBJECTS = $(am_test_dump_text_file_OBJECTS)
 @ENABLE_TEST_TRUE@test_dump_text_file_DEPENDENCIES =  \
 @ENABLE_TEST_TRUE@	$(am__DEPENDENCIES_7) $(am__DEPENDENCIES_8) \
@@ -1350,7 +1359,7 @@ am__test_read_tags_SOURCES_DIST = test/read_tags.cxx \
 @ENABLE_TEST_TRUE@	src/Log.$(OBJEXT) src/IOThread.$(OBJEXT) \
 @ENABLE_TEST_TRUE@	src/ReplayGainInfo.$(OBJEXT) \
 @ENABLE_TEST_TRUE@	src/CheckAudioFormat.$(OBJEXT) \
-@ENABLE_TEST_TRUE@	$(am__objects_60) $(am__objects_71)
+@ENABLE_TEST_TRUE@	$(am__objects_61) $(am__objects_72)
 test_read_tags_OBJECTS = $(am_test_read_tags_OBJECTS)
 @ENABLE_TEST_TRUE@test_read_tags_DEPENDENCIES = $(am__DEPENDENCIES_6) \
 @ENABLE_TEST_TRUE@	libpcm.a $(am__DEPENDENCIES_7) \
@@ -1391,7 +1400,7 @@ am__test_run_decoder_SOURCES_DIST = test/run_decoder.cxx test/stdbin.h \
 @ENABLE_TEST_TRUE@	src/ReplayGainInfo.$(OBJEXT) \
 @ENABLE_TEST_TRUE@	src/AudioFormat.$(OBJEXT) \
 @ENABLE_TEST_TRUE@	src/CheckAudioFormat.$(OBJEXT) \
-@ENABLE_TEST_TRUE@	$(am__objects_60) $(am__objects_71)
+@ENABLE_TEST_TRUE@	$(am__objects_61) $(am__objects_72)
 test_run_decoder_OBJECTS = $(am_test_run_decoder_OBJECTS)
 @ENABLE_TEST_TRUE@test_run_decoder_DEPENDENCIES =  \
 @ENABLE_TEST_TRUE@	$(am__DEPENDENCIES_6) libpcm.a \
@@ -1454,7 +1463,7 @@ am__test_run_input_SOURCES_DIST = test/run_input.cxx test/stdbin.h \
 @ENABLE_TEST_TRUE@am_test_run_input_OBJECTS =  \
 @ENABLE_TEST_TRUE@	test/run_input.$(OBJEXT) src/Log.$(OBJEXT) \
 @ENABLE_TEST_TRUE@	src/IOThread.$(OBJEXT) src/TagSave.$(OBJEXT) \
-@ENABLE_TEST_TRUE@	$(am__objects_71)
+@ENABLE_TEST_TRUE@	$(am__objects_72)
 test_run_input_OBJECTS = $(am_test_run_input_OBJECTS)
 @ENABLE_TEST_TRUE@test_run_input_DEPENDENCIES = $(am__DEPENDENCIES_7) \
 @ENABLE_TEST_TRUE@	$(am__DEPENDENCIES_8) $(am__DEPENDENCIES_9) \
@@ -1626,12 +1635,12 @@ test_test_vorbis_encoder_OBJECTS =  \
 am__test_visit_archive_SOURCES_DIST = test/visit_archive.cxx \
 	src/Log.cxx src/IOThread.cxx src/InputStream.cxx \
 	src/DespotifyUtils.cxx
-@ENABLE_ARCHIVE_TRUE@@ENABLE_DESPOTIFY_TRUE@@ENABLE_TEST_TRUE@am__objects_72 = src/DespotifyUtils.$(OBJEXT)
+@ENABLE_ARCHIVE_TRUE@@ENABLE_DESPOTIFY_TRUE@@ENABLE_TEST_TRUE@am__objects_73 = src/DespotifyUtils.$(OBJEXT)
 @ENABLE_ARCHIVE_TRUE@@ENABLE_TEST_TRUE@am_test_visit_archive_OBJECTS = test/visit_archive.$(OBJEXT) \
 @ENABLE_ARCHIVE_TRUE@@ENABLE_TEST_TRUE@	src/Log.$(OBJEXT) \
 @ENABLE_ARCHIVE_TRUE@@ENABLE_TEST_TRUE@	src/IOThread.$(OBJEXT) \
 @ENABLE_ARCHIVE_TRUE@@ENABLE_TEST_TRUE@	src/InputStream.$(OBJEXT) \
-@ENABLE_ARCHIVE_TRUE@@ENABLE_TEST_TRUE@	$(am__objects_72)
+@ENABLE_ARCHIVE_TRUE@@ENABLE_TEST_TRUE@	$(am__objects_73)
 test_visit_archive_OBJECTS = $(am_test_visit_archive_OBJECTS)
 @ENABLE_ARCHIVE_TRUE@@ENABLE_TEST_TRUE@test_visit_archive_DEPENDENCIES =  \
 @ENABLE_ARCHIVE_TRUE@@ENABLE_TEST_TRUE@	$(am__DEPENDENCIES_7) \
@@ -2226,7 +2235,7 @@ noinst_LIBRARIES = libutil.a libthread.a libsystem.a libevent.a \
 	libpcm.a libconf.a libtag.a libinput.a libfs.a libdb_plugins.a \
 	libplaylist_plugins.a libdecoder_plugins.a libfilter_plugins.a \
 	libmixer_plugins.a liboutput_plugins.a $(am__append_6) \
-	$(am__append_24) $(am__append_32)
+	$(am__append_25) $(am__append_33)
 src_mpd_CPPFLAGS = $(AM_CPPFLAGS) \
 	$(LIBMPDCLIENT_CFLAGS) \
 	$(AVAHI_CFLAGS) \
@@ -2368,8 +2377,8 @@ src_mpd_SOURCES = $(mpd_headers) $(DECODER_SRC) $(OUTPUT_API_SRC) \
 	src/SongFilter.cxx src/SongFilter.hxx src/SongPointer.hxx \
 	src/PlaylistFile.cxx src/PlaylistFile.hxx src/Timer.cxx \
 	$(am__append_1) $(am__append_2) $(am__append_3) \
-	$(am__append_7) $(am__append_40) $(am__append_41) \
-	$(am__append_42)
+	$(am__append_7) $(am__append_41) $(am__append_42) \
+	$(am__append_43)
 @HAVE_WINDOWS_TRUE@noinst_DATA = src/win32/mpd_win32_rc.rc
 @HAVE_WINDOWS_TRUE@EXTRA_src_mpd_DEPENDENCIES = src/win32/mpd_win32_rc.$(OBJEXT)
 @HAVE_WINDOWS_TRUE@src_mpd_LDFLAGS = -Wl,src/win32/mpd_win32_rc.$(OBJEXT)
@@ -2553,20 +2562,15 @@ libtag_a_SOURCES = src/tag/TagType.h src/tag/Tag.cxx src/tag/Tag.hxx \
 
 # decoder plugins
 libdecoder_plugins_a_SOURCES = src/decoder/PcmDecoderPlugin.cxx \
-	src/decoder/PcmDecoderPlugin.hxx \
-	src/decoder/DsdiffDecoderPlugin.cxx \
-	src/decoder/DsdiffDecoderPlugin.hxx \
-	src/decoder/DsfDecoderPlugin.cxx \
-	src/decoder/DsfDecoderPlugin.hxx src/decoder/DsdLib.cxx \
-	src/decoder/DsdLib.hxx src/DecoderBuffer.cxx \
+	src/decoder/PcmDecoderPlugin.hxx src/DecoderBuffer.cxx \
 	src/DecoderBuffer.hxx src/DecoderPlugin.cxx \
 	src/DecoderList.cxx src/DecoderList.hxx $(am__append_12) \
 	$(am__append_13) $(am__append_14) $(am__append_15) \
 	$(am__append_16) $(am__append_17) $(am__append_18) \
 	$(am__append_19) $(am__append_20) $(am__append_21) \
-	$(am__append_22) $(am__append_23) $(am__append_26) \
+	$(am__append_22) $(am__append_23) $(am__append_24) \
 	$(am__append_27) $(am__append_28) $(am__append_29) \
-	$(am__append_30) $(am__append_31)
+	$(am__append_30) $(am__append_31) $(am__append_32)
 libdecoder_plugins_a_CPPFLAGS = $(AM_CPPFLAGS) \
 	$(VORBIS_CFLAGS) $(TREMOR_CFLAGS) \
 	$(patsubst -I%/FLAC,-I%,$(FLAC_CFLAGS)) \
@@ -2591,7 +2595,7 @@ DECODER_LIBS = libdecoder_plugins.a $(VORBIS_LIBS) $(TREMOR_LIBS) \
 	$(LIBMIKMOD_LIBS) $(GME_LIBS) $(SIDPLAY_LIBS) \
 	$(FLUIDSYNTH_LIBS) $(WILDMIDI_LIBS) $(WAVPACK_LIBS) \
 	$(MAD_LIBS) $(MPG123_LIBS) $(OPUS_LIBS) $(FFMPEG_LIBS) \
-	$(MPCDEC_LIBS) $(ADPLUG_LIBS) $(FAAD_LIBS) $(am__append_25)
+	$(MPCDEC_LIBS) $(ADPLUG_LIBS) $(FAAD_LIBS) $(am__append_26)
 DECODER_SRC = 
 @HAVE_MODPLUG_TRUE@libmodplug_decoder_plugin_a_SOURCES = \
 @HAVE_MODPLUG_TRUE@	src/decoder/ModplugDecoderPlugin.cxx \
@@ -2621,10 +2625,10 @@ DECODER_SRC =
 @ENABLE_ENCODER_TRUE@	src/encoder/NullEncoderPlugin.cxx \
 @ENABLE_ENCODER_TRUE@	src/encoder/NullEncoderPlugin.hxx \
 @ENABLE_ENCODER_TRUE@	src/EncoderList.cxx src/EncoderList.hxx \
-@ENABLE_ENCODER_TRUE@	$(am__append_33) $(am__append_34) \
-@ENABLE_ENCODER_TRUE@	$(am__append_35) $(am__append_36) \
-@ENABLE_ENCODER_TRUE@	$(am__append_37) $(am__append_38) \
-@ENABLE_ENCODER_TRUE@	$(am__append_39)
+@ENABLE_ENCODER_TRUE@	$(am__append_34) $(am__append_35) \
+@ENABLE_ENCODER_TRUE@	$(am__append_36) $(am__append_37) \
+@ENABLE_ENCODER_TRUE@	$(am__append_38) $(am__append_39) \
+@ENABLE_ENCODER_TRUE@	$(am__append_40)
 
 #
 # input plugins
@@ -2634,9 +2638,9 @@ libinput_a_SOURCES = src/InputInit.cxx src/InputInit.hxx \
 	src/InputStream.cxx src/InputStream.hxx src/InputPlugin.hxx \
 	src/input/RewindInputPlugin.cxx \
 	src/input/RewindInputPlugin.hxx src/input/FileInputPlugin.cxx \
-	src/input/FileInputPlugin.hxx $(am__append_43) \
-	$(am__append_44) $(am__append_45) $(am__append_46) \
-	$(am__append_47)
+	src/input/FileInputPlugin.hxx $(am__append_44) \
+	$(am__append_45) $(am__append_46) $(am__append_47) \
+	$(am__append_48)
 libinput_a_CPPFLAGS = $(AM_CPPFLAGS) \
 	$(CURL_CFLAGS) \
 	$(CDIO_PARANOIA_CFLAGS) \
@@ -2688,12 +2692,12 @@ OUTPUT_API_SRC = \
 	src/OutputInit.cxx
 
 liboutput_plugins_a_SOURCES = src/output/NullOutputPlugin.cxx \
-	src/output/NullOutputPlugin.hxx $(am__append_48) \
-	$(am__append_50) $(am__append_52) $(am__append_53) \
-	$(am__append_54) $(am__append_55) $(am__append_56) \
-	$(am__append_58) $(am__append_59) $(am__append_60) \
-	$(am__append_62) $(am__append_63) $(am__append_64) \
-	$(am__append_65) $(am__append_66)
+	src/output/NullOutputPlugin.hxx $(am__append_49) \
+	$(am__append_51) $(am__append_53) $(am__append_54) \
+	$(am__append_55) $(am__append_56) $(am__append_57) \
+	$(am__append_59) $(am__append_60) $(am__append_61) \
+	$(am__append_63) $(am__append_64) $(am__append_65) \
+	$(am__append_66) $(am__append_67)
 MIXER_LIBS = \
 	libmixer_plugins.a \
 	$(PULSE_LIBS)
@@ -2707,9 +2711,9 @@ MIXER_API_SRC = \
 	src/MixerInternal.hxx
 
 libmixer_plugins_a_SOURCES = src/mixer/SoftwareMixerPlugin.cxx \
-	src/mixer/SoftwareMixerPlugin.hxx $(am__append_49) \
-	$(am__append_51) $(am__append_57) $(am__append_61) \
-	$(am__append_67)
+	src/mixer/SoftwareMixerPlugin.hxx $(am__append_50) \
+	$(am__append_52) $(am__append_58) $(am__append_62) \
+	$(am__append_68)
 libmixer_plugins_a_CPPFLAGS = $(AM_CPPFLAGS) \
 	$(ALSA_CFLAGS) \
 	$(PULSE_CFLAGS)
@@ -2738,12 +2742,12 @@ libplaylist_plugins_a_SOURCES = src/PlaylistPlugin.hxx \
 	src/playlist/EmbeddedCuePlaylistPlugin.cxx \
 	src/playlist/EmbeddedCuePlaylistPlugin.hxx \
 	src/PlaylistRegistry.cxx src/PlaylistRegistry.hxx \
-	$(am__append_68) $(am__append_69)
+	$(am__append_69) $(am__append_70)
 libplaylist_plugins_a_CPPFLAGS = $(AM_CPPFLAGS) \
 	$(YAJL_CFLAGS) \
 	$(patsubst -I%/FLAC,-I%,$(FLAC_CFLAGS))
 
-PLAYLIST_LIBS = libplaylist_plugins.a $(FLAC_LIBS) $(am__append_70)
+PLAYLIST_LIBS = libplaylist_plugins.a $(FLAC_LIBS) $(am__append_71)
 
 #
 # Filter plugins
@@ -2796,7 +2800,7 @@ SPARSE_SRC = $(addprefix $(top_srcdir)/,$(filter %.c,$(src_mpd_SOURCES)))
 @ENABLE_TEST_TRUE@C_TESTS = test/test_util test/test_byte_reverse \
 @ENABLE_TEST_TRUE@	test/test_mixramp test/test_icy_parser \
 @ENABLE_TEST_TRUE@	test/test_pcm test/test_protocol \
-@ENABLE_TEST_TRUE@	test/test_queue_priority $(am__append_71)
+@ENABLE_TEST_TRUE@	test/test_queue_priority $(am__append_72)
 @ENABLE_TEST_TRUE@test_read_conf_LDADD = \
 @ENABLE_TEST_TRUE@	libconf.a \
 @ENABLE_TEST_TRUE@	libutil.a \
@@ -2854,7 +2858,7 @@ SPARSE_SRC = $(addprefix $(top_srcdir)/,$(filter %.c,$(src_mpd_SOURCES)))
 
 @ENABLE_TEST_TRUE@test_run_input_SOURCES = test/run_input.cxx \
 @ENABLE_TEST_TRUE@	test/stdbin.h src/Log.cxx src/IOThread.cxx \
-@ENABLE_TEST_TRUE@	src/TagSave.cxx $(am__append_79)
+@ENABLE_TEST_TRUE@	src/TagSave.cxx $(am__append_80)
 @ENABLE_ARCHIVE_TRUE@@ENABLE_TEST_TRUE@test_visit_archive_LDADD = \
 @ENABLE_ARCHIVE_TRUE@@ENABLE_TEST_TRUE@	$(INPUT_LIBS) \
 @ENABLE_ARCHIVE_TRUE@@ENABLE_TEST_TRUE@	$(ARCHIVE_LIBS) \
@@ -2872,7 +2876,7 @@ SPARSE_SRC = $(addprefix $(top_srcdir)/,$(filter %.c,$(src_mpd_SOURCES)))
 @ENABLE_ARCHIVE_TRUE@@ENABLE_TEST_TRUE@	src/Log.cxx \
 @ENABLE_ARCHIVE_TRUE@@ENABLE_TEST_TRUE@	src/IOThread.cxx \
 @ENABLE_ARCHIVE_TRUE@@ENABLE_TEST_TRUE@	src/InputStream.cxx \
-@ENABLE_ARCHIVE_TRUE@@ENABLE_TEST_TRUE@	$(am__append_76)
+@ENABLE_ARCHIVE_TRUE@@ENABLE_TEST_TRUE@	$(am__append_77)
 @ENABLE_TEST_TRUE@test_dump_text_file_LDADD = \
 @ENABLE_TEST_TRUE@	$(INPUT_LIBS) \
 @ENABLE_TEST_TRUE@	$(ARCHIVE_LIBS) \
@@ -2888,7 +2892,7 @@ SPARSE_SRC = $(addprefix $(top_srcdir)/,$(filter %.c,$(src_mpd_SOURCES)))
 @ENABLE_TEST_TRUE@test_dump_text_file_SOURCES =  \
 @ENABLE_TEST_TRUE@	test/dump_text_file.cxx test/stdbin.h \
 @ENABLE_TEST_TRUE@	src/Log.cxx src/IOThread.cxx \
-@ENABLE_TEST_TRUE@	src/TextInputStream.cxx $(am__append_80)
+@ENABLE_TEST_TRUE@	src/TextInputStream.cxx $(am__append_81)
 @ENABLE_TEST_TRUE@test_dump_playlist_LDADD = \
 @ENABLE_TEST_TRUE@	$(PLAYLIST_LIBS) \
 @ENABLE_TEST_TRUE@	$(FLAC_LIBS) \
@@ -2912,7 +2916,7 @@ SPARSE_SRC = $(addprefix $(top_srcdir)/,$(filter %.c,$(src_mpd_SOURCES)))
 @ENABLE_TEST_TRUE@	src/CheckAudioFormat.cxx \
 @ENABLE_TEST_TRUE@	src/TextInputStream.cxx \
 @ENABLE_TEST_TRUE@	src/cue/CueParser.cxx src/cue/CueParser.hxx \
-@ENABLE_TEST_TRUE@	$(am__append_77) $(am__append_81)
+@ENABLE_TEST_TRUE@	$(am__append_78) $(am__append_82)
 @ENABLE_TEST_TRUE@test_run_decoder_LDADD = \
 @ENABLE_TEST_TRUE@	$(DECODER_LIBS) \
 @ENABLE_TEST_TRUE@	libpcm.a \
@@ -2932,7 +2936,7 @@ SPARSE_SRC = $(addprefix $(top_srcdir)/,$(filter %.c,$(src_mpd_SOURCES)))
 @ENABLE_TEST_TRUE@	src/ReplayGainInfo.cxx src/AudioFormat.cxx \
 @ENABLE_TEST_TRUE@	src/CheckAudioFormat.cxx $(ARCHIVE_SRC) \
 @ENABLE_TEST_TRUE@	$(INPUT_SRC) $(TAG_SRC) $(DECODER_SRC) \
-@ENABLE_TEST_TRUE@	$(am__append_82)
+@ENABLE_TEST_TRUE@	$(am__append_83)
 @ENABLE_TEST_TRUE@test_read_tags_LDADD = \
 @ENABLE_TEST_TRUE@	$(DECODER_LIBS) \
 @ENABLE_TEST_TRUE@	libpcm.a \
@@ -2951,7 +2955,7 @@ SPARSE_SRC = $(addprefix $(top_srcdir)/,$(filter %.c,$(src_mpd_SOURCES)))
 @ENABLE_TEST_TRUE@	test/FakeDecoderAPI.cxx src/Log.cxx \
 @ENABLE_TEST_TRUE@	src/IOThread.cxx src/ReplayGainInfo.cxx \
 @ENABLE_TEST_TRUE@	src/CheckAudioFormat.cxx $(DECODER_SRC) \
-@ENABLE_TEST_TRUE@	$(am__append_78)
+@ENABLE_TEST_TRUE@	$(am__append_79)
 @ENABLE_TEST_TRUE@@HAVE_ID3TAG_TRUE@test_dump_rva2_LDADD = \
 @ENABLE_TEST_TRUE@@HAVE_ID3TAG_TRUE@	$(TAG_LIBS) \
 @ENABLE_TEST_TRUE@@HAVE_ID3TAG_TRUE@	libutil.a \
@@ -3220,14 +3224,14 @@ SPARSE_SRC = $(addprefix $(top_srcdir)/,$(filter %.c,$(src_mpd_SOURCES)))
 @ENABLE_TEST_TRUE@	libutil.a \
 @ENABLE_TEST_TRUE@	$(CPPUNIT_LIBS)
 
-@ENABLE_TEST_TRUE@src_pcm_dsd2pcm_dsd2pcm_SOURCES = \
-@ENABLE_TEST_TRUE@	src/pcm/dsd2pcm/dsd2pcm.c src/pcm/dsd2pcm/dsd2pcm.h \
-@ENABLE_TEST_TRUE@	src/pcm/dsd2pcm/dsd2pcm.hpp \
-@ENABLE_TEST_TRUE@	src/pcm/dsd2pcm/noiseshape.c src/pcm/dsd2pcm/noiseshape.h \
-@ENABLE_TEST_TRUE@	src/pcm/dsd2pcm/noiseshape.hpp \
-@ENABLE_TEST_TRUE@	src/pcm/dsd2pcm/main.cpp
+@ENABLE_DSD_TRUE@@ENABLE_TEST_TRUE@src_pcm_dsd2pcm_dsd2pcm_SOURCES = \
+@ENABLE_DSD_TRUE@@ENABLE_TEST_TRUE@	src/pcm/dsd2pcm/dsd2pcm.c src/pcm/dsd2pcm/dsd2pcm.h \
+@ENABLE_DSD_TRUE@@ENABLE_TEST_TRUE@	src/pcm/dsd2pcm/dsd2pcm.hpp \
+@ENABLE_DSD_TRUE@@ENABLE_TEST_TRUE@	src/pcm/dsd2pcm/noiseshape.c src/pcm/dsd2pcm/noiseshape.h \
+@ENABLE_DSD_TRUE@@ENABLE_TEST_TRUE@	src/pcm/dsd2pcm/noiseshape.hpp \
+@ENABLE_DSD_TRUE@@ENABLE_TEST_TRUE@	src/pcm/dsd2pcm/main.cpp
 
-@ENABLE_TEST_TRUE@src_pcm_dsd2pcm_dsd2pcm_LDADD = libutil.a
+@ENABLE_DSD_TRUE@@ENABLE_TEST_TRUE@src_pcm_dsd2pcm_dsd2pcm_LDADD = libutil.a
 
 #
 # Documentation
@@ -3407,6 +3411,12 @@ src/decoder/$(DEPDIR)/$(am__dirstamp):
 src/decoder/libdecoder_plugins_a-PcmDecoderPlugin.$(OBJEXT):  \
 	src/decoder/$(am__dirstamp) \
 	src/decoder/$(DEPDIR)/$(am__dirstamp)
+src/libdecoder_plugins_a-DecoderBuffer.$(OBJEXT): src/$(am__dirstamp) \
+	src/$(DEPDIR)/$(am__dirstamp)
+src/libdecoder_plugins_a-DecoderPlugin.$(OBJEXT): src/$(am__dirstamp) \
+	src/$(DEPDIR)/$(am__dirstamp)
+src/libdecoder_plugins_a-DecoderList.$(OBJEXT): src/$(am__dirstamp) \
+	src/$(DEPDIR)/$(am__dirstamp)
 src/decoder/libdecoder_plugins_a-DsdiffDecoderPlugin.$(OBJEXT):  \
 	src/decoder/$(am__dirstamp) \
 	src/decoder/$(DEPDIR)/$(am__dirstamp)
@@ -3416,12 +3426,6 @@ src/decoder/libdecoder_plugins_a-DsfDecoderPlugin.$(OBJEXT):  \
 src/decoder/libdecoder_plugins_a-DsdLib.$(OBJEXT):  \
 	src/decoder/$(am__dirstamp) \
 	src/decoder/$(DEPDIR)/$(am__dirstamp)
-src/libdecoder_plugins_a-DecoderBuffer.$(OBJEXT): src/$(am__dirstamp) \
-	src/$(DEPDIR)/$(am__dirstamp)
-src/libdecoder_plugins_a-DecoderPlugin.$(OBJEXT): src/$(am__dirstamp) \
-	src/$(DEPDIR)/$(am__dirstamp)
-src/libdecoder_plugins_a-DecoderList.$(OBJEXT): src/$(am__dirstamp) \
-	src/$(DEPDIR)/$(am__dirstamp)
 src/decoder/libdecoder_plugins_a-MadDecoderPlugin.$(OBJEXT):  \
 	src/decoder/$(am__dirstamp) \
 	src/decoder/$(DEPDIR)/$(am__dirstamp)
@@ -5384,48 +5388,6 @@ src/decoder/libdecoder_plugins_a-PcmDecoderPlugin.obj: src/decoder/PcmDecoderPlu
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libdecoder_plugins_a_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o src/decoder/libdecoder_plugins_a-PcmDecoderPlugin.obj `if test -f 'src/decoder/PcmDecoderPlugin.cxx'; then $(CYGPATH_W) 'src/decoder/PcmDecoderPlugin.cxx'; else $(CYGPATH_W) '$(srcdir)/src/decoder/PcmDecoderPlugin.cxx'; fi`
 
-src/decoder/libdecoder_plugins_a-DsdiffDecoderPlugin.o: src/decoder/DsdiffDecoderPlugin.cxx
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libdecoder_plugins_a_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT src/decoder/libdecoder_plugins_a-DsdiffDecoderPlugin.o -MD -MP -MF src/decoder/$(DEPDIR)/libdecoder_plugins_a-DsdiffDecoderPlugin.Tpo -c -o src/decoder/libdecoder_plugins_a-DsdiffDecoderPlugin.o `test -f 'src/decoder/DsdiffDecoderPlugin.cxx' || echo '$(srcdir)/'`src/decoder/DsdiffDecoderPlugin.cxx
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) src/decoder/$(DEPDIR)/libdecoder_plugins_a-DsdiffDecoderPlugin.Tpo src/decoder/$(DEPDIR)/libdecoder_plugins_a-DsdiffDecoderPlugin.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='src/decoder/DsdiffDecoderPlugin.cxx' object='src/decoder/libdecoder_plugins_a-DsdiffDecoderPlugin.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libdecoder_plugins_a_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o src/decoder/libdecoder_plugins_a-DsdiffDecoderPlugin.o `test -f 'src/decoder/DsdiffDecoderPlugin.cxx' || echo '$(srcdir)/'`src/decoder/DsdiffDecoderPlugin.cxx
-
-src/decoder/libdecoder_plugins_a-DsdiffDecoderPlugin.obj: src/decoder/DsdiffDecoderPlugin.cxx
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libdecoder_plugins_a_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT src/decoder/libdecoder_plugins_a-DsdiffDecoderPlugin.obj -MD -MP -MF src/decoder/$(DEPDIR)/libdecoder_plugins_a-DsdiffDecoderPlugin.Tpo -c -o src/decoder/libdecoder_plugins_a-DsdiffDecoderPlugin.obj `if test -f 'src/decoder/DsdiffDecoderPlugin.cxx'; then $(CYGPATH_W) 'src/decoder/DsdiffDecoderPlugin.cxx'; else $(CYGPATH_W) '$(srcdir)/src/decoder/DsdiffDecoderPlugin.cxx'; fi`
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) src/decoder/$(DEPDIR)/libdecoder_plugins_a-DsdiffDecoderPlugin.Tpo src/decoder/$(DEPDIR)/libdecoder_plugins_a-DsdiffDecoderPlugin.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='src/decoder/DsdiffDecoderPlugin.cxx' object='src/decoder/libdecoder_plugins_a-DsdiffDecoderPlugin.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libdecoder_plugins_a_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o src/decoder/libdecoder_plugins_a-DsdiffDecoderPlugin.obj `if test -f 'src/decoder/DsdiffDecoderPlugin.cxx'; then $(CYGPATH_W) 'src/decoder/DsdiffDecoderPlugin.cxx'; else $(CYGPATH_W) '$(srcdir)/src/decoder/DsdiffDecoderPlugin.cxx'; fi`
-
-src/decoder/libdecoder_plugins_a-DsfDecoderPlugin.o: src/decoder/DsfDecoderPlugin.cxx
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libdecoder_plugins_a_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT src/decoder/libdecoder_plugins_a-DsfDecoderPlugin.o -MD -MP -MF src/decoder/$(DEPDIR)/libdecoder_plugins_a-DsfDecoderPlugin.Tpo -c -o src/decoder/libdecoder_plugins_a-DsfDecoderPlugin.o `test -f 'src/decoder/DsfDecoderPlugin.cxx' || echo '$(srcdir)/'`src/decoder/DsfDecoderPlugin.cxx
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) src/decoder/$(DEPDIR)/libdecoder_plugins_a-DsfDecoderPlugin.Tpo src/decoder/$(DEPDIR)/libdecoder_plugins_a-DsfDecoderPlugin.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='src/decoder/DsfDecoderPlugin.cxx' object='src/decoder/libdecoder_plugins_a-DsfDecoderPlugin.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libdecoder_plugins_a_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o src/decoder/libdecoder_plugins_a-DsfDecoderPlugin.o `test -f 'src/decoder/DsfDecoderPlugin.cxx' || echo '$(srcdir)/'`src/decoder/DsfDecoderPlugin.cxx
-
-src/decoder/libdecoder_plugins_a-DsfDecoderPlugin.obj: src/decoder/DsfDecoderPlugin.cxx
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libdecoder_plugins_a_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT src/decoder/libdecoder_plugins_a-DsfDecoderPlugin.obj -MD -MP -MF src/decoder/$(DEPDIR)/libdecoder_plugins_a-DsfDecoderPlugin.Tpo -c -o src/decoder/libdecoder_plugins_a-DsfDecoderPlugin.obj `if test -f 'src/decoder/DsfDecoderPlugin.cxx'; then $(CYGPATH_W) 'src/decoder/DsfDecoderPlugin.cxx'; else $(CYGPATH_W) '$(srcdir)/src/decoder/DsfDecoderPlugin.cxx'; fi`
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) src/decoder/$(DEPDIR)/libdecoder_plugins_a-DsfDecoderPlugin.Tpo src/decoder/$(DEPDIR)/libdecoder_plugins_a-DsfDecoderPlugin.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='src/decoder/DsfDecoderPlugin.cxx' object='src/decoder/libdecoder_plugins_a-DsfDecoderPlugin.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libdecoder_plugins_a_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o src/decoder/libdecoder_plugins_a-DsfDecoderPlugin.obj `if test -f 'src/decoder/DsfDecoderPlugin.cxx'; then $(CYGPATH_W) 'src/decoder/DsfDecoderPlugin.cxx'; else $(CYGPATH_W) '$(srcdir)/src/decoder/DsfDecoderPlugin.cxx'; fi`
-
-src/decoder/libdecoder_plugins_a-DsdLib.o: src/decoder/DsdLib.cxx
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libdecoder_plugins_a_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT src/decoder/libdecoder_plugins_a-DsdLib.o -MD -MP -MF src/decoder/$(DEPDIR)/libdecoder_plugins_a-DsdLib.Tpo -c -o src/decoder/libdecoder_plugins_a-DsdLib.o `test -f 'src/decoder/DsdLib.cxx' || echo '$(srcdir)/'`src/decoder/DsdLib.cxx
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) src/decoder/$(DEPDIR)/libdecoder_plugins_a-DsdLib.Tpo src/decoder/$(DEPDIR)/libdecoder_plugins_a-DsdLib.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='src/decoder/DsdLib.cxx' object='src/decoder/libdecoder_plugins_a-DsdLib.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libdecoder_plugins_a_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o src/decoder/libdecoder_plugins_a-DsdLib.o `test -f 'src/decoder/DsdLib.cxx' || echo '$(srcdir)/'`src/decoder/DsdLib.cxx
-
-src/decoder/libdecoder_plugins_a-DsdLib.obj: src/decoder/DsdLib.cxx
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libdecoder_plugins_a_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT src/decoder/libdecoder_plugins_a-DsdLib.obj -MD -MP -MF src/decoder/$(DEPDIR)/libdecoder_plugins_a-DsdLib.Tpo -c -o src/decoder/libdecoder_plugins_a-DsdLib.obj `if test -f 'src/decoder/DsdLib.cxx'; then $(CYGPATH_W) 'src/decoder/DsdLib.cxx'; else $(CYGPATH_W) '$(srcdir)/src/decoder/DsdLib.cxx'; fi`
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) src/decoder/$(DEPDIR)/libdecoder_plugins_a-DsdLib.Tpo src/decoder/$(DEPDIR)/libdecoder_plugins_a-DsdLib.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='src/decoder/DsdLib.cxx' object='src/decoder/libdecoder_plugins_a-DsdLib.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libdecoder_plugins_a_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o src/decoder/libdecoder_plugins_a-DsdLib.obj `if test -f 'src/decoder/DsdLib.cxx'; then $(CYGPATH_W) 'src/decoder/DsdLib.cxx'; else $(CYGPATH_W) '$(srcdir)/src/decoder/DsdLib.cxx'; fi`
-
 src/libdecoder_plugins_a-DecoderBuffer.o: src/DecoderBuffer.cxx
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libdecoder_plugins_a_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT src/libdecoder_plugins_a-DecoderBuffer.o -MD -MP -MF src/$(DEPDIR)/libdecoder_plugins_a-DecoderBuffer.Tpo -c -o src/libdecoder_plugins_a-DecoderBuffer.o `test -f 'src/DecoderBuffer.cxx' || echo '$(srcdir)/'`src/DecoderBuffer.cxx
 @am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) src/$(DEPDIR)/libdecoder_plugins_a-DecoderBuffer.Tpo src/$(DEPDIR)/libdecoder_plugins_a-DecoderBuffer.Po
@@ -5467,6 +5429,48 @@ src/libdecoder_plugins_a-DecoderList.obj: src/DecoderList.cxx
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='src/DecoderList.cxx' object='src/libdecoder_plugins_a-DecoderList.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libdecoder_plugins_a_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o src/libdecoder_plugins_a-DecoderList.obj `if test -f 'src/DecoderList.cxx'; then $(CYGPATH_W) 'src/DecoderList.cxx'; else $(CYGPATH_W) '$(srcdir)/src/DecoderList.cxx'; fi`
+
+src/decoder/libdecoder_plugins_a-DsdiffDecoderPlugin.o: src/decoder/DsdiffDecoderPlugin.cxx
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libdecoder_plugins_a_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT src/decoder/libdecoder_plugins_a-DsdiffDecoderPlugin.o -MD -MP -MF src/decoder/$(DEPDIR)/libdecoder_plugins_a-DsdiffDecoderPlugin.Tpo -c -o src/decoder/libdecoder_plugins_a-DsdiffDecoderPlugin.o `test -f 'src/decoder/DsdiffDecoderPlugin.cxx' || echo '$(srcdir)/'`src/decoder/DsdiffDecoderPlugin.cxx
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) src/decoder/$(DEPDIR)/libdecoder_plugins_a-DsdiffDecoderPlugin.Tpo src/decoder/$(DEPDIR)/libdecoder_plugins_a-DsdiffDecoderPlugin.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='src/decoder/DsdiffDecoderPlugin.cxx' object='src/decoder/libdecoder_plugins_a-DsdiffDecoderPlugin.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libdecoder_plugins_a_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o src/decoder/libdecoder_plugins_a-DsdiffDecoderPlugin.o `test -f 'src/decoder/DsdiffDecoderPlugin.cxx' || echo '$(srcdir)/'`src/decoder/DsdiffDecoderPlugin.cxx
+
+src/decoder/libdecoder_plugins_a-DsdiffDecoderPlugin.obj: src/decoder/DsdiffDecoderPlugin.cxx
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libdecoder_plugins_a_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT src/decoder/libdecoder_plugins_a-DsdiffDecoderPlugin.obj -MD -MP -MF src/decoder/$(DEPDIR)/libdecoder_plugins_a-DsdiffDecoderPlugin.Tpo -c -o src/decoder/libdecoder_plugins_a-DsdiffDecoderPlugin.obj `if test -f 'src/decoder/DsdiffDecoderPlugin.cxx'; then $(CYGPATH_W) 'src/decoder/DsdiffDecoderPlugin.cxx'; else $(CYGPATH_W) '$(srcdir)/src/decoder/DsdiffDecoderPlugin.cxx'; fi`
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) src/decoder/$(DEPDIR)/libdecoder_plugins_a-DsdiffDecoderPlugin.Tpo src/decoder/$(DEPDIR)/libdecoder_plugins_a-DsdiffDecoderPlugin.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='src/decoder/DsdiffDecoderPlugin.cxx' object='src/decoder/libdecoder_plugins_a-DsdiffDecoderPlugin.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libdecoder_plugins_a_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o src/decoder/libdecoder_plugins_a-DsdiffDecoderPlugin.obj `if test -f 'src/decoder/DsdiffDecoderPlugin.cxx'; then $(CYGPATH_W) 'src/decoder/DsdiffDecoderPlugin.cxx'; else $(CYGPATH_W) '$(srcdir)/src/decoder/DsdiffDecoderPlugin.cxx'; fi`
+
+src/decoder/libdecoder_plugins_a-DsfDecoderPlugin.o: src/decoder/DsfDecoderPlugin.cxx
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libdecoder_plugins_a_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT src/decoder/libdecoder_plugins_a-DsfDecoderPlugin.o -MD -MP -MF src/decoder/$(DEPDIR)/libdecoder_plugins_a-DsfDecoderPlugin.Tpo -c -o src/decoder/libdecoder_plugins_a-DsfDecoderPlugin.o `test -f 'src/decoder/DsfDecoderPlugin.cxx' || echo '$(srcdir)/'`src/decoder/DsfDecoderPlugin.cxx
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) src/decoder/$(DEPDIR)/libdecoder_plugins_a-DsfDecoderPlugin.Tpo src/decoder/$(DEPDIR)/libdecoder_plugins_a-DsfDecoderPlugin.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='src/decoder/DsfDecoderPlugin.cxx' object='src/decoder/libdecoder_plugins_a-DsfDecoderPlugin.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libdecoder_plugins_a_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o src/decoder/libdecoder_plugins_a-DsfDecoderPlugin.o `test -f 'src/decoder/DsfDecoderPlugin.cxx' || echo '$(srcdir)/'`src/decoder/DsfDecoderPlugin.cxx
+
+src/decoder/libdecoder_plugins_a-DsfDecoderPlugin.obj: src/decoder/DsfDecoderPlugin.cxx
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libdecoder_plugins_a_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT src/decoder/libdecoder_plugins_a-DsfDecoderPlugin.obj -MD -MP -MF src/decoder/$(DEPDIR)/libdecoder_plugins_a-DsfDecoderPlugin.Tpo -c -o src/decoder/libdecoder_plugins_a-DsfDecoderPlugin.obj `if test -f 'src/decoder/DsfDecoderPlugin.cxx'; then $(CYGPATH_W) 'src/decoder/DsfDecoderPlugin.cxx'; else $(CYGPATH_W) '$(srcdir)/src/decoder/DsfDecoderPlugin.cxx'; fi`
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) src/decoder/$(DEPDIR)/libdecoder_plugins_a-DsfDecoderPlugin.Tpo src/decoder/$(DEPDIR)/libdecoder_plugins_a-DsfDecoderPlugin.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='src/decoder/DsfDecoderPlugin.cxx' object='src/decoder/libdecoder_plugins_a-DsfDecoderPlugin.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libdecoder_plugins_a_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o src/decoder/libdecoder_plugins_a-DsfDecoderPlugin.obj `if test -f 'src/decoder/DsfDecoderPlugin.cxx'; then $(CYGPATH_W) 'src/decoder/DsfDecoderPlugin.cxx'; else $(CYGPATH_W) '$(srcdir)/src/decoder/DsfDecoderPlugin.cxx'; fi`
+
+src/decoder/libdecoder_plugins_a-DsdLib.o: src/decoder/DsdLib.cxx
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libdecoder_plugins_a_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT src/decoder/libdecoder_plugins_a-DsdLib.o -MD -MP -MF src/decoder/$(DEPDIR)/libdecoder_plugins_a-DsdLib.Tpo -c -o src/decoder/libdecoder_plugins_a-DsdLib.o `test -f 'src/decoder/DsdLib.cxx' || echo '$(srcdir)/'`src/decoder/DsdLib.cxx
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) src/decoder/$(DEPDIR)/libdecoder_plugins_a-DsdLib.Tpo src/decoder/$(DEPDIR)/libdecoder_plugins_a-DsdLib.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='src/decoder/DsdLib.cxx' object='src/decoder/libdecoder_plugins_a-DsdLib.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libdecoder_plugins_a_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o src/decoder/libdecoder_plugins_a-DsdLib.o `test -f 'src/decoder/DsdLib.cxx' || echo '$(srcdir)/'`src/decoder/DsdLib.cxx
+
+src/decoder/libdecoder_plugins_a-DsdLib.obj: src/decoder/DsdLib.cxx
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libdecoder_plugins_a_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT src/decoder/libdecoder_plugins_a-DsdLib.obj -MD -MP -MF src/decoder/$(DEPDIR)/libdecoder_plugins_a-DsdLib.Tpo -c -o src/decoder/libdecoder_plugins_a-DsdLib.obj `if test -f 'src/decoder/DsdLib.cxx'; then $(CYGPATH_W) 'src/decoder/DsdLib.cxx'; else $(CYGPATH_W) '$(srcdir)/src/decoder/DsdLib.cxx'; fi`
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) src/decoder/$(DEPDIR)/libdecoder_plugins_a-DsdLib.Tpo src/decoder/$(DEPDIR)/libdecoder_plugins_a-DsdLib.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='src/decoder/DsdLib.cxx' object='src/decoder/libdecoder_plugins_a-DsdLib.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libdecoder_plugins_a_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o src/decoder/libdecoder_plugins_a-DsdLib.obj `if test -f 'src/decoder/DsdLib.cxx'; then $(CYGPATH_W) 'src/decoder/DsdLib.cxx'; else $(CYGPATH_W) '$(srcdir)/src/decoder/DsdLib.cxx'; fi`
 
 src/decoder/libdecoder_plugins_a-MadDecoderPlugin.o: src/decoder/MadDecoderPlugin.cxx
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libdecoder_plugins_a_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT src/decoder/libdecoder_plugins_a-MadDecoderPlugin.o -MD -MP -MF src/decoder/$(DEPDIR)/libdecoder_plugins_a-MadDecoderPlugin.Tpo -c -o src/decoder/libdecoder_plugins_a-MadDecoderPlugin.o `test -f 'src/decoder/MadDecoderPlugin.cxx' || echo '$(srcdir)/'`src/decoder/MadDecoderPlugin.cxx
@@ -10379,8 +10383,8 @@ maintainer-clean-generic:
 	@echo "This command is intended for maintainers to use"
 	@echo "it deletes files that may require special tools to rebuild."
 @ENABLE_DOCUMENTATION_FALSE@uninstall-local:
-@ENABLE_DOCUMENTATION_FALSE@clean-local:
 @ENABLE_DOCUMENTATION_FALSE@install-data-local:
+@ENABLE_DOCUMENTATION_FALSE@clean-local:
 clean: clean-am
 
 clean-am: clean-binPROGRAMS clean-generic clean-local \

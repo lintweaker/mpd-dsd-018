@@ -111,6 +111,9 @@
 /* Define to 1 if you have the `daemon' function. */
 #undef HAVE_DAEMON
 
+/* Define for the DSD decoder */
+#undef HAVE_DSD
+
 /* Define to use FAAD2 for AAC decoding */
 #undef HAVE_FAAD
 
