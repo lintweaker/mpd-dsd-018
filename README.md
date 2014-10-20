@@ -37,10 +37,12 @@ and DSDIFF)
 14-Jul-14 Update native DSD support
 
 13-Aug-14 Update to MPD 0.18.12
-10-Oct-14 - Update to MPD 0.18.13
-	  - Update to MPD 0.18.14
-	  - Update to MPD 0.18.15
-	  - Update to MPD 0.18.16
+10-Oct-14
+- Update to MPD 0.18.13
+- Update to MPD 0.18.14
+- Update to MPD 0.18.15
+- Update to MPD 0.18.16
+
 20-Oct-14 Implement native DSD support for XMOS based USB DACs.
 	See [xmos-native-dsd] (https://github.com/lintweaker/xmos-native-dsd) for more
 	information.
