@@ -62,6 +62,12 @@ enum class SampleFormat : uint8_t {
 	  * per channel
 	  */
 	DSD_U8,
+
+	/**
+	 * DSD native output, 1 bit samples. Each frame carries 4 DSD
+	 * 1 byte samples
+	 */
+	DSD_U32,
 };
 
 #if defined(WIN32) && GCC_CHECK_VERSION(4,6)
@@ -205,6 +211,7 @@ audio_valid_sample_format(SampleFormat format)
 	case SampleFormat::FLOAT:
 	case SampleFormat::DSD:
 	case SampleFormat::DSD_U8:
+	case SampleFormat::DSD_U32:
 		return true;
 
 	case SampleFormat::UNDEFINED:
@@ -263,6 +270,7 @@ sample_format_size(SampleFormat format)
 	case SampleFormat::S24_P32:
 	case SampleFormat::S32:
 	case SampleFormat::FLOAT:
+	case SampleFormat::DSD_U32:
 		return 4;
 
 	case SampleFormat::DSD:

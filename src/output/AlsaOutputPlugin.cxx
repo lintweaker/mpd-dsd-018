@@ -73,6 +73,12 @@ struct AlsaOutput {
 
 	bool dsd_native;
 
+	/**
+	 * dsd_native_type
+	 * 0 = regular, uses DSD_U8, 1 = reserved. 2 = XMOS mode, uses DSD_U32_LE
+	 */
+	unsigned int dsd_native_type;
+
 	/** libasound's buffer_time setting (in microseconds) */
 	unsigned int buffer_time;
 
@@ -162,6 +168,22 @@ alsa_configure(AlsaOutput *ad, const config_param &param)
 	ad->dsd_usb = param.GetBlockValue("dsd_usb", false);
 
 	ad->dsd_native = param.GetBlockValue("dsd_native", false);
+
+
+
+	/* If native DSD is enabled, type for requested output type */
+	if (ad->dsd_native) {
+		ad->dsd_native_type = param.GetBlockValue("dsd_native_type", 255);
+		switch (ad->dsd_native_type) {
+			case 0:
+			case 2:
+				break;
+			case 1:
+				ad->dsd_native = false;
+			default:
+				ad->dsd_native = false;
+		}
+	}
 
 	/* If both dsd_usb and dsd_native are enabled, fall back to dsd_usb */
 	if (ad->dsd_usb && ad->dsd_native)
@@ -274,6 +296,10 @@ get_bitformat(SampleFormat sample_format)
 
 	case SampleFormat::DSD_U8:
 		return SND_PCM_FORMAT_DSD_U8;
+
+	case SampleFormat::DSD_U32:
+		return SND_PCM_FORMAT_DSD_U32_LE;
+
 	}
 
 	assert(false);
@@ -637,9 +663,27 @@ alsa_setup_dsd(AlsaOutput *ad, const AudioFormat audio_format,
 
 	AudioFormat usb_format = audio_format;
 
-	if (ad->dsd_native) {
+	/* DSD native type 0 -> DSD_U8 */
+	if (ad->dsd_native && ad->dsd_native_type == 0) {
 
 		usb_format.format = SampleFormat::DSD_U8;
+		if (!alsa_setup(ad, usb_format, packed_r, reverse_endian_r, error)) {
+
+			error.Format(alsa_output_domain,
+				"Failed to configure native DSD playback on ALSA device \"%s\"",
+				alsa_device(ad));
+			g_free(ad->silence);
+			return false;
+		}
+		return true;
+	}
+
+	/* DSD native type 2 -> DSD_U32_LE */
+	if (ad->dsd_native && ad->dsd_native_type == 2) {
+
+		usb_format.format = SampleFormat::DSD_U32;
+		usb_format.sample_rate /= 4;
+
 		if (!alsa_setup(ad, usb_format, packed_r, reverse_endian_r, error)) {
 
 			error.Format(alsa_output_domain,
@@ -708,7 +752,8 @@ alsa_setup_or_dsd(AlsaOutput *ad, AudioFormat &audio_format,
 
 	ad->pcm_export->Open(audio_format.format,
 			     audio_format.channels,
-			     dsd_usb, shift8, packed, reverse_endian);
+			     dsd_usb, shift8, packed, reverse_endian,
+			     dsd_native, ad->dsd_native_type);
 	return true;
 }
 

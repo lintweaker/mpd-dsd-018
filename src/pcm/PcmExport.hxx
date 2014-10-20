@@ -67,6 +67,20 @@ struct PcmExport {
 	bool dsd_usb;
 
 	/**
+	 * Output native DSD?
+	 * dsd_native_type contains requested output type
+	 */
+	bool dsd_native;
+
+	/**
+	 * DSD native output type
+	 * 0 = DSD_U8, no export needed
+	 * 1 = DSD_U16_LE, reserved. Not supported yet
+	 * 2 = DSD_U32_LE, e.g. XMOS based USB DACs
+	 */
+	unsigned dsd_native_type;
+
+	/**
 	 * Convert (padded) 24 bit samples to 32 bit by shifting 8
 	 * bits to the left?
 	 */
@@ -95,7 +109,8 @@ struct PcmExport {
 	 * @param channels the number of channels; ignored unless dsd_usb is set
 	 */
 	void Open(SampleFormat sample_format, unsigned channels,
-		  bool dsd_usb, bool shift8, bool pack, bool reverse_endian);
+		  bool dsd_usb, bool shift8, bool pack, bool reverse_endian,
+		  bool dsd_native, unsigned dsd_native_type);
 
 	/**
 	 * Calculate the size of one output frame.

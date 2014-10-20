@@ -105,6 +105,7 @@ flac_convert(void *dest,
 	case SampleFormat::DSD:
 	case SampleFormat::UNDEFINED:
 	case SampleFormat::DSD_U8:
+	case SampleFormat::DSD_U32:
 		assert(false);
 		gcc_unreachable();
 	}
