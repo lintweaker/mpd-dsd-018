@@ -188,6 +188,7 @@ pcm_convert_to_16(PcmBuffer &buffer, PcmDither &dither,
 	case SampleFormat::UNDEFINED:
 	case SampleFormat::DSD:
 	case SampleFormat::DSD_U8:
+	case SampleFormat::DSD_U32:
 		break;
 
 	case SampleFormat::S8:
@@ -294,6 +295,7 @@ pcm_convert_to_24(PcmBuffer &buffer,
 	case SampleFormat::UNDEFINED:
 	case SampleFormat::DSD:
 	case SampleFormat::DSD_U8:
+	case SampleFormat::DSD_U32:
 		break;
 
 	case SampleFormat::S8:
@@ -406,6 +408,7 @@ pcm_convert_to_32(PcmBuffer &buffer,
 	case SampleFormat::UNDEFINED:
 	case SampleFormat::DSD:
 	case SampleFormat::DSD_U8:
+	case SampleFormat::DSD_U32:
 		break;
 
 	case SampleFormat::S8:
@@ -517,6 +520,7 @@ pcm_convert_to_float(PcmBuffer &buffer,
 	case SampleFormat::UNDEFINED:
 	case SampleFormat::DSD:
 	case SampleFormat::DSD_U8:
+	case SampleFormat::DSD_U32:
 		break;
 
 	case SampleFormat::S8:

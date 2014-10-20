@@ -20,22 +20,31 @@
 #include "config.h"
 #include "PcmExport.hxx"
 #include "PcmDsdUsb.hxx"
+#include "PcmDsdNative.hxx"
 #include "PcmPack.hxx"
 #include "util/ByteReverse.hxx"
 
 void
 PcmExport::Open(SampleFormat sample_format, unsigned _channels,
-		bool _dsd_usb, bool _shift8, bool _pack, bool _reverse_endian)
+		bool _dsd_usb, bool _shift8, bool _pack, bool _reverse_endian,
+		bool _dsd_native, unsigned _dsd_native_type)
 {
 	assert(audio_valid_sample_format(sample_format));
 	assert(!_dsd_usb || audio_valid_channel_count(_channels));
 
 	channels = _channels;
 	dsd_usb = _dsd_usb && sample_format == SampleFormat::DSD;
+
+	dsd_native = _dsd_native;
+	dsd_native_type = _dsd_native_type;
+
 	if (dsd_usb)
 		/* after the conversion to DSD-over-USB, the DSD
 		   samples are stuffed inside fake 24 bit samples */
 		sample_format = SampleFormat::S24_P32;
+
+	if (dsd_native && dsd_native_type == 2)
+		sample_format = SampleFormat::S32;
 
 	shift8 = _shift8 && sample_format == SampleFormat::S24_P32;
 	pack24 = _pack && sample_format == SampleFormat::S24_P32;
@@ -68,6 +77,9 @@ PcmExport::GetFrameSize(const AudioFormat &audio_format) const
 		   bytes per sample) */
 		return channels * 4;
 
+	if (dsd_native && dsd_native_type == 2)
+		return channels * 4;
+
 	return audio_format.GetFrameSize();
 }
 
@@ -76,6 +88,10 @@ PcmExport::Export(const void *data, size_t size, size_t &dest_size_r)
 {
 	if (dsd_usb)
 		data = pcm_dsd_to_usb(dsd_buffer, channels,
+				      (const uint8_t *)data, size, &size);
+
+	if (dsd_native && dsd_native_type == 2)
+		data = pcm_dsd_native(dsd_buffer, channels,
 				      (const uint8_t *)data, size, &size);
 
 	if (pack24) {

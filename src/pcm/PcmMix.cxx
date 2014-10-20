@@ -80,6 +80,7 @@ pcm_add_vol(void *buffer1, const void *buffer2, size_t size,
 	case SampleFormat::UNDEFINED:
 	case SampleFormat::DSD:
 	case SampleFormat::DSD_U8:
+	case SampleFormat::DSD_U32:
 		/* not implemented */
 		return false;
 
@@ -160,6 +161,7 @@ pcm_add(void *buffer1, const void *buffer2, size_t size,
 	case SampleFormat::UNDEFINED:
 	case SampleFormat::DSD:
 	case SampleFormat::DSD_U8:
+	case SampleFormat::DSD_U32:
 		/* not implemented */
 		return false;
 
