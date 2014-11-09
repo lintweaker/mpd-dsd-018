@@ -47,5 +47,8 @@ and DSDIFF)
 	See [xmos-native-dsd] (https://github.com/lintweaker/xmos-native-dsd) for more
 	information.
 
+09-Nov-14
+- Update to MPD 0.18.17
+
 
 

@@ -42,6 +42,8 @@
 - Implement native DSD playback for XMOS based USB DACs (e.g. iFi nano/micro DSD
   DAC). Requires ALSA lib and kernel support.
   See https://github.com/lintweaker/xmos-native-dsd for more info
+09-Nov-14
+- Update to MPD 0.18.17
 
 
 

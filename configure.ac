@@ -1,6 +1,6 @@
 AC_PREREQ(2.60)
 
-AC_INIT(mpd, 0.18.16-dsd, gtmkramer@xs4all.nl)
+AC_INIT(mpd, 0.18.17-dsd, gtmkramer@xs4all.nl)
 
 VERSION_MAJOR=0
 VERSION_MINOR=18
@@ -1523,6 +1523,7 @@ results(un,[UNIX Domain Sockets])
 printf '\nFile format support:\n\t'
 results(aac, [AAC])
 results(adplug, [AdPlug])
+results(dsd, [DSD])
 results(sidplay, [C64 SID])
 results(ffmpeg, [FFMPEG])
 results(flac, [FLAC])

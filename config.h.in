@@ -117,9 +117,6 @@
 /* Define to use FAAD2 for AAC decoding */
 #undef HAVE_FAAD
 
-/* Define if faad.h uses the broken "unsigned long" pointers */
-#undef HAVE_FAAD_LONG
-
 /* Define for FFMPEG support */
 #undef HAVE_FFMPEG
 
