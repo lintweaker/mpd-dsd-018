@@ -75,7 +75,7 @@ struct AlsaOutput {
 
 	/**
 	 * dsd_native_type
-	 * 0 = regular, uses DSD_U8, 1 = reserved. 2 = XMOS mode, uses DSD_U32_LE
+	 * 0 = regular, uses DSD_U8, 1 = reserved. 2 = XMOS mode, uses DSD_U32_BE
 	 */
 	unsigned int dsd_native_type;
 
@@ -298,7 +298,7 @@ get_bitformat(SampleFormat sample_format)
 		return SND_PCM_FORMAT_DSD_U8;
 
 	case SampleFormat::DSD_U32:
-		return SND_PCM_FORMAT_DSD_U32_LE;
+		return SND_PCM_FORMAT_DSD_U32_BE;
 
 	}
 
@@ -678,7 +678,7 @@ alsa_setup_dsd(AlsaOutput *ad, const AudioFormat audio_format,
 		return true;
 	}
 
-	/* DSD native type 2 -> DSD_U32_LE */
+	/* DSD native type 2 -> DSD_U32_BE */
 	if (ad->dsd_native && ad->dsd_native_type == 2) {
 
 		usb_format.format = SampleFormat::DSD_U32;

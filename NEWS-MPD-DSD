@@ -44,6 +44,9 @@
   See https://github.com/lintweaker/xmos-native-dsd for more info
 09-Nov-14
 - Update to MPD 0.18.17
+21-Nov-14
+- Switch DSD_U32_LE to DSD_U32_BE
+
 
 
 
