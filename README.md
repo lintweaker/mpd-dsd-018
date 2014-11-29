@@ -50,5 +50,10 @@ and DSDIFF)
 09-Nov-14
 - Update to MPD 0.18.17
 
+21-Nov-14
+- Switch to DSD_U32_BE for XMOS/Denon/Marantz native DSD output
+
+29-Nov-14
+- Update to MPD 0.18.18
 
 
