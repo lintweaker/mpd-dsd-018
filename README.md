@@ -57,5 +57,7 @@ and DSDIFF)
 - Update to MPD 0.18.18
 - Update to MPD 0.18.19
 
+13-Nov-14
+- Update to MPD 0.18.20
 
 
