@@ -63,4 +63,6 @@ and DSDIFF)
 28-Jan-15
 - Update to MPD 0.18.21
 - Update to MPD 0.18.22
+- Allow larger ID3 tags for DSD
+
 

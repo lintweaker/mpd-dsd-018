@@ -155,7 +155,7 @@ dsdlib_tag_id3(InputStream &is,
 	count = size - offset;
 
 	/* Check and limit id3 tag size to prevent a stack overflow */
-	if (count == 0 || count > 4096)
+	if (count < 10 || count > 256*1024)
 		return;
 
 	id3_byte_t dsdid3[count];
