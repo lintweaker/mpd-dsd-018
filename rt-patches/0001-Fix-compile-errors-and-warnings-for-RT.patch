@@ -1,0 +1,54 @@
+From 2d06c518ade469285fd72b826756f000feafac82 Mon Sep 17 00:00:00 2001
+From: Jurgen Kramer <gtmkramer@xs4all.nl>
+Date: Sun, 8 Feb 2015 13:59:16 +0100
+Subject: [PATCH] Fix compile errors and warnings for RT
+
+Signed-off-by: Jurgen Kramer <gtmkramer@xs4all.nl>
+---
+ src/rt_opt.cxx | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
+
+diff --git a/src/rt_opt.cxx b/src/rt_opt.cxx
+index ac0eb01..1c5e635 100644
+--- a/src/rt_opt.cxx
++++ b/src/rt_opt.cxx
+@@ -304,14 +304,18 @@ set_parameter(void) {
+ 	enable_rtopt = true;
+ 
+ 	enable_memlock = param->GetBlockValue(RTOPT_MEMLOCK_NAME,false);
+-
++#if 0
+ 	stack_reserve = param->GetBlockValue(RTOPT_STACKRESERVE_NAME,RTOPT_DEFAULT_STACK_RESERVE) * 1024;
+ 
+ 	heap_reserve  = param->GetBlockValue(RTOPT_HEAPRESERVE_NAME,RTOPT_DEFAULT_HEAP_RESERVE) * 1024;
++#else
++	stack_reserve = param->GetBlockValue(((const char*)"stack_reserve"), 0) * 1024;
+ 
++	heap_reserve = param->GetBlockValue(((const char*)"heap_reserve"), 0) * 1024;
++#endif
+ 	if ( enable_memlock ) {
+ 	  FormatDebug(rt_opt_domain,
+-		      "realtime_option(set_parameter): memlock enable  stack_reserve : %d   heap_reserve : %d\n",
++		      "realtime_option(set_parameter): memlock enable  stack_reserve : %d   heap_reserve : %zd\n",
+ 		      stack_reserve,heap_reserve);
+ 	}
+ 
+@@ -455,13 +459,13 @@ void rtopt_memlock() {
+ 
+ 	if ( stack_reserve != (size_t)0 ) {
+ 		FormatDebug(rt_opt_domain,
+-			 "realtime_option(rtopt_memlock): stack_reserve %d",stack_reserve);
++			 "realtime_option(rtopt_memlock): stack_reserve %zd",stack_reserve);
+ 		bzero(alloca(stack_reserve), stack_reserve);
+ 	}
+ 
+ 	if ( heap_reserve != (size_t)0 ) {
+ 		FormatDebug(rt_opt_domain,
+-			 "realtime_option(rtopt_memlock): heap_reserve %d",heap_reserve);
++			 "realtime_option(rtopt_memlock): heap_reserve %zd",heap_reserve);
+ 		ptr = malloc(heap_reserve);
+ 		if ( ptr != NULL ) {
+ 			bzero(ptr, heap_reserve);
+-- 
+2.1.0
+
