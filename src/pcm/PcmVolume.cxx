@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2003-2013 The Music Player Daemon Project
+ * Copyright (C) 2003-2015 The Music Player Daemon Project
  * http://www.musicpd.org
  *
  * This program is free software; you can redistribute it and/or modify
@@ -155,7 +155,7 @@ pcm_volume(void *buffer, size_t length,
 	case SampleFormat::UNDEFINED:
 	case SampleFormat::DSD:
 	case SampleFormat::DSD_U8:
-	case SampleFormat::DSD_U32:
+	case SampleFormat::DSD_U32_BE:
 		/* not implemented */
 		return false;
 

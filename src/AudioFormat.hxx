@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2003-2013 The Music Player Daemon Project
+ * Copyright (C) 2003-2015 The Music Player Daemon Project
  * http://www.musicpd.org
  *
  * This program is free software; you can redistribute it and/or modify
@@ -65,9 +65,9 @@ enum class SampleFormat : uint8_t {
 
 	/**
 	 * DSD native output, 1 bit samples. Each frame carries 4 DSD
-	 * 1 byte samples
+	 * 1 byte samples, Big Endian
 	 */
-	DSD_U32,
+	DSD_U32_BE,
 };
 
 #if defined(WIN32) && GCC_CHECK_VERSION(4,6)
@@ -211,7 +211,7 @@ audio_valid_sample_format(SampleFormat format)
 	case SampleFormat::FLOAT:
 	case SampleFormat::DSD:
 	case SampleFormat::DSD_U8:
-	case SampleFormat::DSD_U32:
+	case SampleFormat::DSD_U32_BE:
 		return true;
 
 	case SampleFormat::UNDEFINED:
@@ -270,7 +270,7 @@ sample_format_size(SampleFormat format)
 	case SampleFormat::S24_P32:
 	case SampleFormat::S32:
 	case SampleFormat::FLOAT:
-	case SampleFormat::DSD_U32:
+	case SampleFormat::DSD_U32_BE:
 		return 4;
 
 	case SampleFormat::DSD:

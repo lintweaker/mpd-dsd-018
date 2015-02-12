@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2003-2013 The Music Player Daemon Project
+ * Copyright (C) 2003-2015 The Music Player Daemon Project
  * http://www.musicpd.org
  *
  * This program is free software; you can redistribute it and/or modify
@@ -57,7 +57,7 @@ sample_format_to_string(SampleFormat format)
 		return "24";
 
 	case SampleFormat::S32:
-	case SampleFormat::DSD_U32:
+	case SampleFormat::DSD_U32_BE:
 		return "32";
 
 	case SampleFormat::FLOAT:

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2003-2013 The Music Player Daemon Project
+ * Copyright (C) 2003-2015 The Music Player Daemon Project
  * http://www.musicpd.org
  *
  * This program is free software; you can redistribute it and/or modify
@@ -188,7 +188,7 @@ pcm_convert_to_16(PcmBuffer &buffer, PcmDither &dither,
 	case SampleFormat::UNDEFINED:
 	case SampleFormat::DSD:
 	case SampleFormat::DSD_U8:
-	case SampleFormat::DSD_U32:
+	case SampleFormat::DSD_U32_BE:
 		break;
 
 	case SampleFormat::S8:
@@ -295,7 +295,7 @@ pcm_convert_to_24(PcmBuffer &buffer,
 	case SampleFormat::UNDEFINED:
 	case SampleFormat::DSD:
 	case SampleFormat::DSD_U8:
-	case SampleFormat::DSD_U32:
+	case SampleFormat::DSD_U32_BE:
 		break;
 
 	case SampleFormat::S8:
@@ -408,7 +408,7 @@ pcm_convert_to_32(PcmBuffer &buffer,
 	case SampleFormat::UNDEFINED:
 	case SampleFormat::DSD:
 	case SampleFormat::DSD_U8:
-	case SampleFormat::DSD_U32:
+	case SampleFormat::DSD_U32_BE:
 		break;
 
 	case SampleFormat::S8:
@@ -520,7 +520,7 @@ pcm_convert_to_float(PcmBuffer &buffer,
 	case SampleFormat::UNDEFINED:
 	case SampleFormat::DSD:
 	case SampleFormat::DSD_U8:
-	case SampleFormat::DSD_U32:
+	case SampleFormat::DSD_U32_BE:
 		break;
 
 	case SampleFormat::S8:

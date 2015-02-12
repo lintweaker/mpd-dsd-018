@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2003-2013 The Music Player Daemon Project
+ * Copyright (C) 2003-2015 The Music Player Daemon Project
  * http://www.musicpd.org
  *
  * This program is free software; you can redistribute it and/or modify
@@ -297,7 +297,7 @@ get_bitformat(SampleFormat sample_format)
 	case SampleFormat::DSD_U8:
 		return SND_PCM_FORMAT_DSD_U8;
 
-	case SampleFormat::DSD_U32:
+	case SampleFormat::DSD_U32_BE:
 		return SND_PCM_FORMAT_DSD_U32_BE;
 
 	}
@@ -681,7 +681,7 @@ alsa_setup_dsd(AlsaOutput *ad, const AudioFormat audio_format,
 	/* DSD native type 2 -> DSD_U32_BE */
 	if (ad->dsd_native && ad->dsd_native_type == 2) {
 
-		usb_format.format = SampleFormat::DSD_U32;
+		usb_format.format = SampleFormat::DSD_U32_BE;
 		usb_format.sample_rate /= 4;
 
 		if (!alsa_setup(ad, usb_format, packed_r, reverse_endian_r, error)) {

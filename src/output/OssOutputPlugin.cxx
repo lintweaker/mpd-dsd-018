@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2003-2013 The Music Player Daemon Project
+ * Copyright (C) 2003-2015 The Music Player Daemon Project
  * http://www.musicpd.org
  *
  * This program is free software; you can redistribute it and/or modify
@@ -423,7 +423,7 @@ sample_format_to_oss(SampleFormat format)
 	case SampleFormat::FLOAT:
 	case SampleFormat::DSD:
 	case SampleFormat::DSD_U8:
-	case SampleFormat::DSD_U32:
+	case SampleFormat::DSD_U32_BE:
 		return AFMT_QUERY;
 
 	case SampleFormat::S8:
