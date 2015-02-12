@@ -75,7 +75,10 @@ struct AlsaOutput {
 
 	/**
 	 * dsd_native_type
-	 * 0 = regular, uses DSD_U8, 1 = reserved. 2 = XMOS mode, uses DSD_U32_BE
+	 * 0 = regular, uses DSD_U8
+	 * 1 = reserved. 
+	 * 2 = XMOS mode/Denon/Marantz, uses DSD_U32_BE
+	 * 3 = BeagleBone Black with botic driver
 	 */
 	unsigned int dsd_native_type;
 
@@ -299,6 +302,9 @@ get_bitformat(SampleFormat sample_format)
 
 	case SampleFormat::DSD_U32_BE:
 		return SND_PCM_FORMAT_DSD_U32_BE;
+
+	case SampleFormat::DSD_U32_LE:
+		return SND_PCM_FORMAT_DSD_U32_LE;
 
 	}
 

@@ -76,7 +76,8 @@ struct PcmExport {
 	 * DSD native output type
 	 * 0 = DSD_U8, no export needed
 	 * 1 = DSD_U16_LE, reserved. Not supported yet
-	 * 2 = DSD_U32_LE, e.g. XMOS based USB DACs
+	 * 2 = DSD_U32_BE, e.g. XMOS based USB DACs
+	 * 3 = DSD_U32_LE, e.q. for BeagleBone Black with botic driver
 	 */
 	unsigned dsd_native_type;
 

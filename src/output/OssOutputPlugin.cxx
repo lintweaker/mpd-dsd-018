@@ -424,6 +424,7 @@ sample_format_to_oss(SampleFormat format)
 	case SampleFormat::DSD:
 	case SampleFormat::DSD_U8:
 	case SampleFormat::DSD_U32_BE:
+	case SampleFormat::DSD_U32_LE:
 		return AFMT_QUERY;
 
 	case SampleFormat::S8:

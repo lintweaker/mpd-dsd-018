@@ -156,6 +156,7 @@ pcm_volume(void *buffer, size_t length,
 	case SampleFormat::DSD:
 	case SampleFormat::DSD_U8:
 	case SampleFormat::DSD_U32_BE:
+	case SampleFormat::DSD_U32_LE:
 		/* not implemented */
 		return false;
 

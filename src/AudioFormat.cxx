@@ -58,6 +58,7 @@ sample_format_to_string(SampleFormat format)
 
 	case SampleFormat::S32:
 	case SampleFormat::DSD_U32_BE:
+	case SampleFormat::DSD_U32_LE:
 		return "32";
 
 	case SampleFormat::FLOAT:
