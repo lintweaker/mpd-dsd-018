@@ -685,10 +685,15 @@ alsa_setup_dsd(AlsaOutput *ad, const AudioFormat audio_format,
 		return true;
 	}
 
-	/* DSD native type 2 -> DSD_U32_BE */
-	if (ad->dsd_native && ad->dsd_native_type == 2) {
+	if (ad->dsd_native && (ad->dsd_native_type == 2 || ad->dsd_native_type == 3)) {
 
-		usb_format.format = SampleFormat::DSD_U32_BE;
+		if (ad->dsd_native_type == 2) {
+			/* DSD native type 2 -> DSD_U32_BE */
+			usb_format.format = SampleFormat::DSD_U32_BE;
+		} else {
+			/* DSD native type 3 -> DSD_U32_LE */
+			usb_format.format = SampleFormat::DSD_U32_LE;
+		}
 		usb_format.sample_rate /= 4;
 
 		if (!alsa_setup(ad, usb_format, packed_r, reverse_endian_r, error)) {
