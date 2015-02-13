@@ -77,7 +77,7 @@ PcmExport::GetFrameSize(const AudioFormat &audio_format) const
 		   bytes per sample) */
 		return channels * 4;
 
-	if (dsd_native && dsd_native_type == 2)
+	if (dsd_native && (dsd_native_type == 2 || dsd_native_type == 3))
 		return channels * 4;
 
 	return audio_format.GetFrameSize();
