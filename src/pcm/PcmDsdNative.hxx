@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 Jurgen Kramer
+ * Copyright (C) 2014-2015 Jurgen Kramer
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -33,6 +33,6 @@ class PcmBuffer;
 const uint32_t *
 pcm_dsd_native(PcmBuffer &buffer, unsigned channels,
 	       const uint8_t *src, size_t src_size,
-	       size_t *dest_size_r);
+	       size_t *dest_size_r, unsigned dsd_native_type);
 
 #endif

@@ -174,12 +174,13 @@ alsa_configure(AlsaOutput *ad, const config_param &param)
 
 
 
-	/* If native DSD is enabled, type for requested output type */
+	/* If native DSD is enabled, check for requested output type */
 	if (ad->dsd_native) {
 		ad->dsd_native_type = param.GetBlockValue("dsd_native_type", 255);
 		switch (ad->dsd_native_type) {
 			case 0:
 			case 2:
+			case 3:
 				break;
 			case 1:
 				ad->dsd_native = false;

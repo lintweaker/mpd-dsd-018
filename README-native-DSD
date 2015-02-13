@@ -1,4 +1,4 @@
-[08-feb-15]
+[13-feb-15]
 
 mpd.conf config options for native DSD playback:
 
@@ -13,6 +13,8 @@ audio_output {
 }
 
 Use 'dsd_native_type "0"' for DSD_U8 (e.g. botic driver).
+Use 'dsd_native_type "3"' for DSD_U32_LE (e.g. botic driver).
+
 Note: disable DoP output config option: 'dsd_usb "no"' when using native DSD playback
 
 [29-Nov-14]

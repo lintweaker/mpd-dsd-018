@@ -43,7 +43,7 @@ PcmExport::Open(SampleFormat sample_format, unsigned _channels,
 		   samples are stuffed inside fake 24 bit samples */
 		sample_format = SampleFormat::S24_P32;
 
-	if (dsd_native && dsd_native_type == 2)
+	if (dsd_native && (dsd_native_type == 2 || dsd_native_type == 3))
 		sample_format = SampleFormat::S32;
 
 	shift8 = _shift8 && sample_format == SampleFormat::S24_P32;
@@ -90,9 +90,9 @@ PcmExport::Export(const void *data, size_t size, size_t &dest_size_r)
 		data = pcm_dsd_to_usb(dsd_buffer, channels,
 				      (const uint8_t *)data, size, &size);
 
-	if (dsd_native && dsd_native_type == 2)
+	if (dsd_native && (dsd_native_type == 2 || dsd_native_type == 3))
 		data = pcm_dsd_native(dsd_buffer, channels,
-				      (const uint8_t *)data, size, &size);
+				      (const uint8_t *)data, size, &size, dsd_native_type);
 
 	if (pack24) {
 		assert(size % 4 == 0);

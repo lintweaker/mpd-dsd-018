@@ -55,7 +55,8 @@
 - Update to MPD 0.18.21
 - Update to MPD 0.18.22
 - Allow larger ID3 tags for DSD
-
+13-Feb-15
+- DSD native output option for DSD_U32_LE
 
 
 

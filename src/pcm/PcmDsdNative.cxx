@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 Jurgen Kramer
+ * Copyright (C) 2014-2015 Jurgen Kramer
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -37,7 +37,7 @@ pcm_two_dsd_native(uint8_t a, uint8_t b, uint8_t c, uint8_t d)
 const uint32_t *
 pcm_dsd_native(PcmBuffer &buffer, unsigned channels,
 	       const uint8_t *src, size_t src_size,
-	       size_t *dest_size_r)
+	       size_t *dest_size_r, unsigned dsd_native_type)
 {
 	assert(audio_valid_channel_count(channels));
 	assert(src != NULL);
@@ -48,8 +48,6 @@ pcm_dsd_native(PcmBuffer &buffer, unsigned channels,
 	const unsigned num_src_frames = num_src_samples / channels;
 
 	const unsigned num_frames = num_src_frames / 2;
-	//const unsigned num_samples = num_frames * channels;
-
 	const size_t dest_size = src_size;
 
 	*dest_size_r = dest_size;
@@ -58,13 +56,25 @@ pcm_dsd_native(PcmBuffer &buffer, unsigned channels,
 
 	for (unsigned i = num_frames / 2; i > 0 ; --i) {
 
-		/* Left channel */
-		*dest++ = pcm_two_dsd_native(src[6], src[4], src[2], src[0]);
-		/* Right channel */
-		*dest++ = pcm_two_dsd_native(src[7], src[5], src[3], src[1]);
+		/* Output for DSD_U32_BE */
+		if (dsd_native_type == 2) {
 
+			/* Left channel */
+			*dest++ = pcm_two_dsd_native(src[6], src[4], src[2], src[0]);
+			/* Right channel */
+			*dest++ = pcm_two_dsd_native(src[7], src[5], src[3], src[1]);
+
+		} else {
+		/* Output for DSD_U32_LE */
+
+			/* Left channel */
+			*dest++ = pcm_two_dsd_native(src[0], src[2], src[4], src[6]);
+			/* Right channel */
+			*dest++ = pcm_two_dsd_native(src[1], src[3], src[5], src[7]);
+
+		}
 		src += 8;
 	}
-
 	return dest0;
 }
+
