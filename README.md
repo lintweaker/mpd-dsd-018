@@ -65,4 +65,9 @@ and DSDIFF)
 - Update to MPD 0.18.22
 - Allow larger ID3 tags for DSD
 
+8-Feb-15
+- Add patches for RT support
+
+13-Feb-15
+- Add support for native DSD using DSD_U32_LE
 
