@@ -89,8 +89,8 @@ index 3061b49..94e8884 100644
 @@ -1,6 +1,6 @@
  AC_PREREQ(2.60)
  
--AC_INIT(mpd, 0.18.22-dsd, gtmkramer@xs4all.nl)
-+AC_INIT(mpd, 0.18.22-dsd-rt, gtmkramer@xs4all.nl)
+-AC_INIT(mpd, 0.18.23-dsd, gtmkramer@xs4all.nl)
++AC_INIT(mpd, 0.18.23-dsd-rt, gtmkramer@xs4all.nl)
  
  VERSION_MAJOR=0
  VERSION_MINOR=18

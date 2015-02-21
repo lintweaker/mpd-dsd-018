@@ -9,9 +9,6 @@
 /* Define when libcurl is used for HTTP streaming */
 #undef ENABLE_CURL
 
-/* Define when despotify is enabled */
-#undef ENABLE_DESPOTIFY
-
 /* Define for the DSD decoder */
 #undef ENABLE_DSD
 

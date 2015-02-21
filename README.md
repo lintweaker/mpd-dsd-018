@@ -71,3 +71,6 @@ and DSDIFF)
 13-Feb-15
 - Add support for native DSD using DSD_U32_LE
 
+21-Feb-15
+- Update to MPD 0.18.23
+
